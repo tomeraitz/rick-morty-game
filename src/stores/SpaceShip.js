@@ -35,9 +35,6 @@ class SpaceShip {
       this.moveDirection(direction)
     }
 
-    @action shoot = () =>{
-        return this
-    }
 }
 
 

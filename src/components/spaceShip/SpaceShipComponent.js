@@ -7,7 +7,7 @@ import { observer, inject } from 'mobx-react'
 @observer
 class SpaceShipComponent extends Component {
     hadelKeyPress = (e) =>{
-        e.which === 32 ? this.props.SpaceShip.shoot() :
+        e.which === 32 ? this.props.GameManager.shoot(this.props.SpaceShip) :
         this.props.SpaceShip.move(e.which)
   }
 
@@ -18,6 +18,7 @@ class SpaceShipComponent extends Component {
   render() {
     let  x = this.props.SpaceShip.x
     let  y = this.props.SpaceShip.y
+    console.log(this.props.SpaceShip)
     return (
       <div id="spaceShipBorder" >
             <div id="hero" style={{top : `${x}px`, left : `${y}px`}} >
