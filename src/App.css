@@ -4,7 +4,6 @@ body {
 
 .laser {
     position: absolute;
-    top: 10vw;
     height: 15px;
     width: 12px;
     border-radius: 50%;
@@ -14,7 +13,6 @@ body {
 .enemy {
     position: absolute;
     height: 30px;
-    width: 20px;
+    width: 30px;
     background-color: green
-    
 }
