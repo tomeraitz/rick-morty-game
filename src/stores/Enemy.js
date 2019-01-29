@@ -1,6 +1,6 @@
 import { observable, computed, action } from 'mobx'
 
-class Enemies {
+class Enemy {
     @observable x
     @observable y
     constructor(x, y) {
@@ -9,14 +9,13 @@ class Enemies {
     }
 
     @action move = () => {
-        for (let i = 0; i <= 1000; i++) {
+        for (let i = 0; i <= 1000; i++)
+        {
             setTimeout(() => {
                 this.x = i
             }, i * 1)
         }
     }
 }
-
-let Enemy = new Enemies()
 
 export default Enemy
