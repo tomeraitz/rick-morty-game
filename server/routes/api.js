@@ -11,7 +11,7 @@ const Score = require('../model/Score')
 const Users = require('../model/Users')
 
 router.get('/bestScores', function (req, res) {
-    Users.find({}).populate({ path: 'Scores' })
+    Users.find({}).populate({ path: 'scores' })
         .exec((err, results) => {
             let users = []
             results.forEach(u => u.scores.forEach(s => users.push({ name: u.name, score: s.score })))
@@ -21,9 +21,10 @@ router.get('/bestScores', function (req, res) {
 })
 
 router.post('/user', function (req, res) {
+    let newUser = req.body
     let user = new Users({
-        name: req.body.companyName,
-        email: req.body.companyDomain,
+        name: newUser.name,
+        email: newUser.email,
         scores: []
     })
     user.save()
@@ -39,7 +40,7 @@ router.post('/score', function (req, res) {
         score.save()
 
         results.scores.push(score)
-        user.save()
+        results.save()
         res.send("score saved")
     });
 })

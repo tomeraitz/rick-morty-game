@@ -6,7 +6,7 @@ const api = require('./server/routes/api')
 
 // Mongoose setup
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/complainDB', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/Rick&MortyDB', { useNewUrlParser: true })
 
 const app = express()
 app.use(express.static(path.join(__dirname, 'dist')))
