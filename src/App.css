@@ -1,0 +1,13 @@
+
+body {
+    background-color: black
+}
+
+.laser {
+    position: absolute;
+    top: 50vw;
+    height: 15px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: red
+}
