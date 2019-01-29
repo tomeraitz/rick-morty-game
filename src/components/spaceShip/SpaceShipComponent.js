@@ -20,6 +20,7 @@ class SpaceShipComponent extends Component {
     let y = this.props.y
     return (
       <div id="spaceShipBorder" >
+
         <div id="hero" style={{ bottom: `${y}vh`, left: `${x}vw` }} >
 
         </div>
