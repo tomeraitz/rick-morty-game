@@ -31,49 +31,73 @@ import SpaceShip from './SpaceShip'
 class GameManager {
     @observable spaceShips = []
     @observable enemies = []
-    @observable LaserShots = []
+    @observable laserShots = []
 
     @computed get isGameOn() {
         return this.spaceShips.length > 0
     }
 
     @action start = () => {
-        this.drawInstance(new SpaceShip(300, 5))
+        this.drawInstance(new SpaceShip(0, 50))
+        this.drawInstance(new Enemy(110, 10))
+        this.drawInstance(new Enemy(110, 50))
+        this.drawInstance(new Enemy(110, 80))
+
+
         console.log("game")
-        // while (this.isGameOn())
-        // {
+        let count = 0
+        while (count < 10000)
+        {
+            count++
+            setTimeout(() => {
+                console.log('TCL: GameManager -> @actionstart ->             count', count)
 
-        //     // 
-        //     // G A M E    O N
-        //     //
+                // move
+                this.enemies.forEach(e => {
+                    e.x--
+                })
+                this.laserShots.forEach(l => {
+                    this.checkEnemies(l)//check hit
+                    l.x++
+                })
 
-        // }
+
+                this.spaceShips.forEach(s => {
+                    this.checkEnemies(s) //check hits
+                })
+
+            }, 100)
+
+        }
     }
-    @action createLaserShot = (spaceShip) => {
-        const newLaserShot = new LaserShot(spaceShip.x, spaceShip.y)
+    @action createLaserShot = (x, y) => {
+        const newLaserShot = new LaserShot(x, y)
         this.drawInstance(newLaserShot)
-        newLaserShot.fire()
+        // newLaserShot.fire()
     }
 
     @action drawInstance = instance => {
-        // if (instance instanceof LaserShot)
-        // {
-        //     this.LaserShots.push(instance)
-        // }
-        // else if (instance instanceof Enemy)
-        // {
-        //     this.enemies.push(instance)
-        // }
-        // else if (instance instanceof SpaceShip)
-        // {
-        this.spaceShips.push(instance)
-        // }
+        if (instance instanceof LaserShot)
+        {
+            console.log("LaserShot")
+            this.laserShots.push(instance)
+        }
+        else if (instance instanceof Enemy)
+        {
+            console.log("Enemy")
+            this.enemies.push(instance)
+        }
+        else if (instance instanceof SpaceShip)
+        {
+            console.log("SpaceShip")
+            this.spaceShips.push(instance)
+        }
     }
 
     @action kill(instance) {
         if (instance instanceof LaserShot)
         {
-            this.LaserShots = this.LaserShots.filter(LaserShot => LaserShot.id !== instance.id)
+            this.laserShots = this.laserShots.filter(laserShot => laserShot.id !== instance.id)
         }
         else if (instance instanceof Enemy)
         {
@@ -84,6 +108,9 @@ class GameManager {
             this.spaceShips.filter(spaceShip => spaceShip.id !== instance.id)
         }
     }
+
+
+    // const chackDistance = (A, B) => Math.sqrt(A.x * B.x + A.y * B.y)
 
     @action checkBorder(x, y) {
         if (x <= 0 || x >= 100 || y <= 0 || y >= 100)
