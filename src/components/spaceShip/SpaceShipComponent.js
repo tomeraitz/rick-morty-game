@@ -21,7 +21,6 @@ class SpaceShipComponent extends Component {
     return (
       <div id="spaceShipBorder" >
         <div id="hero" style={{ bottom: `${y}px`, left: `${x}px` }} >
-
         </div>
       </div>
     );
