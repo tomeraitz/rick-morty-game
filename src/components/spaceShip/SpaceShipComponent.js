@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import './spaceShip.css';
 import { observer, inject } from 'mobx-react'
+import LaserShot from '../../stores/LaserShot';
 
 @inject("GameManager")
 
 @observer
 class SpaceShipComponent extends Component {
   hadelKeyPress = (e) => {
-    e.which === 32 ? this.props.GameManager.createLaserShot(this.props.x, this.props.y) :
+    console.log('TCL: SpaceShipComponent -> hadelKeyPress -> this.props.x', this.props.x)
+    console.log('TCL: SpaceShipComponent -> hadelKeyPress -> this.props.y', this.props.y)
+
+    e.which === 32 ? this.props.GameManager.drawInstance(new LaserShot(this.props.x, this.props.y)) :
       this.props.move(e.which)
   }
 
@@ -19,10 +23,12 @@ class SpaceShipComponent extends Component {
     let x = this.props.x
     let y = this.props.y
     return (
-      <div id="spaceShipBorder" >
+      <div id="game-border">
+        <div id="space-background" >
 
-        <div id="hero" style={{ bottom: `${y}vh`, left: `${x}vw` }} >
+          <div id="hero" style={{ bottom: `${y}vh`, left: `${x}vw` }} >
 
+          </div>
         </div>
       </div>
     );
