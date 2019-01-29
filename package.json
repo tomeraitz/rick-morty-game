@@ -71,7 +71,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-<<<<<<< HEAD
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "repository": {
@@ -84,7 +83,6 @@
     "url": "https://github.com/tomeraitz/rick-morty-game/issues"
   },
   "homepage": "https://github.com/tomeraitz/rick-morty-game#readme"
-=======
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
@@ -139,5 +137,4 @@
       "react-app"
     ]
   }
->>>>>>> 26e3cf1b6d17334b6db9511cc979c8e9180ea53c
 }
