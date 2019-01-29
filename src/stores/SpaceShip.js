@@ -8,41 +8,33 @@ class SpaceShip {
         this.x = x
         this.y = y
     }
-
-    moveDirection = (direction) => {
+    @action move = (direction) => {
         if (direction === 40)
         {
             // up
-            this.y -= 35
+            this.y -= 3
         }
 
         if (direction === 38)
         {
             // down
-            this.y += 35
+            this.y += 3
         }
 
         if (direction === 37)
         {
             // left
-            this.x -= 35
+            this.x -= 3
         }
 
         if (direction === 39)
         {
             //right
-            this.x += 35
+            this.x += 3
         }
     }
-
-    @action move = (direction) => {
-        this.moveDirection(direction)
-    }
-
 }
 
-
-// const ship = new SpaceShip(300 , 5)
 
 
 export default SpaceShip

@@ -5,14 +5,13 @@ import { observer, inject } from 'mobx-react';
 
 @observer
 class Enemy extends Component {
-    componentDidMount() {
-        this.props.Enemy.move()
-    }
 
     render() {
         let x = this.props.Enemy.x
+        let y = this.props.Enemy.y
+
         return (
-            <div className="enemy" style={{ right: `${x}px`, top: `20vw` }}></div>
+            <div className="enemy" style={{ right: `${x}vw`, top: `${y}vh` }}></div>
         );
     }
 }
