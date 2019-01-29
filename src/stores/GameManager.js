@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { observable, get } from 'mobx';
+// import { observable, get } from 'mobx';
+import { observable, action, computed } from 'mobx'
+
 import { spaceShipSizes, enemySizes, shotSizes } from '../consts/sizes'
-import { observable, action, computed } from 'mobx-react'
 
-
-
+import Enemy from './Enemy'
 import LaserShot from './LaserShot'
 import SpaceShip from './SpaceShip'
 
@@ -39,15 +39,15 @@ class GameManager {
 
     @action start = () => {
         this.drawInstance(new SpaceShip(300, 5))
+        console.log("game")
+        // while (this.isGameOn())
+        // {
 
-        while (this.isGameOn())
-        {
+        //     // 
+        //     // G A M E    O N
+        //     //
 
-            // 
-            // G A M E    O N
-            //
-
-        }
+        // }
     }
     @action createLaserShot = (spaceShip) => {
         const newLaserShot = new LaserShot(spaceShip.x, spaceShip.y)
@@ -56,18 +56,18 @@ class GameManager {
     }
 
     @action drawInstance = instance => {
-        if (instance instanceof LaserShot)
-        {
-            this.LaserShots.push(instance)
-        }
-        else if (instance instanceof Enemy)
-        {
-            this.enemies.push(instance)
-        }
-        else if (instance instanceof SpaceShip)
-        {
-            this.spaceShips.push(instance)
-        }
+        // if (instance instanceof LaserShot)
+        // {
+        //     this.LaserShots.push(instance)
+        // }
+        // else if (instance instanceof Enemy)
+        // {
+        //     this.enemies.push(instance)
+        // }
+        // else if (instance instanceof SpaceShip)
+        // {
+        this.spaceShips.push(instance)
+        // }
     }
 
     @action kill(instance) {
@@ -96,13 +96,14 @@ class GameManager {
         this.enemies.forEach(e => {
             if (e.x === x && e.y === y)
             {
-                kill(instance instanceof SpaceShip ? instance : e)
+                this.kill(instance instanceof SpaceShip ? instance : e)
             }
         })
     }
-
-
 }
 
 
-export default GameBoard
+const game = new GameManager()
+
+
+export default game

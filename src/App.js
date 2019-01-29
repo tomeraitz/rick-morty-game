@@ -2,21 +2,17 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react'
 import './App.css';
 
-import SpaceShipComponent from './components/spaceShip/SpaceShipComponent';
+import GameBoard from './components/GameBoard/GameBoard';
 
-import Lasers from './components/LaserShots/Lasers';
 
 
 @observer
 class App extends Component {
   render() {
+
     return (
       <div className="App">
-
-        <SpaceShipComponent />
-
-        <Lasers />
-
+        <GameBoard />
       </div>
     );
   }

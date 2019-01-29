@@ -4,12 +4,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'mobx-react'
+import Enemy from './stores/Enemy'
+
 import LaserShot from './stores/LaserShot'
 import SpaceShip from './stores/SpaceShip'
 import GameManager from './stores/GameManager'
 
-
-const stores = { GameManager, SpaceShip, LaserShot }
+const stores = { GameManager, SpaceShip, LaserShot, Enemy }
 ReactDOM.render(<Provider {...stores}>
     <App />
 </Provider>, document.getElementById('root'));

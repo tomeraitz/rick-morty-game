@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
-import SpaceShipComponent from './spaceShip/SpaceShipComponent';
-import Lasers from './LaserShots/Lasers';
-
+import SpaceShipComponent from '../spaceShip/SpaceShipComponent';
+// import Lasers from './LaserShots/Lasers';
 
 @inject('GameManager')
-
 @observer
-
 class GameBoard extends Component {
+    componentDidMount() {
+        this.props.GameManager.start()
+    }
     render() {
-        this.props.GameManger.start()
-        const spaceShips = this.props.GameManger.spaceShips.map(s => {
-            return <SpaceShipComponent />
-        });
 
+
+        const spaceShips = this.props.GameManager.spaceShips.map(s => {
+
+            return <SpaceShipComponent move={s.move} x={s.x} y={s.y} />
+
+        });
+        console.log(this.props.GameManager.spaceShips)
         return (
             <div>
                 {spaceShips}
@@ -24,3 +27,6 @@ class GameBoard extends Component {
 
     }
 }
+
+
+export default GameBoard
