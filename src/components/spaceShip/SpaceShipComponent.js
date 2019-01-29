@@ -11,6 +11,10 @@ class SpaceShipComponent extends Component {
       this.props.move(e.which)
   }
 
+  testWidth = () =>{
+
+  }
+
   componentDidMount() {
     document.addEventListener("keydown", this.hadelKeyPress);
   }
@@ -18,8 +22,18 @@ class SpaceShipComponent extends Component {
   render() {
     let x = this.props.x
     let y = this.props.y
+
+   var element = document.getElementById('spaceShipBorder');
+   if(element){
+        var positionInfo = element.getBoundingClientRect();
+        var height = positionInfo.height;
+        var width = positionInfo.width;
+        console.log(height)
+   }
+
     return (
-      <div id="spaceShipBorder" >
+        
+      <div id="spaceShipBorder" onClick={this.testWidth}>
 
         <div id="hero" style={{ bottom: `${y}vh`, left: `${x}vw` }} >
 

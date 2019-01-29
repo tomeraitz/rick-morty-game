@@ -50,7 +50,7 @@ class GameManager {
         {
             count++
             setTimeout(() => {
-                console.log('TCL: GameManager -> @actionstart ->             count', count)
+               // console.log('TCL: GameManager -> @actionstart ->             count', count)
 
                 // move
                 this.enemies.forEach(e => {
