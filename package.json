@@ -82,7 +82,7 @@
   "bugs": {
     "url": "https://github.com/tomeraitz/rick-morty-game/issues"
   },
-  "homepage": "https://github.com/tomeraitz/rick-morty-game#readme"
+  "homepage": "https://github.com/tomeraitz/rick-morty-game#readme",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",

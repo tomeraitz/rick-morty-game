@@ -6,11 +6,12 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'mobx-react'
 import LaserShot from './stores/LaserShot'
 import SpaceShip from './stores/SpaceShip'
+import GameManager from './stores/GameManager'
 
-const stores = {SpaceShip ,LaserShot}
 
-ReactDOM.render(<Provider {... stores}>
-                    <App />
-                </Provider>, document.getElementById('root'));
+const stores = { GameManager, SpaceShip, LaserShot }
+ReactDOM.render(<Provider {...stores}>
+    <App />
+</Provider>, document.getElementById('root'));
 
 serviceWorker.unregister();

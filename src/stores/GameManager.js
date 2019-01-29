@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { observable, get } from 'mobx';
-import { spaceShipSizes, enemySizes, shotSizes } from '../../consts/sizes'
+import { spaceShipSizes, enemySizes, shotSizes } from '../consts/sizes'
+import { observable, action, computed } from 'mobx-react'
+
+
+
+import LaserShot from './LaserShot'
+import SpaceShip from './SpaceShip'
+
+
 // <<Class>>
 // GameBoard
 // + spaceShip: Object
@@ -20,13 +28,10 @@ import { spaceShipSizes, enemySizes, shotSizes } from '../../consts/sizes'
 
 // + gameOver() : check if game over
 
-
-
-
 class GameManager {
     @observable spaceShips = []
     @observable enemies = []
-    @observable shots = []
+    @observable LaserShots = []
 
     @computed get isGameOn() {
         return this.spaceShips.length > 0
@@ -44,15 +49,16 @@ class GameManager {
 
         }
     }
-    @action createShot = (spaceShip) => {
-        const newShot = new LaserShot(spaceShip.x, spaceShip.y)
-        this.drawInstance(newShot)
-        newShot.fire()
+    @action createLaserShot = (spaceShip) => {
+        const newLaserShot = new LaserShot(spaceShip.x, spaceShip.y)
+        this.drawInstance(newLaserShot)
+        newLaserShot.fire()
     }
+
     @action drawInstance = instance => {
-        if (instance instanceof Shot)
+        if (instance instanceof LaserShot)
         {
-            this.shots.push(instance)
+            this.LaserShots.push(instance)
         }
         else if (instance instanceof Enemy)
         {
@@ -65,9 +71,9 @@ class GameManager {
     }
 
     @action kill(instance) {
-        if (instance instanceof Shot)
+        if (instance instanceof LaserShot)
         {
-            this.shots = this.shots.filter(shot => shot.id !== instance.id)
+            this.LaserShots = this.LaserShots.filter(LaserShot => LaserShot.id !== instance.id)
         }
         else if (instance instanceof Enemy)
         {
@@ -96,9 +102,6 @@ class GameManager {
     }
 
 
-    constructor() {
-
-    }
 }
 
 

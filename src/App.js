@@ -4,7 +4,7 @@ import './App.css';
 
 import SpaceShipComponent from './components/spaceShip/SpaceShipComponent';
 
-import Lasers from './components/Lasers';
+import Lasers from './components/LaserShots/Lasers';
 
 
 @observer
