@@ -11,8 +11,6 @@ class GameBoard extends Component {
         this.props.GameManager.start()
     }
     render() {
-
-
         const spaceShips = this.props.GameManager.spaceShips.map(s => {
 
             return <SpaceShipComponent move={s.move} x={s.x} y={s.y} />
