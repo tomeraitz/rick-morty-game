@@ -7,7 +7,7 @@ import { observer, inject } from 'mobx-react'
 @observer
 class SpaceShipComponent extends Component {
   hadelKeyPress = (e) => {
-    e.which === 32 ? this.props.GameManager.shoot(this.props.x, this.props.y) :
+    e.which === 32 ? this.props.GameManager.createLaserShot(this.props.x, this.props.y) :
       this.props.move(e.which)
   }
 
@@ -20,7 +20,7 @@ class SpaceShipComponent extends Component {
     let y = this.props.y
     return (
       <div id="spaceShipBorder" >
-        <div id="hero" style={{ bottom: `${y}px`, left: `${x}px` }} >
+        <div id="hero" style={{ bottom: `${y}vh`, left: `${x}vw` }} >
 
         </div>
       </div>
