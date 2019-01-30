@@ -1,3 +1,7 @@
+/* :root {
+    --img: url('./images/Jaguar00.png');
+  } */
+
 #game-border {
     width: 100vw;
     height: 100vh;
@@ -33,7 +37,8 @@
 .enemy {
     height: 50px;
     width: 50px;
-    background-color: aqua;
+    /* background-image: var(--img);
+    background-size: cover; */
     position: absolute;
 }
 

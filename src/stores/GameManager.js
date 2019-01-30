@@ -1,8 +1,18 @@
-// import React, { Component } from 'react';
+import React, {
+    Component
+} from 'react';
 // import { observable, get } from 'mobx';
-import { observable, action } from 'mobx'//computed
+import {
+    observable,
+    action,
+    computed
+} from 'mobx'
 
-// import { spaceShipSizes, enemySizes, shotSizes } from '../consts/sizes'
+import {
+    spaceShipSizes,
+    enemySizes,
+    shotSizes
+} from '../consts/sizes'
 
 import Enemy from './Enemy'
 import LaserShot from './LaserShot'
@@ -43,7 +53,8 @@ class GameManager {
             if (e.x + 50 <= this.boardWidth) {
                 e.x += 1
             }
-            else {
+            else 
+            {
                 this.kill(e)
             }
 
@@ -54,7 +65,8 @@ class GameManager {
                 l.x += 15
                 this.checkEnemies(l)
             }
-            else {
+            else 
+            {
                 this.kill(l)
             }
         })
@@ -78,6 +90,12 @@ class GameManager {
         })
         this.interval_id = setInterval((this.game), 1)
     }
+//         this.drawInstance(new SpaceShip(0, 50, 3, 0, 0))
+//         this.drawInstance(new Enemy(100, 100))
+//         this.drawInstance(new Enemy(20, 300))
+//         this.drawInstance(new Enemy(300, 20))
+//         this.interval_id = setInterval((this.game), 20)
+    }
     gameOver() {
         console.log("game over")
         clearInterval(this.interval_id);
@@ -91,12 +109,12 @@ class GameManager {
             if (this.laserShots.length === 0) {
                 this.laserShots.push(instance)
             }
-            else {
+            else 
+            {
                 while (this.laserShots[this.laserShots.length - 1].x > 100) {
                     this.laserShots.push(instance)
                 }
             }
-
         }
         else if (instance instanceof Enemy) {
             instance.y += 50
@@ -131,6 +149,7 @@ class GameManager {
             let ship = this.spaceShips.find(spaceShip => spaceShip.id === instance.id)
             if (ship.life === 0 || this.enemyPerLevel === 0) {
                 this.gameOver()
+              // alert("you are a loser!")
             }
             else {
                 ship.life--
