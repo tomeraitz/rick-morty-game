@@ -25,8 +25,7 @@ class SpaceShipComponent extends Component {
     let y = this.props.y
     return (
 
-      <div className="spaceShip" style={{ bottom: `${y}px`, left: `${x}px` }} >
-      </div>
+        <div className="spaceShip" style={{ bottom: `${y}px`, left: `${x}px` }} ></div>
     );
   }
 }

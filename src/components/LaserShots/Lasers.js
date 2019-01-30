@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
 
+
 @observer
 class Lasers extends Component {
 
