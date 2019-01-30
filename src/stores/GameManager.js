@@ -32,6 +32,8 @@ class GameManager {
     @observable spaceShips = []
     @observable enemies = []
     @observable laserShots = []
+    @observable boardWidth
+    @observable boardHeight
 
     @computed get isGameOn() {
         return this.spaceShips.length > 0
@@ -67,6 +69,12 @@ class GameManager {
 
         }
     }
+
+    @action setBorders(height , width){
+        this.boardWidth = width
+        this.boardHeight = height
+    }
+
     // @action createLaserShot = (x, y) => {
     //     const newLaserShot = new LaserShot(x, y)
     //     this.drawInstance(newLaserShot)

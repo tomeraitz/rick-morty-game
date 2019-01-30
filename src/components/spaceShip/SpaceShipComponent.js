@@ -8,11 +8,12 @@ import LaserShot from '../../stores/LaserShot';
 @observer
 class SpaceShipComponent extends Component {
   hadelKeyPress = (e) => {
-    console.log('TCL: SpaceShipComponent -> hadelKeyPress -> this.props.x', this.props.x)
-    console.log('TCL: SpaceShipComponent -> hadelKeyPress -> this.props.y', this.props.y)
-
     e.which === 32 ? this.props.GameManager.drawInstance(new LaserShot(this.props.x, this.props.y)) :
-      this.props.move(e.which)
+      this.props.move(e.which , this.props.GameManager.boardWidth , this.props.GameManager.boardHeight)
+  }
+
+  testWidth = () =>{
+
   }
 
   componentDidMount() {
@@ -22,11 +23,13 @@ class SpaceShipComponent extends Component {
   render() {
     let x = this.props.x
     let y = this.props.y
+    console.log(y)
     return (
+
       <div id="game-border">
         <div id="space-background" >
 
-          <div id="hero" style={{ bottom: `${y}vh`, left: `${x}vw` }} >
+          <div id="hero" style={{ bottom: `${y}px`, left: `${x}px` }} >
 
           </div>
         </div>
