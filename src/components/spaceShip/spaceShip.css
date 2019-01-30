@@ -1,9 +1,11 @@
+
 #game-border {
     width: 100vw;
     height: 100vh;
 }
 
 #space-background {
+
     width: 100vw;
     height: 100vh;
     background-image: url("../../images/RM_page-header_background.png");
