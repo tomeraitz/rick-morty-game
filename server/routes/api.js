@@ -10,30 +10,46 @@ router.use(bodyParser.urlencoded({ extended: false }))
 const Score = require('../model/Score')
 const Users = require('../model/Users')
 
-router.get('/bestScores', function (req, res) {
-    Users.find({}).populate({ path: 'scores' })
-        .exec((err, results) => {
-            let users = []
-            results.forEach(u => u.scores.forEach(s => users.push({ name: u.name, score: s.score })))
-            let bestScores = users.sort((a, b) => { return b.score - a.score; });
-            res.send(bestScores);
-        })
+
+//get best scores
+router.get('/bestScores', async function (req, res) {
+    const user = await Users.find({}).populate('scores')
+    let bestScores = []
+    user.forEach(u => u.scores.forEach(s => bestScores.push({ name: u.name, score: s.score })))
+    bestScores = bestScores.sort((a, b) => { return b.score - a.score; });
+    res.send(bestScores.slice(0, 5));
 })
 
-router.post('/user', function (req, res) {
-    let newUser = req.body
-    let user = new Users({
+//log in
+router.post('/login', async function (req, res) {
+    const user = await User.findOne({
+        email: req.body.name
+    }).populate('scores')
+    if (user.password === req.body.password) {
+        res.send(user._id)
+    } else {
+        res.send("not corrnt password")
+    }
+
+})
+
+//sign in
+router.post('/singup', function (req, res) {
+    const newUser = req.body
+    const user = new Users({
         name: newUser.name,
         email: newUser.email,
+        password: newUser.password,
         scores: []
     })
     user.save()
     res.send("user saved")
 })
 
+//add new score
 router.post('/score', function (req, res) {
     Users.findById(req.body.id).exec((err, results) => {
-        let score = new Score({
+        const score = new Score({
             date: moment().format('LLLL'),
             score: req.body.score
         })
