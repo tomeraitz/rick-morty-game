@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
+@inject("LaserShot")
 
 @observer
 class Lasers extends Component {
-    // componentDidMount() {
-    //     this.props.fire()
-    // }
+    componentDidMount() {
+        this.props.LaserShot.fire()
+    }
 
     render() {
+        let x = this.props.LaserShot.x
         return (
-            <div className="laser" style={{ left: `${this.props.x}vw`, bottom: `${this.props.y + 2}vh` }}></div>
+            <div className="laser" style={{ left: `${x}px`, top: `10vw` }}></div>
         );
     }
 }

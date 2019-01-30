@@ -8,29 +8,30 @@ class SpaceShip {
         this.x = x
         this.y = y
     }
-    @action move = (direction) => {
-        if (direction === 40)
-        {
-            // up
-            this.y -= 3
-        }
-
-        if (direction === 38)
+    @action move = (direction , width ,height) => {
+        if (direction === 40 && this.y-35 > 0)
         {
             // down
-            this.y += 3
+            this.y -= 35
+            
         }
 
-        if (direction === 37)
+        if (direction === 38 && this.y + 60 < height)
+        {
+            // up
+            this.y += 35
+        }
+
+        if (direction === 37 && this.x-25 > 0)
         {
             // left
-            this.x -= 3
+            this.x -= 35
         }
 
-        if (direction === 39)
+        if (direction === 39 && this.x + 120 < width)
         {
             //right
-            this.x += 3
+            this.x += 35
         }
     }
 }

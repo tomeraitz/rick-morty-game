@@ -32,6 +32,8 @@ class GameManager {
     @observable spaceShips = []
     @observable enemies = []
     @observable laserShots = []
+    @observable boardWidth
+    @observable boardHeight
 
     @computed get isGameOn() {
         return this.spaceShips.length > 0
@@ -50,8 +52,6 @@ class GameManager {
         {
             count++
             setTimeout(() => {
-               // console.log('TCL: GameManager -> @actionstart ->             count', count)
-
                 // move
                 this.enemies.forEach(e => {
                     e.x--
@@ -61,7 +61,6 @@ class GameManager {
                     l.x++
                 })
 
-
                 this.spaceShips.forEach(s => {
                     this.checkEnemies(s) //check hits
                 })
@@ -70,11 +69,17 @@ class GameManager {
 
         }
     }
-    @action createLaserShot = (x, y) => {
-        const newLaserShot = new LaserShot(x, y)
-        this.drawInstance(newLaserShot)
-        // newLaserShot.fire()
+
+    @action setBorders(height , width){
+        this.boardWidth = width
+        this.boardHeight = height
     }
+
+    // @action createLaserShot = (x, y) => {
+    //     const newLaserShot = new LaserShot(x, y)
+    //     this.drawInstance(newLaserShot)
+    //     // newLaserShot.fire()
+    // }
 
     @action drawInstance = instance => {
         if (instance instanceof LaserShot)
@@ -119,9 +124,9 @@ class GameManager {
         }
     }
 
-    @action checkEnemies(instance, x, y) {
+    @action checkEnemies(instance) {
         this.enemies.forEach(e => {
-            if (e.x === x && e.y === y)
+            if (e.x === instance.x && e.y === instance.y)
             {
                 this.kill(instance instanceof SpaceShip ? instance : e)
             }

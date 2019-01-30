@@ -12,6 +12,14 @@ class GameBoard extends Component {
         this.props.GameManager.start()
     }
     render() {
+        let gameBorders = document.getElementById('game-border')
+        if(gameBorders){
+            const positionInfo = gameBorders.getBoundingClientRect();
+            const height = positionInfo.height;
+            const width = positionInfo.width;
+            this.props.GameManager.setBorders(height , width)
+        }
+
 
         const enemies = this.props.GameManager.enemies.map((e, i) => {
             return <Enemy key={i} move={e.move} x={e.x} y={e.y} />

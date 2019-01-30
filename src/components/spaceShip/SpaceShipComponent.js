@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import './spaceShip.css';
 import { observer, inject } from 'mobx-react'
+import LaserShot from '../../stores/LaserShot';
 
 @inject("GameManager")
 
 @observer
 class SpaceShipComponent extends Component {
   hadelKeyPress = (e) => {
-    e.which === 32 ? this.props.GameManager.createLaserShot(this.props.x, this.props.y) :
-      this.props.move(e.which)
+    e.which === 32 ? this.props.GameManager.drawInstance(new LaserShot(this.props.x, this.props.y)) :
+      this.props.move(e.which , this.props.GameManager.boardWidth , this.props.GameManager.boardHeight)
   }
 
   testWidth = () =>{
@@ -22,21 +23,15 @@ class SpaceShipComponent extends Component {
   render() {
     let x = this.props.x
     let y = this.props.y
-
-   var element = document.getElementById('spaceShipBorder');
-   if(element){
-        var positionInfo = element.getBoundingClientRect();
-        var height = positionInfo.height;
-        var width = positionInfo.width;
-        console.log(height)
-   }
-
+    console.log(y)
     return (
-        
-      <div id="spaceShipBorder" onClick={this.testWidth}>
 
-        <div id="hero" style={{ bottom: `${y}vh`, left: `${x}vw` }} >
+      <div id="game-border">
+        <div id="space-background" >
 
+          <div id="hero" style={{ bottom: `${y}px`, left: `${x}px` }} >
+
+          </div>
         </div>
       </div>
     );
