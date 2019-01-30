@@ -9,12 +9,11 @@ import Enemy from '../Enemy/Enemy';
 @observer
 class GameBoard extends Component {
     componentDidMount() {
-            this.props.GameManager.start()
+        this.props.GameManager.start()
     }
     render() {
         let gameBorders = document.getElementById('game-border')
-        if (gameBorders)
-        {
+        if (gameBorders) {
             const positionInfo = gameBorders.getBoundingClientRect();
             const height = positionInfo.height;
             const width = positionInfo.width;
@@ -27,7 +26,7 @@ class GameBoard extends Component {
         });
 
         const spaceShips = this.props.GameManager.spaceShips.map((s, i) => {
-            return <SpaceShipComponent key={i} move={s.move} x={s.x} y={s.y} id={s.id}/>
+            return <SpaceShipComponent key={i} move={s.move} x={s.x} y={s.y} id={s.id} />
         });
 
         const laserShot = this.props.GameManager.laserShots.map((l, i) => {
@@ -35,14 +34,15 @@ class GameBoard extends Component {
         });
         return (
             <div id="game-board">
-            {this.props.GameManager.spaceShips.map((s, i) => {
-            return  <div>
+                {this.props.GameManager.spaceShips.map((s, i) => {
+                    return <div key={i}>
                         <div className="score">Socre : {s.score}</div>
                         <div className="life">Life : {s.life}</div>
+                        <div className="life">Level : {s.level}</div>
                     </div>
-
-                 })}
+                })}
                 <div id="game-border">
+                    <div className="life">Enemy : {this.props.GameManager.enemies.length}</div>
                     <div id="space-background" >
 
                         {spaceShips}

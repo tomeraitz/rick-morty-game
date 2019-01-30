@@ -1,4 +1,4 @@
-import { observable, computed, action } from 'mobx'
+import { observable } from 'mobx'//, computed, action
 
 class Enemy {
     @observable id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10)
