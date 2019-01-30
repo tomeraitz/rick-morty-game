@@ -20,9 +20,6 @@ class App extends Component {
 
         <GameBoard />
       </div>
-      //   </div>
-
-      // </div>
     );
   }
 }
