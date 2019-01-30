@@ -36,3 +36,11 @@
     background-color: aqua;
     position: absolute;
 }
+
+.score{
+    color: white;
+}
+
+.life{
+    color: white;
+}

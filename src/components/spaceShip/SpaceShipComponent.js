@@ -8,7 +8,7 @@ import '../../App.css'
 @observer
 class SpaceShipComponent extends Component {
   hadelKeyPress = (e) => {
-    e.which === 32 ? this.props.GameManager.drawInstance(new LaserShot(this.props.x, this.props.y)) :
+    e.which === 32 ? this.props.GameManager.drawInstance(new LaserShot(this.props.x +70, this.props.y, this.props.id)) :
       this.props.move(e.which, this.props.GameManager.boardWidth, this.props.GameManager.boardHeight)
   }
 
