@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+
 import '../../style/landing-page.css';
 import Menu from './Menu'
 
@@ -8,7 +10,13 @@ class LandingPage extends Component {
         return (
             <div id="landing-page" >
                 <img id="logo" src={rickAndMortyLogo} />
-                <Menu />
+                {/* <div className="start-game-container"> */}
+                <Link to="/game">
+                    <div className="start-game">
+                        START GAME
+                        </div>
+                </Link>
+                {/* </div> */}
             </div>
         );
     }
