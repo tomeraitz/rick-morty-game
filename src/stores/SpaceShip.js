@@ -7,30 +7,37 @@ class SpaceShip {
     constructor(x, y) {
         this.x = x
         this.y = y
+
+        this.nextX = x
+        this.nextY = y
     }
     @action move = (direction) => {
         if (direction === 40)
         {
             // up
-            this.y -= 3
+            this.nextY = this.y - 15
+            // this.y -= 15
         }
 
         if (direction === 38)
         {
             // down
-            this.y += 3
+            this.nextY = this.y + 15
+            // this.y += 15
         }
 
         if (direction === 37)
         {
             // left
-            this.x -= 3
+            this.nextX = this.x - 15
+            // this.x -= 15
         }
 
         if (direction === 39)
         {
             //right
-            this.x += 3
+            this.nextX = this.x + 15
+            // this.x += 15
         }
     }
 }

@@ -14,7 +14,7 @@ class GameBoard extends Component {
     render() {
 
         const enemies = this.props.GameManager.enemies.map((e, i) => {
-            return <Enemy key={i} move={e.move} x={e.x} y={e.y} />
+            return <Enemy key={i} x={e.x} y={e.y} />
         });
 
         const spaceShips = this.props.GameManager.spaceShips.map((s, i) => {
@@ -22,10 +22,10 @@ class GameBoard extends Component {
         });
 
         const laserShot = this.props.GameManager.laserShots.map((l, i) => {
-            return <Lasers key={i} fire={l.fire} x={l.x} y={l.y} />
+            return <Lasers key={i} x={l.x} y={l.y} />
         });
         return (
-            <div>
+            <div id="game-board">
                 {spaceShips}
                 {laserShot}
                 {enemies}
