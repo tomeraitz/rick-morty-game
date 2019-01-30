@@ -41,9 +41,9 @@ class GameManager {
 
     @action start = () => {
         this.drawInstance(new SpaceShip(0, 50))
-        this.drawInstance(new Enemy(110, 10))
-        this.drawInstance(new Enemy(110, 50))
-        this.drawInstance(new Enemy(110, 80))
+        this.drawInstance(new Enemy(this.boardWidth, 10))
+        this.drawInstance(new Enemy(this.boardWidth, 50))
+        this.drawInstance(new Enemy(this.boardWidth, 80))
 
 
         console.log("game")
@@ -57,8 +57,13 @@ class GameManager {
                     e.x--
                 })
                 this.laserShots.forEach(l => {
-                    this.checkEnemies(l)//check hit
-                    l.x++
+                this.checkEnemies(l)//check hit
+                    if(l.x +50 <= this.boardWidth){
+                        l.x += 15
+                    }
+                    else{
+                        this.kill(l)
+                    }
                 })
 
                 this.spaceShips.forEach(s => {
@@ -117,12 +122,12 @@ class GameManager {
 
     // const chackDistance = (A, B) => Math.sqrt(A.x * B.x + A.y * B.y)
 
-    @action checkBorder(x, y) {
-        if (x <= 0 || x >= 100 || y <= 0 || y >= 100)
-        {
-            return false
-        }
-    }
+    // @action checkBorder(x, y) {
+    //     if (x <= 0 || x >= 100 || y <= 0 || y >= 100)
+    //     {
+    //         return false
+    //     }
+    // }
 
     @action checkEnemies(instance) {
         this.enemies.forEach(e => {
