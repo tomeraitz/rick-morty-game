@@ -9,8 +9,13 @@ import '../../App.css'
 class SpaceShipComponent extends Component {
   hadelKeyPress = (e) => {
 
+
     e.which === 32 ? this.props.GameManager.drawInstance(new LaserShot(this.props.x, this.props.y)) :
-      this.props.move(e.which)
+      this.props.move(e.which, this.props.GameManager.boardWidth, this.props.GameManager.boardHeight)
+  }
+
+  testWidth = () => {
+
   }
 
   componentDidMount() {
@@ -21,7 +26,9 @@ class SpaceShipComponent extends Component {
     let x = this.props.x
     let y = this.props.y
     return (
-      <div className="spaceShip" style={{ bottom: `${y}px`, left: `${x}px` }} >          </div>
+
+      <div className="spaceShip" style={{ bottom: `${y}px`, left: `${x}px` }} >
+      </div>
     );
   }
 }

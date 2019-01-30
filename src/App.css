@@ -3,15 +3,11 @@
     height: 100vh;
 }
 
-/* #game-board  */
-
-body {
+#space-background {
     width: 100vw;
     height: 100vh;
     background-image: url("./images/RM_page-header_background.png");
-    /* background-image: url("../images/RM_page-header_background.png"); */
-    background-size: 100vw;
-    z-index: 9999
+    background-size: cover;
 }
 
 .spaceShip {

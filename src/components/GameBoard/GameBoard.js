@@ -12,6 +12,15 @@ class GameBoard extends Component {
         this.props.GameManager.start()
     }
     render() {
+        let gameBorders = document.getElementById('game-border')
+        if (gameBorders)
+        {
+            const positionInfo = gameBorders.getBoundingClientRect();
+            const height = positionInfo.height;
+            const width = positionInfo.width;
+            this.props.GameManager.setBorders(height, width)
+        }
+
 
         const enemies = this.props.GameManager.enemies.map((e, i) => {
             return <Enemy key={i} x={e.x} y={e.y} />
@@ -26,9 +35,15 @@ class GameBoard extends Component {
         });
         return (
             <div id="game-board">
-                {spaceShips}
-                {laserShot}
-                {enemies}
+                <div id="game-border">
+                    <div id="space-background" >
+
+                        {spaceShips}
+                        {laserShot}
+                        {enemies}
+
+                    </div>
+                </div>
             </div>
         )
 

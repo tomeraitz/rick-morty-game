@@ -33,6 +33,8 @@ class GameManager {
     @observable spaceShips = []
     @observable enemies = []
     @observable laserShots = []
+    @observable boardWidth
+    @observable boardHeight
 
     @computed get isGameOn() {
         return this.spaceShips.length > 0
@@ -40,9 +42,10 @@ class GameManager {
 
     @action start = () => {
         this.drawInstance(new SpaceShip(0, 50))
-        this.drawInstance(new Enemy(-10, 10))
-        this.drawInstance(new Enemy(-10, 50))
-        this.drawInstance(new Enemy(-10, 80))
+        this.drawInstance(new Enemy(this.boardWidth, 10))
+        this.drawInstance(new Enemy(this.boardWidth, 50))
+        this.drawInstance(new Enemy(this.boardWidth, 80))
+
 
 
         console.log("game")
@@ -61,25 +64,31 @@ class GameManager {
                 })
                 // console.log("finished enemies")
                 this.laserShots.forEach(l => {
-                    this.checkEnemies(l)//check hit
-                    l.x += 10
-                    // if (this.isOutside(l.x, l.y))
-                    // {
-                    //     this.kill(l)
-                    // }
-
+                    // this.checkEnemies(l)//check hit
+                    if (l.x + 50 <= this.boardWidth)
+                    {
+                        l.x += 15
+                    }
+                    else
+                    {
+                        this.kill(l)
+                    }
                 })
 
                 this.spaceShips.forEach(s => {
-                    s.x = s.nextX
-                    s.y = s.nextY
                     this.checkEnemies(s) //check hits
                 })
 
-            }, 500)
+            }, 1000)
         }
         console.log("game loop is over")
     }
+
+    @action setBorders(height, width) {
+        this.boardWidth = width
+        this.boardHeight = height
+    }
+
     // @action createLaserShot = (x, y) => {
     //     const newLaserShot = new LaserShot(x, y)
     //     this.drawInstance(newLaserShot)
@@ -121,13 +130,6 @@ class GameManager {
 
 
     // const chackDistance = (A, B) => Math.sqrt(A.x * B.x + A.y * B.y)
-
-    @action isOutside(x, y) {
-        if (x <= 0 || x >= 100 || y <= 0 || y >= 100)
-        {
-            return true
-        }
-    }
 
     @action checkEnemies(instance) {
         this.enemies.forEach(e => {

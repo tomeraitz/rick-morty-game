@@ -3,8 +3,9 @@ import { observer } from 'mobx-react'
 
 import './App.css';
 
+import LandingPage from './components/LandingPage/LandingPage'
 import GameBoard from './components/GameBoard/GameBoard';
-
+import Stars from './components/Stars/Stars'
 
 
 @observer
@@ -13,8 +14,10 @@ class App extends Component {
 
     return (
       <div className="App">
-        {/* <div id="game-border">
-          <div id="space-background" > */}
+
+        {/* <LandingPage /> */}
+        <Stars />
+
         <GameBoard />
       </div>
       //   </div>

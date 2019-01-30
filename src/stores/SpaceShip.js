@@ -11,33 +11,37 @@ class SpaceShip {
         this.nextX = x
         this.nextY = y
     }
-    @action move = (direction) => {
-        if (direction === 40)
+    @action move = (direction, width, height) => {
+        if (direction === 40 && this.y - 35 > 0)
         {
-            // up
-            this.nextY = this.y - 15
-            // this.y -= 15
-        }
 
-        if (direction === 38)
-        {
             // down
-            this.nextY = this.y + 15
-            // this.y += 15
+            this.y -= 35
+
+
         }
 
-        if (direction === 37)
+        if (direction === 38 && this.y + 60 < height)
+        {
+
+            // up
+            this.y += 35
+
+        }
+
+        if (direction === 37 && this.x - 25 > 0)
         {
             // left
-            this.nextX = this.x - 15
-            // this.x -= 15
+
+            this.x -= 35
+
         }
 
-        if (direction === 39)
+        if (direction === 39 && this.x + 120 < width)
         {
             //right
-            this.nextX = this.x + 15
-            // this.x += 15
+            this.x += 35
+
         }
     }
 }
