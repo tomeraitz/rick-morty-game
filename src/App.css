@@ -1,17 +1,32 @@
-/* :root {
-    --img: url('./images/Jaguar00.png');
-  } */
+@import url('https://fonts.googleapis.com/css?family=Patrick+Hand');
+* {
+    font-family: 'Patrick Hand', cursive;
+}
 
 #game-border {
     width: 100vw;
     height: 100vh;
+    background-image: url("./images/RM_page-header_background.png");
+    background-size: cover;
+}
+
+i {
+    color: white;
+    justify-self: end;
+    margin-right: 1vw;
+    cursor: pointer;
+}
+
+.navbar-user {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 6fr;
+    height: 4vh;
+    align-items: center;
 }
 
 #space-background {
     width: 100vw;
-    height: 100vh;
-    background-image: url("./images/RM_page-header_background.png");
-    background-size: cover;
+    height: 100vh;   
 }
 
 .spaceShip {
@@ -37,15 +52,32 @@
 .enemy {
     height: 50px;
     width: 50px;
-    /* background-image: var(--img);
-    background-size: cover; */
     position: absolute;
 }
 
-.score{
+.user-status{
     color: white;
+    margin-left: 1vw;
+    text-transform: uppercase;
 }
 
-.life{
-    color: white;
+#next-level {
+    position: absolute;
+    text-align: center;
+    top: 25%;
+    left: 25%;
+    height: 25vh;
+    width: 50vw;
+}
+
+#next-level > h1 {
+    color: #62a839;
+    font-size: 50px;
+    text-transform: uppercase
+}
+
+#next-level > h3 {
+    color: #e2e25a;
+    cursor: pointer;
+    font-size: 30px;
 }
