@@ -1,12 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'mobx-react'
+import Enemy from './stores/Enemy'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import './index.css';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
+
+import LaserShot from './stores/LaserShot'
+import SpaceShip from './stores/SpaceShip'
+import GameManager from './stores/GameManager'
+
+const stores = { GameManager, SpaceShip, LaserShot, Enemy }
+ReactDOM.render(<Provider {...stores}>
+    <App />
+</Provider>, document.getElementById('root'));
+
 serviceWorker.unregister();
