@@ -10,7 +10,7 @@ class Lasers extends Component {
 
     render() {
         return (
-            <div className="laser" style={{ left: `${this.props.x}vw`, bottom: `${this.props.y + 2}vh` }}></div>
+            <div className="laser" style={{ left: `${this.props.x}px`, bottom: `${this.props.y + 2}px` }}></div>
         );
     }
 }
