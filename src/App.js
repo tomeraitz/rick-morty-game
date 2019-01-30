@@ -4,6 +4,7 @@ import './App.css';
 
 import LandingPage from './components/LandingPage/LandingPage'
 import GameBoard from './components/GameBoard/GameBoard';
+import Stars from './components/Stars/Stars'
 
 
 @observer
@@ -12,8 +13,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        <LandingPage />
-        {/* <GameBoard /> */}
+        {/* <LandingPage /> */}
+        <Stars />
+        <GameBoard />
       </div>
     );
   }
