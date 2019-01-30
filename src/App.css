@@ -5,13 +5,13 @@
 #game-border {
     width: 100vw;
     height: 100vh;
+    background-image: url("./images/RM_page-header_background.png");
+    background-size: cover;
 }
 
 #space-background {
     width: 100vw;
-    height: 100vh;
-    background-image: url("./images/RM_page-header_background.png");
-    background-size: cover;
+    height: 100vh;   
 }
 
 .spaceShip {
