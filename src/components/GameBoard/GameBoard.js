@@ -4,6 +4,9 @@ import { observer, inject } from 'mobx-react';
 import SpaceShipComponent from '../spaceShip/SpaceShipComponent';
 import Lasers from '../LaserShots/Lasers';
 import Enemy from '../Enemy/Enemy';
+import arrayImages from '../../consts/ArrayImages'
+import ReactAudioPlayer from 'react-audio-player';
+import ThemeSong from '../../sounds/01. Rick and Morty Theme.mp3'
 
 @inject('GameManager')
 @observer
@@ -23,7 +26,8 @@ class GameBoard extends Component {
 
 
         const enemies = this.props.GameManager.enemies.map((e, i) => {
-            return <Enemy key={i} x={e.x} y={e.y} />
+            
+            return <Enemy key={i} x={e.x} y={e.y} myImage={arrayImages[e.index]}/>
         });
 
         const spaceShips = this.props.GameManager.spaceShips.map((s, i) => {
@@ -43,8 +47,14 @@ class GameBoard extends Component {
 
                  })}
                 <div id="game-border">
+                <ReactAudioPlayer
+                type="audio/mp3"
+                 src={ThemeSong}
+                autoPlay
+                loop
+                />
                     <div id="space-background" >
-
+                        
                         {spaceShips}
                         {laserShot}
                         {enemies}
