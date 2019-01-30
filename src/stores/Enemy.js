@@ -1,6 +1,7 @@
 import { observable, computed, action } from 'mobx'
 
 class Enemy {
+    @observable id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10)
     @observable x
     @observable y
     constructor(x, y) {
@@ -8,14 +9,6 @@ class Enemy {
         this.y = y
     }
 
-    // @action move = () => {
-    //     for (let i = 0; i <= 1000; i++)
-    //     {
-    //         setTimeout(() => {
-    //             this.x = i
-    //         }, i * 1)
-    //     }
-    // }
 }
 
 export default Enemy

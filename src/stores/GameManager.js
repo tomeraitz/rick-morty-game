@@ -42,29 +42,25 @@ class GameManager {
 
     @action start = () => {
         this.drawInstance(new SpaceShip(0, 50))
-        this.drawInstance(new Enemy(this.boardWidth, 10))
-        this.drawInstance(new Enemy(this.boardWidth, 50))
-        this.drawInstance(new Enemy(this.boardWidth, 80))
-
-
+        this.drawInstance(new Enemy(100, 100))
+        this.drawInstance(new Enemy(20, 300))
+        this.drawInstance(new Enemy(300, 20))
 
         console.log("game")
-        let count = 0
-        while (count < 10000)
+
+        setInterval(() =>
         {
-            count++
-            setTimeout(() => {
-                // move
                 this.enemies.forEach(e => {
-                    e.x += 10
-                    // if (this.isOutside(e.x, e.y))
-                    // {
-                    //     this.kill(e)
-                    // }
+                    if (e.x + 50 <= this.boardWidth){
+                        e.x += 1
+                    }
+                    else{
+                        this.kill(e)
+                    }
+                    
                 })
-                // console.log("finished enemies")
+
                 this.laserShots.forEach(l => {
-                    // this.checkEnemies(l)//check hit
                     if (l.x + 50 <= this.boardWidth)
                     {
                         l.x += 15
@@ -79,21 +75,13 @@ class GameManager {
                     this.checkEnemies(s) //check hits
                 })
 
-            }, 1000)
-        }
-        console.log("game loop is over")
+            }, 20)
     }
 
     @action setBorders(height, width) {
         this.boardWidth = width
         this.boardHeight = height
     }
-
-    // @action createLaserShot = (x, y) => {
-    //     const newLaserShot = new LaserShot(x, y)
-    //     this.drawInstance(newLaserShot)
-    //     // newLaserShot.fire()
-    // }
 
     @action drawInstance = instance => {
         if (instance instanceof LaserShot)
