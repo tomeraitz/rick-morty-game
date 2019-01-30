@@ -1,19 +1,4 @@
-// import React, {
-//     Component
-// } from 'react';
-// import { observable, get } from 'mobx';
-import {
-    observable,
-    action,
-    // computed
-} from 'mobx'
-
-// import {
-//     spaceShipSizes,
-//     enemySizes,
-//     shotSizes
-// } from '../consts/sizes'
-
+import {observable,action} from 'mobx'
 import Enemy from './Enemy'
 import LaserShot from './LaserShot'
 import SpaceShip from './SpaceShip'
@@ -47,12 +32,11 @@ class GameManager {
     @observable boardWidth
     @observable enemyPerLevel
     @observable boardHeight
-
     @action game = () => {
-        console.log("game on")
+        // console.log("game on")
         this.enemies.forEach(e => {
             if (e.x + 50 <= this.boardWidth) {
-                e.x += 1
+                e.x += this.spaceShips[0].level/3
             }
             else {
                 this.kill(e)
@@ -74,9 +58,12 @@ class GameManager {
         })
     }
     createEnemies = (num) => {
-        for (let i = 0; i < (num); i++) {
-            let m = 50 + Math.floor(Math.random() * 600)
-            this.drawInstance(new Enemy(0, m))
+ 
+        for (let i = 1; i < (num + 1); i++) {
+            let y =  Math.floor(Math.random() * 400)
+            let x =  i*50
+            // console.log(obj)
+            this.drawInstance(new Enemy(-x, y))
         }
     }
     @action start = () => {
@@ -87,7 +74,7 @@ class GameManager {
             this.enemyPerLevel = s.level * 4
             this.createEnemies(s.level * 4)
         })
-        this.interval_id = setInterval((this.game), 1)
+        this.interval_id = setInterval((this.game), 20)
     }
     gameOver() {
         console.log("game over")
@@ -99,10 +86,12 @@ class GameManager {
         this.start()
 
     }
+
     @action setBorders(height, width) {
         this.boardWidth = width
         this.boardHeight = height
     }
+
     @action drawInstance = instance => {
         if (instance instanceof LaserShot) {
             if (this.laserShots.length === 0) {
@@ -117,10 +106,12 @@ class GameManager {
             this.spaceShips.push(instance)
         }
     }
+
     setNewLevel = () => {
         this.spaceShips.forEach(s => s.level++)
         this.start()
     }
+
     @action kill(instance) {
         if (instance instanceof LaserShot) {
             this.laserShots = this.laserShots.filter(laserShot => laserShot.id !== instance.id)
