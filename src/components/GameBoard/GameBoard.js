@@ -17,7 +17,7 @@ class GameBoard extends Component {
         this.props.GameManager.start()
     }
     render() {
-        if(this.props.GameManager.finishLevel) { console.log('TCL: GameBoard -> render -> this.props.GameManager.finishLevel', this.props.GameManager.finishLevel) }
+        console.log('isGameOver ', this.props.GameManager.isGameOver)
         let gameBorders = document.getElementById('game-border')
         if (gameBorders) {
             const positionInfo = gameBorders.getBoundingClientRect();
@@ -25,7 +25,6 @@ class GameBoard extends Component {
             const width = positionInfo.width;
             this.props.GameManager.setBorders(height, width)
         }
-
 
         const enemies = this.props.GameManager.enemies.map((e, i) => {
 
@@ -39,19 +38,19 @@ class GameBoard extends Component {
         const laserShot = this.props.GameManager.laserShots.map((l, i) => {
             return <Lasers key={i} x={l.x} y={l.y} />
         });
+
+        const playerInfo = this.props.GameManager.playerInfo
         return (
 
             <div id="game-border">
-                {this.props.GameManager.spaceShips.map((s, i) => {
-                    return <div key={i} className="navbar-user">
-                        <div className="user-status">Socre : {s.score}</div>
-                        <div className="user-status">Life : {s.life}</div>
-                        <div className="user-status">Level : {s.level}</div>
-                        <div className="user-status">Enemies : {this.props.GameManager.enemyPerLevel}</div>
-                        <i className="fas fa-pause"></i>
-
-                    </div>
-                })}
+                {/* <NextLevel /> */}
+                <div className="navbar-user">
+                    <div className="user-status">Socre : {playerInfo.score}</div>
+                    <div className="user-status">Life : {playerInfo.life}</div>
+                    <div className="user-status">Level : {playerInfo.level}</div>
+                    <div className="user-status">Enemies : {this.props.GameManager.enemyPerLevel}</div>
+                    <i className="fas fa-pause"></i>
+                </div>
                 <ReactAudioPlayer
                     type="audio/mp3"
                     src={ThemeSong}
@@ -64,7 +63,7 @@ class GameBoard extends Component {
                     {laserShot}
                     {enemies}
 
-                    {this.props.GameManager.finishLevel ? <NextLevel /> : null}
+                    {this.props.GameManager.finishLevel ? <NextLevel level={playerInfo.level}/> : null}
 
                 </div>
 
