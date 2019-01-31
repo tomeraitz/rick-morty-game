@@ -26,7 +26,7 @@ class Enemy extends Component {
                     right: `${x}px`, bottom: `${y}px`
                 }}
             >
-                <img src={this.props.myImage} />
+                <img alt="enemy" src={this.props.myImage} />
 
             </div>
         );
