@@ -35,17 +35,23 @@
 }
 
 .enemy {
-    height: 50px;
+    /* height: 15px;
     width: 50px;
-    /* background-image: var(--img);
+ background-image: var(--img);
     background-size: cover; */
+    display: inline-block;
     position: absolute;
+    /* transition: 50ms; */
 }
 
-.score{
+.enemy img {
+    height: 50px;
+}
+
+.score {
     color: white;
 }
 
-.life{
+.life {
     color: white;
 }

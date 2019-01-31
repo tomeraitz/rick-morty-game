@@ -1,12 +1,10 @@
+
 import React, {
     Component
 } from 'react';
 // import { observable, get } from 'mobx';
-import {
-    observable,
-    action,
-    computed
-} from 'mobx'
+
+import { observable, action } from 'mobx'
 
 
 import Enemy from './Enemy'
@@ -22,13 +20,14 @@ class GameManager {
     @observable enemyPerLevel
     @observable boardHeight
     @action game = () => {
-        console.log("game on")
+        // console.log("game on")
         this.enemies.forEach(e => {
             if (e.x + 50 <= this.boardWidth)
             {
-                e.x += 1
+                e.x += this.spaceShips[0].level / 2
+
             }
-            else 
+            else
             {
                 this.kill(e)
             }
@@ -41,7 +40,7 @@ class GameManager {
                 l.x += 15
                 this.checkEnemies(l)
             }
-            else 
+            else
             {
                 this.kill(l)
             }
@@ -51,10 +50,14 @@ class GameManager {
         })
     }
     createEnemies = (num) => {
-        for (let i = 0; i < (num); i++)
+
+        for (let i = 1; i < (num + 1); i++)
         {
-            let m = 50 + Math.floor(Math.random() * 600)
-            this.drawInstance(new Enemy(0, m))
+            let y = Math.floor(Math.random() * 400)
+            let x = i * 50
+            // console.log(obj)
+            this.drawInstance(new Enemy(-x, y))
+
         }
     }
     @action start = () => {
@@ -66,35 +69,31 @@ class GameManager {
             this.enemyPerLevel = s.level * 4
             this.createEnemies(s.level * 4)
         })
-        this.interval_id = setInterval((this.game), 1)
+        this.interval_id = setInterval((this.game), 20)
     }
-    //         this.drawInstance(new SpaceShip(0, 50, 3, 0, 0))
-    //         this.drawInstance(new Enemy(100, 100))
-    //         this.drawInstance(new Enemy(20, 300))
-    //         this.drawInstance(new Enemy(300, 20))
-    //         this.interval_id = setInterval((this.game), 20)
 
     gameOver() {
         console.log("game over")
         clearInterval(this.interval_id);
+        this.spaceShips = []
+        this.enemies = []
+        this.laserShots = []
+        alert("start new game loser!")
+        this.start()
+
     }
+
     @action setBorders(height, width) {
         this.boardWidth = width
         this.boardHeight = height
     }
+
     @action drawInstance = instance => {
         if (instance instanceof LaserShot)
         {
             if (this.laserShots.length === 0)
             {
                 this.laserShots.push(instance)
-            }
-            else 
-            {
-                while (this.laserShots[this.laserShots.length - 1].x > 100)
-                {
-                    this.laserShots.push(instance)
-                }
             }
         }
         else if (instance instanceof Enemy)
@@ -107,14 +106,17 @@ class GameManager {
             this.spaceShips.push(instance)
         }
     }
+
     setNewLevel = () => {
         this.spaceShips.forEach(s => s.level++)
         this.start()
     }
+
     @action kill(instance) {
-        console.log('this.enemyPerLevel', this.enemyPerLevel)
+
         if (instance instanceof LaserShot)
         {
+
             this.laserShots = this.laserShots.filter(laserShot => laserShot.id !== instance.id)
         }
         else if (instance instanceof Enemy)
@@ -135,16 +137,20 @@ class GameManager {
         }
         else if (instance instanceof SpaceShip)
         {
+            console.log('TCL: GameManager -> @actionkill -> instance', instance)
             let ship = this.spaceShips.find(spaceShip => spaceShip.id === instance.id)
-            if (ship.life === 0 || this.enemyPerLevel === 0)
+            console.log('TCL: GameManager -> @actionkill -> ship', ship)
+
+            if (ship.life === 0)
             {
                 this.gameOver()
-                // alert("you are a loser!")
+
             }
             else
             {
                 ship.life--
                 this.enemyPerLevel--
+                console.log('this.enemyPerLevel ', this.enemyPerLevel)
             }
         }
     }
