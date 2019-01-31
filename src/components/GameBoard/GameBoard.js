@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
+import { BrowserRouter as Redirect } from 'react-router-dom'
+
+
 import SpaceShipComponent from '../spaceShip/SpaceShipComponent';
 import Lasers from '../LaserShots/Lasers';
 import Enemy from '../Enemy/Enemy';
@@ -17,8 +20,11 @@ class GameBoard extends Component {
         this.props.GameManager.start()
     }
     render() {
+
+        console.log('TCL: GameBoard -> render -> this.props.GameManager.isGameOver', this.props.GameManager.isGameOver)
         let gameBorders = document.getElementById('game-border')
-        if (gameBorders) {
+        if (gameBorders)
+        {
             const positionInfo = gameBorders.getBoundingClientRect();
             const height = positionInfo.height;
             const width = positionInfo.width;
@@ -41,7 +47,7 @@ class GameBoard extends Component {
         return (
 
             <div id="game-border">
-                <NextLevel />
+                {/* <NextLevel /> */}
                 {this.props.GameManager.spaceShips.map((s, i) => {
                     return <div key={i} className="navbar-user">
                         <div className="user-status">Socre : {s.score}</div>

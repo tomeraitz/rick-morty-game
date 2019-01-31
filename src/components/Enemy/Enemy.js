@@ -11,15 +11,24 @@ class Enemy extends Component {
     //  }
 
     render() {
-        let x = this.props.x
-        let y = this.props.y
+        const { x, y } = this.props
+        // let y = this.props.y
 
         return (
-            <div className="enemy" 
-                    style={{ right: `${x}px`, bottom: `${y}px`, 
-                    backgroundImage: 'url('+ this.props.myImage + ') ',
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: 'contain',}}></div>
+            <div className="enemy"
+                // style={{
+                //     right: `${x}px`, bottom: `${y}px`,
+                //     backgroundImage: 'url(' + this.props.myImage + ') ',
+                //     backgroundRepeat: "no-repeat",
+                //     backgroundSize: 'contain',
+                // }}
+                style={{
+                    right: `${x}px`, bottom: `${y}px`
+                }}
+            >
+                <img src={this.props.myImage} />
+
+            </div>
         );
     }
 }

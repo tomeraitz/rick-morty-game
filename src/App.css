@@ -26,7 +26,7 @@ i {
 
 #space-background {
     width: 100vw;
-    height: 100vh;   
+    height: 100vh;
 }
 
 .spaceShip {
@@ -50,16 +50,28 @@ i {
 }
 
 .enemy {
+    display: inline-block;
+    position: absolute;
+    /* 
     height: 50px;
     width: 50px;
-    position: absolute;
+ background-image: var(--img);
+    background-size: cover; */
 }
 
-.user-status{
+.enemy img {
+    height: 50px;
+}
+
+.user-status {
     color: white;
     margin-left: 1vw;
     text-transform: uppercase;
 }
+
+/* .life {
+    color: white;
+======= */
 
 #next-level {
     position: absolute;
@@ -70,13 +82,13 @@ i {
     width: 50vw;
 }
 
-#next-level > h1 {
+#next-level>h1 {
     color: #62a839;
     font-size: 50px;
     text-transform: uppercase
 }
 
-#next-level > h3 {
+#next-level>h3 {
     color: #e2e25a;
     cursor: pointer;
     font-size: 30px;

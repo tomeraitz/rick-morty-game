@@ -9,12 +9,34 @@ body {
     background-image: url("../images/RM_page-header_background.png");
     background-size: cover;
     display: grid;
+    grid-template-rows: 1fr 1fr;
     justify-content: center;
-    grid-template-rows: 1fr 2fr;
+}
+
+#landing-page a {
+    text-decoration: none;
+    display: grid;
+    justify-content: center;
+}
+
+.start-game {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    width: 20vw;
+    height: 5vh;
+    color: #000000;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    background: #00b0c8;
+    border: 2px solid #a5d049;
+    box-shadow: 0 0 40px #5fa43d;
 }
 
 #landing-page>img {
     align-self: center;
+    margin-left: 70px;
 }
 
 #menu {
