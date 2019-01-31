@@ -1,10 +1,10 @@
 
 import { observable, action } from 'mobx'
 
-
 import Enemy from './Enemy'
 import LaserShot from './LaserShot'
 import SpaceShip from './SpaceShip'
+
 
 import { Howl, Howler } from 'howler';
 import Riggity from '../sounds/Riggity.wav'
@@ -15,58 +15,31 @@ import ticky from '../sounds/ricky_ticky_tabby_biatch.wav'
 import dubdub from '../sounds/woo_vu_luvub_dub_dub.wav'
 
 
-
 class GameManager {
     @observable spaceShips = []
+    @observable playerInfo = { life: 3, score: 0, level: 1 }
     @observable enemies = []
     @observable laserShots = []
+
     @observable interval_id
     @observable boardWidth
     @observable enemyPerLevel
     @observable boardHeight
+
+    @observable finishLevel = false
     @observable isGameOver = false
 
-    @action game = () => {
-        // console.log("game on")
-        this.enemies.forEach(e => {
-            if (e.x + 50 <= this.boardWidth)
-            {
-                e.x += this.spaceShips[0].level / 2
-
-            }
-            else
-            {
-                this.kill(e)
-            }
-
-        })
-
-        this.laserShots.forEach(l => {
-            if (l.x + 50 <= this.boardWidth)
-            {
-                l.x += 15
-                this.checkEnemies(l)
-            }
-            else
-            {
-                this.kill(l)
-            }
-        })
-        this.spaceShips.forEach(s => {
-            this.checkEnemies(s) //check hits
-        })
-    }
     createEnemies = (num) => {
 
-        for (let i = 1; i < (num + 1); i++)
-        {
+        for (let i = 1; i < (num + 1); i++) {
             let y = Math.floor(Math.random() * 400)
             let x = i * 50
-            // console.log(obj)
             this.drawInstance(new Enemy(-x, y))
 
         }
+        
     }
+
     @action start = () => {
         this.sound()
         if (this.spaceShips.length === 0)
@@ -78,101 +51,134 @@ class GameManager {
             this.createEnemies(s.level * 3)
         })
         this.interval_id = setInterval((this.game), 20)
+
+    setNewLevel = () => {
+
+        this.finishLevel = true
+        this.playerInfo.level++
+
+        this.start()
+
+
     }
 
     gameOver() {
-        console.log("game over")
         clearInterval(this.interval_id);
-        this.spaceShips = []
+
         this.enemies = []
+        this.spaceShips = []
         this.laserShots = []
+        this.playerInfo = { life: 3, score: 0, level: 1 }
+        
         this.isGameOver = true
+        this.finishLevel = false
+
         alert("start new game loser!")
         this.start()
 
     }
 
+    @action start = () => {
+
+        setTimeout(()=>this.finishLevel = false, 2000);
+        if (this.spaceShips.length === 0) {
+            this.drawInstance(new SpaceShip(0, 50))
+        }
+        this.enemyPerLevel = this.playerInfo.level * 4
+        this.createEnemies(this.enemyPerLevel)
+        this.interval_id = setInterval((this.game), 20)
+    }
+
+    @action game = () => {
+
+        this.enemies.forEach(e => {
+            if (e.x + 50 <= this.boardWidth) {
+                e.x += this.playerInfo.level / 2
+            }
+            else {
+                this.kill(e)
+            }
+
+        })
+
+        this.laserShots.forEach(l => {
+            if (l.x + 50 <= this.boardWidth) {
+                l.x += 15
+                this.checkEnemies(l)
+            }
+            else {
+                this.kill(l)
+            }
+        })
+
+        this.spaceShips.forEach(s => {
+            this.checkEnemies(s)
+        })
+
+    }
+    
     @action setBorders(height, width) {
         this.boardWidth = width
         this.boardHeight = height
     }
 
     @action drawInstance = instance => {
-        if (instance instanceof LaserShot)
-        {
-            if (this.laserShots.length === 0)
-            {
+
+        if (instance instanceof LaserShot) {
+            if (this.laserShots.length === 0) {
                 this.laserShots.push(instance)
             }
         }
-        else if (instance instanceof Enemy)
-        {
+
+        else if (instance instanceof Enemy) {
             instance.y += 50
             this.enemies.push(instance)
         }
-        else if (instance instanceof SpaceShip)
-        {
+
+        else if (instance instanceof SpaceShip) {
             this.spaceShips.push(instance)
         }
-    }
 
-    setNewLevel = () => {
-        this.spaceShips.forEach(s => s.level++)
-        this.start()
     }
 
     @action kill(instance) {
 
-        if (instance instanceof LaserShot)
-        {
+        if (instance instanceof LaserShot) {
 
             this.laserShots = this.laserShots.filter(laserShot => laserShot.id !== instance.id)
         }
-        else if (instance instanceof Enemy)
-        {
+        else if (instance instanceof Enemy) {
             this.enemies = this.enemies.filter(enemy => enemy.id !== instance.id)
-            if (this.enemies.length === 0)
-            {
-                if (this.enemyPerLevel > 0)
-                {
+            console.log("x y ", instance.x, " ", instance.y)
+            if (this.enemies.length === 0) {
+                if (this.enemyPerLevel > 0) {
                     this.createEnemies(this.enemyPerLevel)
                 }
-                else
-                {
-                    alert("Good job")
+                else {
                     this.setNewLevel()
                 }
             }
         }
-        else if (instance instanceof SpaceShip)
-        {
-            console.log('TCL: GameManager -> @actionkill -> instance', instance)
-            let ship = this.spaceShips.find(spaceShip => spaceShip.id === instance.id)
-            console.log('TCL: GameManager -> @actionkill -> ship', ship)
 
-            if (ship && ship.life === 0)
-            {
+        else if (instance instanceof SpaceShip) {
+
+
+            if (this.playerInfo.life === 1) {
                 this.gameOver()
-
             }
-            else
-            {
-                ship.life--
+            else {
+                this.playerInfo.life--
                 this.enemyPerLevel--
-                console.log('this.enemyPerLevel ', this.enemyPerLevel)
             }
         }
     }
 
     @action checkEnemies(instance) {
         this.enemies.forEach(e => {
-            if (e.x + instance.x + 70 >= this.boardWidth && Math.abs(e.y - instance.y + 25) <= 50)
-            {
-                if (instance instanceof LaserShot)
-                {
-                    let ship = this.spaceShips.find(spaceShip => spaceShip.id === instance.shipID)
+            if (e.x + instance.x + 70 >= this.boardWidth && Math.abs(e.y - instance.y + 25) <= 50) {
+                if (instance instanceof LaserShot) {
                     this.enemyPerLevel--
-                    ship.score += 10
+                    this.playerInfo.score += 10
                 }
                 this.kill(instance)
                 this.kill(e)
