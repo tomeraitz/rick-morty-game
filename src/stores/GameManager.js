@@ -32,6 +32,7 @@ class GameManager {
     @observable boardWidth
     @observable enemyPerLevel
     @observable boardHeight
+    @observable finishLevel = false
     @action game = () => {
         // console.log("game on")
         this.enemies.forEach(e => {
@@ -67,6 +68,7 @@ class GameManager {
         }
     }
     @action start = () => {
+        this.finishLevel = false
         if (this.spaceShips.length === 0) {
             this.drawInstance(new SpaceShip(0, 50, 3, 0, 1))
         }
@@ -123,7 +125,7 @@ class GameManager {
                     this.createEnemies(this.enemyPerLevel)
                 }
                 else {
-                    alert("Good job")
+                    this.finishLevel = true
                     this.setNewLevel()
                 }
             }

@@ -58,7 +58,7 @@ class GameBoard extends Component {
                         {spaceShips}
                         {laserShot}
                         {enemies}
-
+                    {this.props.GameManager.finishLevel ? <h1>good jobs</h1> : null}
                     </div>
                 </div>
             </div>
