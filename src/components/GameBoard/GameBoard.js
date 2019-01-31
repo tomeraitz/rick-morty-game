@@ -11,7 +11,8 @@ import NextLevel from './NextLevel'
 
 import arrayImages from '../../consts/ArrayImages'
 import ReactAudioPlayer from 'react-audio-player';
-import ThemeSong from '../../sounds/01. Rick and Morty Theme.mp3'
+import ThemeSong from '../../sounds/Rick and Morty 8-Bit Intro Adult Swim.mp3'
+
 
 @inject('GameManager')
 @observer
@@ -20,8 +21,6 @@ class GameBoard extends Component {
         this.props.GameManager.start()
     }
     render() {
-
-        console.log('TCL: GameBoard -> render -> this.props.GameManager.isGameOver', this.props.GameManager.isGameOver)
         let gameBorders = document.getElementById('game-border')
         if (gameBorders)
         {
@@ -44,8 +43,8 @@ class GameBoard extends Component {
         const laserShot = this.props.GameManager.laserShots.map((l, i) => {
             return <Lasers key={i} x={l.x} y={l.y} />
         });
-        return (
 
+        return (
             <div id="game-border">
                 {/* <NextLevel /> */}
                 {this.props.GameManager.spaceShips.map((s, i) => {

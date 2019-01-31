@@ -1,15 +1,20 @@
 
-import React, {
-    Component
-} from 'react';
-// import { observable, get } from 'mobx';
-
 import { observable, action } from 'mobx'
 
 
 import Enemy from './Enemy'
 import LaserShot from './LaserShot'
 import SpaceShip from './SpaceShip'
+
+import { Howl, Howler } from 'howler';
+import Riggity from '../sounds/Riggity.wav'
+import Balls from '../sounds/lick_my_balls.wav'
+import rickBlech from '../sounds/rick-belching-rick-and-morty.mp3'
+import rickportal from '../sounds/rickportal.wav'
+import ticky from '../sounds/ricky_ticky_tabby_biatch.wav'
+import dubdub from '../sounds/woo_vu_luvub_dub_dub.wav'
+
+
 
 class GameManager {
     @observable spaceShips = []
@@ -63,6 +68,7 @@ class GameManager {
         }
     }
     @action start = () => {
+        this.sound()
         if (this.spaceShips.length === 0)
         {
             this.drawInstance(new SpaceShip(0, 50, 3, 0, 1))
@@ -144,7 +150,7 @@ class GameManager {
             let ship = this.spaceShips.find(spaceShip => spaceShip.id === instance.id)
             console.log('TCL: GameManager -> @actionkill -> ship', ship)
 
-            if (ship.life === 0)
+            if (ship && ship.life === 0)
             {
                 this.gameOver()
 
@@ -173,6 +179,21 @@ class GameManager {
             }
         })
     }
+    sound() {
+        console.log('sound')
+        Howler.volume(1);
+        const sounds = [[Riggity], [Balls], [rickBlech], [rickportal], [ticky], [dubdub]]
+            .map((s) => new Howl({
+                src: s
+            }));
+
+        const soundIndex = Math.floor(Math.random() * sounds.length)
+        const sound = new Howl({
+            src: sounds[soundIndex]
+        });
+        sounds[soundIndex].play();
+    }
+
 }
 
 const game = new GameManager()
