@@ -4,6 +4,8 @@ import { observer, inject } from 'mobx-react';
 import SpaceShipComponent from '../spaceShip/SpaceShipComponent';
 import Lasers from '../LaserShots/Lasers';
 import Enemy from '../Enemy/Enemy';
+import NextLevel from './NextLevel'
+
 import arrayImages from '../../consts/ArrayImages'
 import ReactAudioPlayer from 'react-audio-player';
 import ThemeSong from '../../sounds/01. Rick and Morty Theme.mp3'
@@ -15,6 +17,7 @@ class GameBoard extends Component {
         this.props.GameManager.start()
     }
     render() {
+        if(this.props.GameManager.finishLevel) { console.log('TCL: GameBoard -> render -> this.props.GameManager.finishLevel', this.props.GameManager.finishLevel) }
         let gameBorders = document.getElementById('game-border')
         if (gameBorders) {
             const positionInfo = gameBorders.getBoundingClientRect();
@@ -25,8 +28,8 @@ class GameBoard extends Component {
 
 
         const enemies = this.props.GameManager.enemies.map((e, i) => {
-            
-            return <Enemy key={i} x={e.x} y={e.y} myImage={arrayImages[e.index]}/>
+
+            return <Enemy key={i} x={e.x} y={e.y} myImage={arrayImages[e.index]} />
         });
 
         const spaceShips = this.props.GameManager.spaceShips.map((s, i) => {
@@ -37,30 +40,35 @@ class GameBoard extends Component {
             return <Lasers key={i} x={l.x} y={l.y} />
         });
         return (
-            <div id="game-board">
+
+            <div id="game-border">
                 {this.props.GameManager.spaceShips.map((s, i) => {
-                    return <div key={i}>
-                        <div className="score">Socre : {s.score}</div>
-                        <div className="life">Life : {s.life}</div>
-                        <div className="life">Level : {s.level}</div>
+                    return <div key={i} className="navbar-user">
+                        <div className="user-status">Socre : {s.score}</div>
+                        <div className="user-status">Life : {s.life}</div>
+                        <div className="user-status">Level : {s.level}</div>
+                        <div className="user-status">Enemies : {this.props.GameManager.enemyPerLevel}</div>
+                        <i className="fas fa-pause"></i>
+
                     </div>
                 })}
-                <div id="game-border">
-                    <div className="life">Enemy : {this.props.GameManager.enemies.length}</div>
                 <ReactAudioPlayer
-                type="audio/mp3"
-                 src={ThemeSong}
-                autoPlay
-                loop
+                    type="audio/mp3"
+                    src={ThemeSong}
+                    autoPlay
+                    loop
                 />
-                    <div id="space-background" >
-                        
-                        {spaceShips}
-                        {laserShot}
-                        {enemies}
-                    {this.props.GameManager.finishLevel ? <h1>good jobs</h1> : null}
-                    </div>
+                <div id="space-background" >
+
+                    {spaceShips}
+                    {laserShot}
+                    {enemies}
+
+                    {this.props.GameManager.finishLevel ? <NextLevel /> : null}
+
                 </div>
+
+
             </div>
         )
 

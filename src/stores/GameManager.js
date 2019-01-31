@@ -1,4 +1,4 @@
-import {observable,action} from 'mobx'
+import { observable, action } from 'mobx'
 import Enemy from './Enemy'
 import LaserShot from './LaserShot'
 import SpaceShip from './SpaceShip'
@@ -37,7 +37,7 @@ class GameManager {
         // console.log("game on")
         this.enemies.forEach(e => {
             if (e.x + 50 <= this.boardWidth) {
-                e.x += this.spaceShips[0].level/3
+                e.x += this.spaceShips[0].level / 3
             }
             else {
                 this.kill(e)
@@ -59,10 +59,10 @@ class GameManager {
         })
     }
     createEnemies = (num) => {
- 
+
         for (let i = 1; i < (num + 1); i++) {
-            let y =  Math.floor(Math.random() * 400)
-            let x =  i*50
+            let y = Math.floor(Math.random() * 400)
+            let x = i * 50
             // console.log(obj)
             this.drawInstance(new Enemy(-x, y))
         }
@@ -76,7 +76,7 @@ class GameManager {
             this.enemyPerLevel = s.level * 4
             this.createEnemies(s.level * 4)
         })
-        this.interval_id = setInterval((this.game), 20)
+            ((this.game), 20)
     }
     gameOver() {
         console.log("game over")
@@ -110,6 +110,7 @@ class GameManager {
     }
 
     setNewLevel = () => {
+        this.finishLevel = true
         this.spaceShips.forEach(s => s.level++)
         this.start()
     }
@@ -120,25 +121,25 @@ class GameManager {
         }
         else if (instance instanceof Enemy) {
             this.enemies = this.enemies.filter(enemy => enemy.id !== instance.id)
+            console.log("x y ", instance.x , " ", instance.y)
             if (this.enemies.length === 0) {
                 if (this.enemyPerLevel > 0) {
                     this.createEnemies(this.enemyPerLevel)
                 }
                 else {
-                    this.finishLevel = true
                     this.setNewLevel()
                 }
             }
         }
         else if (instance instanceof SpaceShip) {
             let ship = this.spaceShips.find(spaceShip => spaceShip.id === instance.id)
-            if (ship.life === 0) {
+            if (ship.life === 1) {
                 this.gameOver()
             }
             else {
                 ship.life--
                 this.enemyPerLevel--
-                console.log('this.enemyPerLevel ', this.enemyPerLevel)
+                // console.log('this.enemyPerLevel ', this.enemyPerLevel)
             }
         }
     }
@@ -160,3 +161,11 @@ class GameManager {
 
 const game = new GameManager()
 export default game
+// if (this.enemies.length === 0) {
+//     if (this.enemyPerLevel > 0) {
+//         this.createEnemies(this.enemyPerLevel)
+//     }
+//     else {
+//         this.setNewLevel()
+//     }
+// }
