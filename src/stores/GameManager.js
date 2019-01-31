@@ -67,7 +67,7 @@ class GameManager {
         }
         this.spaceShips.forEach(s => {
             this.enemyPerLevel = s.level * 4
-            this.createEnemies(s.level * 4)
+            this.createEnemies(s.level * 3)
         })
         this.interval_id = setInterval((this.game), 20)
     }

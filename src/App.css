@@ -50,17 +50,18 @@ i {
 }
 
 .enemy {
-    /* height: 15px;
+    position: absolute;
+    height: 50px;
     width: 50px;
-
+    /* 
  background-image: var(--img);
     background-size: cover; */
-    display: inline-block;
+    /* display: inline-block; */
 }
 
-.enemy img {
+/* .enemy img {
     height: 50px;
-}
+} */
 
 .user-status {
     color: white;

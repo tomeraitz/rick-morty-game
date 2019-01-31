@@ -18,7 +18,8 @@ class GameBoard extends Component {
     }
     render() {
         let gameBorders = document.getElementById('game-border')
-        if (gameBorders) {
+        if (gameBorders)
+        {
             const positionInfo = gameBorders.getBoundingClientRect();
             const height = positionInfo.height;
             const width = positionInfo.width;
@@ -41,7 +42,7 @@ class GameBoard extends Component {
         return (
 
             <div id="game-border">
-                <NextLevel />
+                {/* <NextLevel /> */}
                 {this.props.GameManager.spaceShips.map((s, i) => {
                     return <div key={i} className="navbar-user">
                         <div className="user-status">Socre : {s.score}</div>
