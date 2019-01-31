@@ -45,7 +45,8 @@ class GameManager {
         this.enemies = []
         this.spaceShips = []
         this.laserShots = []
-
+        this.playerInfo = { life: 3, score: 0, level: 1 }
+        
         this.isGameOver = true
         this.finishLevel = false
 
@@ -136,7 +137,7 @@ class GameManager {
             }
         }
         else if (instance instanceof SpaceShip) {
-            
+
             if (this.playerInfo.life === 1) {
                 this.gameOver()
             }
