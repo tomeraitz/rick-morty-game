@@ -11,22 +11,22 @@ class Enemy extends Component {
     //  }
 
     render() {
-        const { x, y } = this.props.x
+        const { x, y } = this.props
         // let y = this.props.y
 
         return (
             <div className="enemy"
+                // style={{
+                //     right: `${x}px`, bottom: `${y}px`,
+                //     backgroundImage: 'url(' + this.props.myImage + ') ',
+                //     backgroundRepeat: "no-repeat",
+                //     backgroundSize: 'contain',
+                // }}
                 style={{
-                    right: `${x}px`, bottom: `${y}px`,
-                    backgroundImage: 'url(' + this.props.myImage + ') ',
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: 'contain',
+                    right: `${x}px`, bottom: `${y}px`
                 }}
-            // style={{
-            //     right: `${x}px`, bottom: `${y}px`
-            // }}
             >
-                {/* <img src={this.props.myImage} /> */}
+                <img src={this.props.myImage} />
 
             </div>
         );

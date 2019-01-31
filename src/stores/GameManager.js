@@ -19,6 +19,8 @@ class GameManager {
     @observable boardWidth
     @observable enemyPerLevel
     @observable boardHeight
+    @observable isGameOver = false
+
     @action game = () => {
         // console.log("game on")
         this.enemies.forEach(e => {
@@ -78,6 +80,7 @@ class GameManager {
         this.spaceShips = []
         this.enemies = []
         this.laserShots = []
+        this.isGameOver = true
         alert("start new game loser!")
         this.start()
 

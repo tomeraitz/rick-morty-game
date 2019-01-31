@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
+import { BrowserRouter as Redirect } from 'react-router-dom'
+
+
 import SpaceShipComponent from '../spaceShip/SpaceShipComponent';
 import Lasers from '../LaserShots/Lasers';
 import Enemy from '../Enemy/Enemy';
@@ -17,6 +20,8 @@ class GameBoard extends Component {
         this.props.GameManager.start()
     }
     render() {
+
+        console.log('TCL: GameBoard -> render -> this.props.GameManager.isGameOver', this.props.GameManager.isGameOver)
         let gameBorders = document.getElementById('game-border')
         if (gameBorders)
         {
