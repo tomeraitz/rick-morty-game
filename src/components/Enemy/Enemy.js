@@ -6,22 +6,17 @@ import { observer, inject } from 'mobx-react';
 
 @observer
 class Enemy extends Component {
-    //  componentDidMount(){
-    //     document.documentElement.style.setProperty("--img", `url(${myImage})`);
-    //  }
+    componentDidMount() {
+        let height = document.getElementById(`${this.props.id}`).clientHeight
+        let width = document.getElementById(`${this.props.id}`).clientWidth
+        let border = { h: height, w: width }
+        console.log(border)
+    }
 
     render() {
         const { x, y } = this.props
-        // let y = this.props.y
-
         return (
-            <div className="enemy"
-                // style={{
-                //     right: `${x}px`, bottom: `${y}px`,
-                //     backgroundImage: 'url(' + this.props.myImage + ') ',
-                //     backgroundRepeat: "no-repeat",
-                //     backgroundSize: 'contain',
-                // }}
+            <div className="enemy" id={this.props.id}
                 style={{
                     right: `${x}px`, bottom: `${y}px`
                 }}

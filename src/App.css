@@ -29,8 +29,8 @@ i {
     height: 100vh;
 }
 
-.spaceShip {
-    width: 101px;
+#space-ship {
+    width: 93px;
     height: 58px;
     background-image: url("./images/rick-and-morty-szechuan-sauce-png.png");
     background-size: cover;
@@ -52,15 +52,11 @@ i {
 .enemy {
     display: inline-block;
     position: absolute;
-    /* 
-    height: 50px;
-    width: 50px;
- background-image: var(--img);
-    background-size: cover; */
+    background-color: red;
 }
 
 .enemy img {
-    height: 50px;
+    height: 50px;    
 }
 
 .user-status {

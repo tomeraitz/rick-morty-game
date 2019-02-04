@@ -28,8 +28,7 @@ class GameBoard extends Component {
         }
 
         const enemies = this.props.GameManager.enemies.map((e, i) => {
-
-            return <Enemy key={i} x={e.x} y={e.y} myImage={arrayImages[e.index]} />
+            return <Enemy key={i} id={e.id} x={e.x} y={e.y} myImage={arrayImages[e.index]} />
         });
 
         const spaceShips = this.props.GameManager.spaceShips.map((s, i) => {
