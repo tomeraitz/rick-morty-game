@@ -40,8 +40,6 @@ class GameBoard extends Component {
             return <Lasers key={i} x={l.x} y={l.y} />
         });
         const playerInfo = this.props.GameManager.playerInfo
-        return (
-
 
         return (
             <div id="game-border">
@@ -65,7 +63,7 @@ class GameBoard extends Component {
                     {laserShot}
                     {enemies}
 
-                    {this.props.GameManager.finishLevel ? <NextLevel level={playerInfo.level}/> : null}
+                    {this.props.GameManager.finishLevel ? <NextLevel level={playerInfo.level} /> : null}
 
                 </div>
 
