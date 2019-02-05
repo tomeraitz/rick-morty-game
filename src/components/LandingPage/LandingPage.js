@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Link } from 'react-router-dom' //Router, Route
+import { Link } from 'react-router-dom'
 import Popup from './Popup'
 
 import '../../style/landing-page.css';
