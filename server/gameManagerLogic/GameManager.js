@@ -1,4 +1,4 @@
-const io =require('../../server')//require('socket.io')
+const io = require('../../server')//require('socket.io')
 
 const Enemy = require('./Enemy')
 const LaserShot = require('./LaserShot')
@@ -7,7 +7,7 @@ const arrayImages = require('../enemiesImags/enemiesImgs')
 
 class GameManager {
     constructor(id) { //(randomWords) {
-        this.id=id
+        this.id = id
         this.spaceShips = []
         this.playerInfo = {
             life: 3,
@@ -18,30 +18,30 @@ class GameManager {
         this.laserShots = []
         this.gameInterval
         this.explosion = []
-        // this.boardWidth = boardWidth
-        // this.boardHeight = boardHeight
         this.enemyPerLevel = 4
         this.finishLevel = false
         this.isGameOver = false
         this.isGameOnPause = false
-        this.game=this.game.bind(this)
+        this.game = this.game.bind(this)
     }
 
     joinGame(playerID) {
-		console.log('TCL: GameManager -> joinGame -> playerID', playerID)
-        const y = (this.spaceShips.length + 1) * 100
-        this.spaceShips.push(new SpaceShip(playerID, y))
+        console.log('TCL: GameManager -> joinGame -> playerID', playerID)
+        const y = (this.spaceShips.length + 1) * 10
+        const x = 10
+        this.spaceShips.push(new SpaceShip(playerID, x, y))
         io.to(`${this.id}`).emit('playerJoined');
     }
 
     createEnemies(num) {
         for (let i = 1; i < (num + 1); i++) {
             let y = Math.floor(Math.random() * 400)
-            let x = i * 50
+            let x = i * 2
             let index = Math.floor(Math.random() * arrayImages.length)
             let width = arrayImages[index].width
             let height = arrayImages[index].height
             let src = arrayImages[index].src
+            console.log(src)
             this.drawInstance(new Enemy(index, -x, y, width, height, src))
         }
     }
@@ -56,20 +56,20 @@ class GameManager {
         this.gameInterval = setInterval((this.game), 20)
     }
 
-    finishExplosion () {
+    finishExplosion() {
         this.explosion.shift()
     }
 
-    setNewLeve () {
+    setNewLeve() {
         this.finishLevel = true
         this.playerInfo.level++
         this.enemyPerLevel = this.playerInfo.level * 4
         clearInterval(this.gameInterval);
-        setTimeout(() => this.finishLevel = false, 2000);
+        setTimeout(() => this.finishLevel = false, 20);
         this.start()
     }
 
-    gameOver () {
+    gameOver() {
         clearInterval(this.gameInterval);
 
         this.enemies = []
@@ -86,25 +86,25 @@ class GameManager {
         this.start()
     }
 
-    pauseGame () {
+    pauseGame() {
         if (!this.isGameOnPause) clearInterval(this.gameInterval);
         this.isGameOnPause = true
     }
 
-    continuePlaying(){
+    continuePlaying() {
         if (this.isGameOnPause) this.gameInterval = setInterval(this.game, 20)
         this.isGameOnPause = false
     }
 
     game() {
-        
+
         this.enemies.forEach(e => {
-            if (e.x + 50 <= this.boardWidth) e.x += this.playerInfo.level
+            if (e.x + 5 <= 100) e.x += this.playerInfo.level
             else this.kill(e)
         })
         this.laserShots.forEach(l => {
-            if (l.x + 50 <= this.boardWidth) {
-                l.x += 15
+            if (l.x + 5 <= 100) {
+                l.x += 5
                 this.checkEnemies(l)
             } else this.kill(l)
         })
@@ -131,9 +131,13 @@ class GameManager {
     //     this.boardHeight = height
     // }
 
-    drawInstance (instance) {
+    drawInstance(instance) {
         if (instance instanceof LaserShot) {
-            if (this.laserShots.length === 0) this.laserShots.push(instance)
+            if (this.laserShots.length === 0) {
+                this.laserShots.push(instance)
+                console.log(this.laserShots)
+            }
+
         } else if (instance instanceof Enemy) {
             this.enemies.push(instance)
         } else if (instance instanceof SpaceShip) {
@@ -167,7 +171,7 @@ class GameManager {
         }
     }
 
-    checkEnemies (instance) {
+    checkEnemies(instance) {
         this.enemies.forEach(e => {
             if (Math.abs(e.y - instance.y) <= e.height) {
                 if (e.x + instance.x + (e.width) >= this.boardWidth || e.x + instance.x + (instance.width) >= this.boardWidth) {
@@ -184,37 +188,33 @@ class GameManager {
     }
 
     move(playerIndex, direction) {
-        if (direction === 40 && this.y - 4 > 0) {
+        let spaceShip = this.spaceShips[playerIndex]
+        if (direction === 40 && spaceShip.y - 4 > 0) {
             // down
-            this.spaceShips[playerIndex].y -= 4
+            spaceShip.y -= 4
         }
 
-        if (direction === 38 && this.y + 6 < 100) {
+        if (direction === 38 && spaceShip.y + 6 < 100) {
             // up
-            this.spaceShips[playerIndex].y += 4
+            spaceShip.y += 4
         }
 
-        if (direction === 37 && this.x - 2 > 0) {
+        if (direction === 37 && spaceShip.x - 2 > 0) {
             // left
-            this.spaceShips[playerIndex].x -= 2
+            spaceShip.x -= 2
         }
 
-        if (direction === 39 && this.x + 7 < 100) {
+        if (direction === 39 && spaceShip.x + 7 < 100) {
             //right
-            this.spaceShips[playerIndex].x += 2
+            spaceShip.x += 2
         }
 
     }
 
     shoot(playerIndex) {
-        const {
-            x,
-            y
-        } = this.spaceShips[playerIndex]
+        const { x, y } = this.spaceShips[playerIndex]
         this.drawInstance(new LaserShot(x, y, playerIndex))
     }
-
-
 
     // sound = () => {
     //     Howler.volume(1);
@@ -245,5 +245,4 @@ class GameManager {
 
 }
 
-// const game = new GameManager()
-module.exports=GameManager
+module.exports = GameManager
