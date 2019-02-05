@@ -1,9 +1,10 @@
-
 import { observable, action } from 'mobx'
 
 import Enemy from './Enemy'
 import LaserShot from './LaserShot'
 import SpaceShip from './SpaceShip' 
+
+import arrayImages from '../consts/ArrayImages'
 
 import { Howl, Howler } from 'howler';
 import Riggity from '../sounds/Riggity.wav'
@@ -13,6 +14,7 @@ import rickportal from '../sounds/rickportal.wav'
 import ticky from '../sounds/ricky_ticky_tabby_biatch.wav'
 import dubdub from '../sounds/woo_vu_luvub_dub_dub.wav'
 
+console.log(arrayImages)
 
 class GameManager {
     @observable spaceShips = []
@@ -34,23 +36,27 @@ class GameManager {
         for (let i = 1; i < (num + 1); i++) {
             let y = Math.floor(Math.random() * 400)
             let x = i * 50
-            this.drawInstance(new Enemy(-x, y))
+            let index = Math.floor(Math.random() * arrayImages.length)
+            let width = arrayImages[index].width
+            let height = arrayImages[index].height
+            let src = arrayImages[index].src
+            this.drawInstance(new Enemy(index, - x, y, width, height, src))                      
         }
     }
-
-    @action finishExplosion = () => {
-        this.explosion.shift()
-    }
-
     @action start = () => {
         // this.sound()
+        setTimeout(() => this.finishLevel = false, 2000);
 
         if (this.spaceShips.length === 0) this.drawInstance(new SpaceShip(0, 50, 3, 0, 1))
         this.createEnemies(this.enemyPerLevel)
 
         this.interval = setInterval((this.game), 20)
     }
-
+    
+    @action finishExplosion = () => {
+        this.explosion.shift()
+    }
+    
     setNewLevel = () => {
         this.finishLevel = true
 
@@ -81,7 +87,6 @@ class GameManager {
         if (!this.isGameOnPause) clearInterval(this.interval);
         this.isGameOnPause = true
     }
-
     @action continuePlaying = () => {
         if (this.isGameOnPause) this.interval = setInterval((this.game), 20)
         this.isGameOnPause = false
@@ -114,8 +119,8 @@ class GameManager {
             if (this.laserShots.length === 0) this.laserShots.push(instance)
         }
         else if (instance instanceof Enemy) {
-            instance.y += 100
             this.enemies.push(instance)
+            console.log(this.enemies)
         }
         else if (instance instanceof SpaceShip) this.spaceShips.push(instance)
     }
@@ -150,8 +155,10 @@ class GameManager {
     }
 
     @action checkEnemies(instance) {
+        let spaceShipBorder = this.charBorders()
+
         this.enemies.forEach(e => {
-            if (e.x + instance.x + 70 >= this.boardWidth && Math.abs(e.y - instance.y + 25) <= 50) {
+            if (e.x + instance.x + (spaceShipBorder.width + e.width) >= this.boardWidth && Math.abs(e.y - instance.y) <= spaceShipBorder.height) {
                 if (instance instanceof LaserShot) {
                     this.enemyPerLevel--
                     this.playerInfo.score += 10
@@ -161,9 +168,7 @@ class GameManager {
             }
         })
     }
-
     sound = () => {
-        // console.log('sound')
         Howler.volume(1);
         const sounds = [[Riggity], [Balls], [rickBlech], [rickportal], [ticky], [dubdub]]
             .map(s => new Howl({ src: [s] }));
@@ -171,6 +176,12 @@ class GameManager {
         // const sound = new Howl({ src: sounds[soundIndex] });
         sounds[soundIndex].play();
         // sound.play();
+    }
+
+    @action charBorders = () => {
+        let spaceShip = new SpaceShip()
+        let border = spaceShip.charBorders()
+        return border
     }
 }
 

@@ -1,19 +1,37 @@
 import myImage1 from '../images/ReaperCardWars.png'
+import myImage2 from '../images/NicePng_rick-and-morty-png_90726.png'
 import myImage3 from '../images/main-qimg-fb94ac008f735da6e136f6ec801c2132.png'
 import myImage4 from '../images/Martinrender.png'
-import myImage5 from '../images/Rick_and_morty_icon-300x233.png'
-import myImage6 from '../images/rick-and-morty-character-png-8.png'
+import myImage5 from '../images/NicePng_mr-meeseeks-png_1487609.png'
+import myImage6 from '../images/NicePng_pickle-rick-png_290141.png'
 import myImage7 from '../images/S4ricardio.png'
 import myImage8 from '../images/Squirrel.png'
-import myImage9 from '../images/SummerVVV.png'
 
-let arr =[]
-arr.push(myImage1)
-arr.push(myImage3)
-arr.push(myImage4)
-arr.push(myImage5)
-arr.push(myImage6)
-arr.push(myImage7)
-arr.push(myImage8)
-arr.push(myImage9)
+
+const heightToPixels = heigth => {
+    let screenHeight = window.innerHeight
+    return Math.floor(screenHeight * heigth / 100)
+}
+
+const widthToPixels = width => {
+    let screenWidth = window.innerWidth
+    return Math.floor(screenWidth * width / 100)
+}
+
+let arr = [
+    { name: 'reaper', src: myImage1, height: heightToPixels(9), width: widthToPixels(4) },
+    { name: 'ass-morty', src: myImage2, height: heightToPixels(10), width: widthToPixels(2) },
+    { name: 'poopy', src: myImage3, height: heightToPixels(10), width: widthToPixels(2) },
+    { name: 'martin', src: myImage4, height: heightToPixels(10), width: widthToPixels(5) },
+    { name: 'rick-and-morty', src: myImage5, height: heightToPixels(10), width: widthToPixels(3) },
+    { name: 'pickle', src: myImage6, height: heightToPixels(10), width: widthToPixels(2) },
+    { name: 'robot', src: myImage7, height: heightToPixels(10), width: widthToPixels(4) },
+    { name: 'squirrel', src: myImage8, height: heightToPixels(10), width: widthToPixels(8) }
+]
+
+
+setTimeout(function () {
+    console.log(arr)
+
+})
 export default arr
