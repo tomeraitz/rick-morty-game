@@ -41,7 +41,6 @@ class GameManager {
             let width = arrayImages[index].width
             let height = arrayImages[index].height
             let src = arrayImages[index].src
-            console.log(src)
             this.drawInstance(new Enemy(index, -x, y, width, height, src))
         }
     }

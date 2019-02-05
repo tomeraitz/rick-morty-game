@@ -28,7 +28,6 @@ class ClientManager {
     }
 
     @action getgameData = (gameData) => {
-
         this.gameData = { ...gameData }
     }
 
