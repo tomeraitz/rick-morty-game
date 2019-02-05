@@ -7,16 +7,7 @@ import myImage6 from '../images/NicePng_pickle-rick-png_290141.png'
 import myImage7 from '../images/S4ricardio.png'
 import myImage8 from '../images/Squirrel.png'
 
-
-const heightToPixels = heigth => {
-    let screenHeight = window.innerHeight
-    return Math.floor(screenHeight * heigth / 100)
-}
-
-const widthToPixels = width => {
-    let screenWidth = window.innerWidth
-    return Math.floor(screenWidth * width / 100)
-}
+import { heightToPixels, widthToPixels } from './toPixels'
 
 let arr = [
     { name: 'reaper', src: myImage1, height: heightToPixels(9), width: widthToPixels(4) },
@@ -26,8 +17,7 @@ let arr = [
     { name: 'rick-and-morty', src: myImage5, height: heightToPixels(10), width: widthToPixels(3) },
     { name: 'pickle', src: myImage6, height: heightToPixels(10), width: widthToPixels(2) },
     { name: 'robot', src: myImage7, height: heightToPixels(10), width: widthToPixels(4) },
-    { name: 'squirrel', src: myImage8, height: heightToPixels(10), width: widthToPixels(8) }
+    { name: 'squirrel', src: myImage8, height: heightToPixels(10), width: widthToPixels(7) }
 ]
-
 
 export default arr

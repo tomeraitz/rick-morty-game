@@ -19,6 +19,19 @@ body {
     justify-content: center;
 }
 
+#landing-page > img {
+    align-self: center;
+    justify-self: center;
+    margin-left: 2vw;
+}
+
+.games-buttons {
+    display: grid;
+    justify-self: center;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 3vw;
+}
+
 .start-game {
     display: grid;
     justify-content: center;
@@ -30,115 +43,101 @@ body {
     border-radius: 25px;
     cursor: pointer;
     background: #00b0c8;
-    border: 2px solid #a5d049;
+    border: none;
     box-shadow: 0 0 40px #5fa43d;
+    cursor: pointer;
 }
 
-#landing-page>img {
-    align-self: center;
-    margin-left: 70px;
-}
-
-#menu {
-    height: 40vh;
-    width: 33vw;
-    justify-self: center;
+.start-multiplayer-game {
     display: grid;
     justify-content: center;
-}
-
-#menu>button {
-    background: #00b0c8;
-    width: 100%;
-    height: 5vh;
-    color: #000000;
-    font-weight: bold;
-    border-radius: 25px;
-    justify-self: center;
-    border: none;
-    cursor: pointer;
-}
-
-#login-or-sign-up {
-    display: grid;
-    grid-template-columns: 3fr 1fr 3fr
-}
-
-#login-or-sign-up>p {
-    color: white;
-    justify-self: center;
-    align-self: center;
-    margin: 0;
-}
-
-#login {
-    display: grid;
     align-content: center;
-}
-
-#login>button {
-    background: #e2e25a;
-    width: 100%;
+    width: 20vw;
     height: 5vh;
     color: #000000;
     font-weight: bold;
     border-radius: 25px;
-    justify-self: center;
-    border: none;
     cursor: pointer;
-    margin-top: 1vh;
-}
-
-#login-input {
-    display: grid;
-    grid-gap: 5px;
-    grid-template-columns: repeat(2, 1fr)
-}
-
-#login-input>input {
-    height: 5vh;
-    border-radius: 25px;
-    width: 100%;
+    background: #a5d049;
     border: none;
-    text-align: center;
+    box-shadow: 0 0 40px #5fa43d;
+    cursor: pointer;
 }
 
-#login-input>input::placeholder {
-    text-align: center;
-}
-
-#sign-up {
+/* Multiplayer-Popup */
+.popup {
+    position: absolute;
+    top: 18%;
+    left: 28%;
+    height: 70vh;
+    width: 47vw;
+    background-color: #000000;
+    background-image: url('../images/rick-and-morty-featured-image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
     display: grid;
+    grid-template-columns: 1fr 23fr 1fr;
+    justify-content: center;
     align-content: center;
+    grid-gap: 5vh;
+    border-radius: 25px;
 }
 
-#sign-up>button {
-    background: #e2e25a;
-    width: 100%;
+.side-bar {
+    display: grid;
+}
+
+.create-game {
+    background-color: #00b0c8;
     height: 5vh;
-    color: #000000;
+    width: 20vw;
+    font-weight: bold;
+    justify-self: start;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 0 0 40px #5fa43d;
+    cursor: pointer;
+}
+
+.join-game {
+    display: grid;
+    height: 35vh;
+    width: 20vw;
+    align-content: end;
+    grid-gap: 5vh;
+}
+
+.join-game > input {
+    border: none;
+    border-radius: 25px;
+    width: 17vw;
+    height: 5vh;
+    text-align: center;
+    background-color: white
+}
+
+.join-game > input::placeholder {
+    text-align: center;
+    color: black;
+    font-size: 12px;
+}
+
+.join-game-button {
+    background-color: #a5d049;
+    height: 5vh;
+    width: 20vw;
     font-weight: bold;
     border-radius: 25px;
-    justify-self: center;
     border: none;
+    box-shadow: 0 0 40px #5fa43d;
+    align-self: end;
     cursor: pointer;
-    margin: 1vh 0;
 }
 
-#sign-up-input {
-    display: grid;
-    grid-gap: 5px;
-    grid-template-columns: repeat(2, 1fr)
-}
-
-#sign-up-input>input {
-    height: 5vh;
-    border-radius: 25px;
-    width: 100%;
-    border: none;
-    text-align: center;
-}
-
-#sign-up-input>input::placeholder {
-    text-align: center;
+.close-popup {
+    position: absolute;
+    top: 4%;
+    right: 4%;
+    color: #a5d049;
+    cursor: pointer;
 }

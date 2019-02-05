@@ -6,10 +6,11 @@ import {
     inject
 } from 'mobx-react';
 
-import SpaceShipComponent from '../spaceShip/SpaceShipComponent';
-import Lasers from '../LaserShots/Lasers';
-import Enemy from '../Enemy/Enemy';
+import SpaceShipComponent from '../spaceShip/SpaceShipComponent'
+import Lasers from '../LaserShots/Lasers'
+import Enemy from '../Enemy/Enemy'
 import NextLevel from './NextLevel'
+import Losing from './Losing'
 
 import arrayImages from '../../consts/ArrayImages'
 import explosion from '../../consts/explosion'
@@ -24,6 +25,7 @@ const socket = io.connect('http://localhost:3004/')
 @inject('ClientManager')
 @observer
 class GameBoard extends Component {
+
     componentDidMount() {
         
         socket.emit('newGame')
@@ -37,132 +39,72 @@ class GameBoard extends Component {
                 this.props.ClientManager.getgameData(gameData)
             })
         }
+    // finishExplosion() {
+    //     setTimeout(() =>
+    //         game.finishExplosion()
+    //         , 500)
+    // }
         
-        render() {
+    render() {
      
-
         if (this.props.ClientManager.gameData) {
 
             const game = this.props.ClientManager.gameData
             const playerInfo = game.playerInfo
-
-            // game.getgameData()
             const enemies = game.enemies.map((e, i) => {
-                return <Enemy key = {
-                    i
-                }
-                id = {
-                    arrayImages[e.index].name
-                }
-                x = {
-                    e.x
-                }
-                y = {
-                    e.y
-                }
-                myImage = {
-                    e.src
-                }
-                arrayImages = {
-                    arrayImages[e.index]
-                }
-                />
+                return <Enemy key = {i} id = {arrayImages[e.index].name} x = {e.x} y = {e.y} myImage = {e.src} arrayImages = {arrayImages[e.index] }/>
             });
+
             const spaceShips = game.spaceShips.map((s, i) => {
-                return <SpaceShipComponent key = {
-                    i
-                }
-                move = {
-                    s.move
-                }
-                x = {
-                    s.x
-                }
-                y = {
-                    s.y
-                }
-                id = {
-                    s.id
-                }
-                />
+                return <SpaceShipComponent key = {i} move = {s.move} x = {s.x} y = {s.y} id = {s.id}/>
             });
+
             const laserShot = game.laserShots.map((l, i) => {
-                return <Lasers key = {
-                    i
-                }
-                x = {
-                    l.x
-                }
-                y = {
-                    l.y
-                }
-                />
+                return <Lasers key = {i} x = {l.x} y = {l.y}/>
             });
+        
 
-            return (
-                 <div id = "game-border" >
-                <div className = "navbar-user" >
-                <div className = "user-status" > Socre: {
-                    playerInfo.score
-                } </div> 
-                <div className = "user-status" > Life: {
-                    playerInfo.life
-                } </div>
-                 <div className = "user-status" > Level: {
-                    playerInfo.level
-                } 
-                </div> <div className = "user-status" > Enemies: {
-                    game.enemyPerLevel
-                } 
-                </div> <i className = "fas fa-pause"
-                onClick = {
-                    game.pauseGame
-                } > </i> 
-                <i className = "fas fa-play"
-                onClick = {
-                    game.continueGame
-                } >
-                 </i>
-                  </div> {
-                    /* <ReactAudioPlayer
-                                        type="audio/mp3"
-                                        src={ThemeSong}
-                                        autoPlay
-                                        loop
-                                    /> */
-                } <div id = "space-background" >
+        return (
+            <div id="game-border">
+                <div className="navbar-user">
+                    <div className="user-status">Socre : {playerInfo.score}</div>
+                    <div className="user-status">Life : {playerInfo.life}</div>
+                    <div className="user-status">Level : {playerInfo.level}</div>
+                    <div className="user-status">Enemies : {game.enemyPerLevel}</div>
+                    {game.isGameOnPause ?
+                        <i className="fas fa-play" onClick={game.continuePlaying}></i>
+                        : <i className="fas fa-pause" onClick={game.pauseGame}></i>}
+                </div>
+                {/* <ReactAudioPlayer
+                    type="audio/mp3"
+                    src={ThemeSong}
+                    autoPlay
+                    loop
+                /> */}
+                <div id="space-background" >
 
-                {
-                    spaceShips
-                } {
-                    laserShot
-                } {
-                    enemies
-                }
+                    {spaceShips}
+                    {laserShot}
+                    {enemies}
 
-                {
-                    game.finishLevel ? < NextLevel level = {
-                        playerInfo.level
-                    }
-                    /> : null} {
-                        /* {this.props.ClientManager.gameData.explosion.map((e,i) =>
-                                                <div key={i} className="explosion"
-                                                style={{
-                                                    right: `${e.x}px`,
-                                                    bottom: `${e.y}px`
-                                                }}>
-                                                <img alt="explosion" src={explosion} />
-                                                </div>
-                                            )} */
-                    } </div> </div>
-                )
-            }
-            else {
-                return <div> loading </div>
-            }
+                    {game.finishLevel ? <NextLevel level={playerInfo.level} /> : null}
+                    {game.explosion.map((e, i) =>
+                        <div key={i} className="explosion"
+                            style={{
+                                right: `${e.x}px`,
+                                bottom: `${e.y}px`
+                            }}>
+                            <img alt="explosion" src={explosion} />
+                        </div>
+                    )}
 
-        }
-    }
+                    {game.gameOver && game.losing ? <Losing /> : null}
+                    </div>
+                </div>
+            )   
+        } else {return <div>ERROR</div>}
+    } 
+    
+}
 
-
-    export default GameBoard
+export default GameBoard
