@@ -5,6 +5,7 @@ import { observer, inject } from 'mobx-react';
 
 @observer
 class Enemy extends Component {
+
     render() {
         const { x, y } = this.props
         return (
@@ -14,7 +15,6 @@ class Enemy extends Component {
                 }}
             >
                 <img alt="enemy" src={this.props.myImage} />
-
             </div>
         );
     }

@@ -19,7 +19,7 @@ i {
 
 .navbar-user {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 6fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     height: 4vh;
     align-items: center;
 }
@@ -54,8 +54,19 @@ i {
     display: inline-block;
     position: absolute;
 }
+.explosion{
+    display: inline-block;
+    position: absolute;
+}
+.explosion>img {
+    height: 50px;
 
+}
 
+.explosion>img {
+    animation-duration: 1s;
+}
+  
 #reaper > img {
     height: 9vh;
     width: 4vw;
