@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable } from 'mobx'
 
 class Enemy {
     @observable id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10)
@@ -17,7 +17,6 @@ class Enemy {
         this.width = width
         this.src = src
     }
-
 }
 
 export default Enemy

@@ -26,7 +26,7 @@ class SpaceShipComponent extends Component {
     return (
 
       <div id="space-ship" style={{ bottom: `${y}px`, left: `${x}px` }} >
-        <img src={spaceShipImage} />
+        <img src={spaceShipImage} alt="space-ship" />
       </div>
     );
   }

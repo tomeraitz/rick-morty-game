@@ -64,4 +64,80 @@ body {
     cursor: pointer;
 }
 
+/* Popup */
+.popup {
+    position: absolute;
+    top: 18%;
+    left: 28%;
+    height: 70vh;
+    width: 47vw;
+    background-color: #000000;
+    background-image: url('../images/rick-and-morty-featured-image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: grid;
+    grid-template-columns: 1fr 23fr 1fr;
+    justify-content: center;
+    align-content: center;
+    grid-gap: 5vh;
+    border-radius: 25px;
+}
 
+.side-bar {
+    display: grid;
+}
+
+.create-game {
+    background-color: #00b0c8;
+    height: 5vh;
+    width: 20vw;
+    justify-self: start;
+    border-radius: 25px;
+    font-size: 18px;
+    border: 2px solid #95978f;
+    box-shadow: 0 0 40px #5fa43d;
+    cursor: pointer;
+}
+
+.join-game {
+    display: grid;
+    height: 35vh;
+    width: 20vw;
+    align-content: end;
+    grid-gap: 5vh;
+}
+
+.join-game > input {
+    border: none;
+    border-radius: 25px;
+    width: 17vw;
+    height: 5vh;
+    text-align: center;
+    background-color: white
+}
+
+.join-game > input::placeholder {
+    text-align: center;
+    color: black;
+    font-size: 15px;
+}
+
+.join-game-button {
+    background-color: #00b0c8;
+    height: 5vh;
+    width: 20vw;
+    border-radius: 25px;
+    font-size: 18px;
+    border: 2px solid #95978f;
+    box-shadow: 0 0 40px #5fa43d;
+    align-self: end;
+    cursor: pointer;
+}
+
+.close-popup {
+    position: absolute;
+    top: 4%;
+    right: 4%;
+    color: #a5d049;
+    cursor: pointer;
+}
