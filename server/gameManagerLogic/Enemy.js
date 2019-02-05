@@ -11,4 +11,4 @@ class Enemy {
 
 }
 
-export default Enemy
+module.exports=Enemy

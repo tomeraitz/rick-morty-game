@@ -30,8 +30,4 @@ let arr = [
 ]
 
 
-setTimeout(function () {
-    console.log(arr)
-
-})
 export default arr

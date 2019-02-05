@@ -1,5 +1,5 @@
 class SpaceShip {
-    constructor(x, y, height, width) {
+    constructor(x, y) {
         this.id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10)
         this.x = x
         this.y = y
@@ -19,4 +19,4 @@ class SpaceShip {
 
 
 
-export default SpaceShip
+module.exports=SpaceShip

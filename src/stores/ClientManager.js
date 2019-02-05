@@ -1,22 +1,22 @@
 import { observable, action } from 'mobx'
-const socket = io()
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:3004/')
 
 class ClientManager {
     @observable gameID
     @observable playerID
     @observable gameData
     @observable checKeyPress = [40, 38 , 37 , 39 ]
-
-    getGameIdAndPlayerID(){
-        socket.on('joinedGame' , gameIDAndPlayer)
-        this.gameID = gameIDAndPlayer.gameID
-        this.playerID = gameIDAndPlayer.playerIndex
+    
+    @action getGameIdAndPlayerID(gameIDAndPlayer){
+        this.gameID = gameIDAndPlayer.gameId
+        this.playerID = gameIDAndPlayer.playerId
     }
-
+    
     @action startGame = () =>{
         socket.emit('startGame' , this.gameID)
     }
-
+    
     @action newGame = () =>{
         socket.emit('newGame')
         this.getGameIdAndPlayerID()
@@ -27,12 +27,12 @@ class ClientManager {
         this.getGameIdAndPlayerID()
     }
 
-    @action getgameData = () => {
-        socket.on('newState', gameData )
+    @action getgameData = (gameData) => {
+        
         this.gameData = gameData
     }
 
-    @action move =() =>{
+    @action move =(direction) =>{
         socket.emit('move', this.gameID, this.playerID, direction)
     }
 
@@ -50,4 +50,5 @@ class ClientManager {
 }
 
 const clientManager = new ClientManager()
+
 export default clientManager

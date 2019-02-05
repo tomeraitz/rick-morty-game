@@ -8,4 +8,4 @@ class LaserShot {
 }
 
 
-export default LaserShot
+module.exports= LaserShot
