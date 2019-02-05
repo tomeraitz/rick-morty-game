@@ -4,7 +4,7 @@ import SpaceShip from './SpaceShip'
 import arrayImages from '../../src/consts/ArrayImages'
 
 class GameManager {
-    constructor(boardWidth, boardHeight) {
+    constructor() {//(randomWords) {
         this.spaceShips = []
         this.playerInfo = {
             life: 3,
