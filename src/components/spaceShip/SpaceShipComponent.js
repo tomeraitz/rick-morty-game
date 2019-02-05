@@ -5,10 +5,6 @@ import LaserShot from '../../stores/LaserShot';
 import '../../App.css'
 
 
-// import sounds from '../../sounds/sound.js'
-
-
-
 @inject("GameManager")
 
 @observer

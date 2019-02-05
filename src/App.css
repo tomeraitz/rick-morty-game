@@ -49,14 +49,51 @@ i {
     box-shadow: 0 0 70px 7px #FF596F;
 }
 
+/* Enemies */
 .enemy {
     display: inline-block;
     position: absolute;
-    background-color: red;
 }
 
-.enemy img {
-    height: 50px;    
+
+#reaper > img {
+    height: 9vh;
+    width: 4vw;
+}
+
+#poopy > img {
+    height: 10vh;
+    width: 2vw;
+}
+
+#martin > img {
+    height: 10vh;
+    width: 5vw;
+}
+
+#rick-and-morty > img {
+    height: 10vh;
+    width: 3vw;
+}
+
+#ass-morty > img {
+    height: 10vh;
+    width: 2vw;
+}
+
+#pickle > img {
+    height: 10vh;
+    width: 2vw;
+}
+
+#robot > img {
+    height: 10vh;
+    width: 4vw;
+}
+
+#squirrel > img{
+    height: 10vh;
+    width: 8vw;
 }
 
 .user-status {
@@ -64,10 +101,6 @@ i {
     margin-left: 1vw;
     text-transform: uppercase;
 }
-
-/* .life {
-    color: white;
-======= */
 
 #next-level {
     position: absolute;
