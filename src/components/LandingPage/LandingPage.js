@@ -9,13 +9,10 @@ class LandingPage extends Component {
         return (
             <div id="landing-page" >
                 <img id="logo" alt="" src={rickAndMortyLogo} />
-                {/* <div className="start-game-container"> */}
-                <Link to="/game">
-                    <div className="start-game">
-                        START GAME
-                        </div>
-                </Link>
-                {/* </div> */}
+                <div className="games-buttons">
+                    <Link to="/game"><div className="start-game">SINGLE PLAYER</div></Link>
+                    <Link to="/multiplayer-game"><div className="start-multiplayer-game">MULTIPLAYER</div></Link>
+                </div>
             </div>
         );
     }

@@ -13,8 +13,8 @@ class Enemy {
         this.index = index
         this.x = x
         this.y = y
-        this.height = width
-        this.width = height
+        this.height = height
+        this.width = width
         this.src = src
     }
 

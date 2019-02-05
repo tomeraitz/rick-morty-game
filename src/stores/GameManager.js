@@ -2,7 +2,7 @@ import { observable, action } from 'mobx'
 
 import Enemy from './Enemy'
 import LaserShot from './LaserShot'
-import SpaceShip from './SpaceShip' 
+import SpaceShip from './SpaceShip'
 
 import arrayImages from '../consts/ArrayImages'
 
@@ -13,8 +13,6 @@ import rickBlech from '../sounds/rick-belching-rick-and-morty.mp3'
 import rickportal from '../sounds/rickportal.wav'
 import ticky from '../sounds/ricky_ticky_tabby_biatch.wav'
 import dubdub from '../sounds/woo_vu_luvub_dub_dub.wav'
-
-console.log(arrayImages)
 
 class GameManager {
     @observable spaceShips = []
@@ -40,7 +38,8 @@ class GameManager {
             let width = arrayImages[index].width
             let height = arrayImages[index].height
             let src = arrayImages[index].src
-            this.drawInstance(new Enemy(index, - x, y, width, height, src))                      
+            this.drawInstance(new Enemy(index, - x, y, width, height, src))
+            console.log(this.enemies)
         }
     }
     @action start = () => {
@@ -52,11 +51,11 @@ class GameManager {
 
         this.interval = setInterval((this.game), 20)
     }
-    
+
     @action finishExplosion = () => {
         this.explosion.shift()
     }
-    
+
     setNewLevel = () => {
         this.finishLevel = true
 
@@ -99,7 +98,7 @@ class GameManager {
         })
         this.laserShots.forEach(l => {
             if (l.x + 50 <= this.boardWidth) {
-                l.x += 15 
+                l.x += 15
                 this.checkEnemies(l)
             }
             else this.kill(l)
@@ -117,27 +116,23 @@ class GameManager {
     @action drawInstance = instance => {
         if (instance instanceof LaserShot) {
             if (this.laserShots.length === 0) this.laserShots.push(instance)
-        }
-        else if (instance instanceof Enemy) {
+        } else if (instance instanceof Enemy) {
             this.enemies.push(instance)
-            console.log(this.enemies)
-        }
-        else if (instance instanceof SpaceShip) this.spaceShips.push(instance)
+        } else if (instance instanceof SpaceShip) this.spaceShips.push(instance)
     }
 
     @action kill(instance) {
-
         if (instance instanceof LaserShot) {
             this.laserShots = this.laserShots.filter(laserShot => laserShot.id !== instance.id)
-        }
-        else if (instance instanceof Enemy) {
-            this.enemies = this.enemies.filter(enemy => enemy.id !== instance.id)~
+        } else if (instance instanceof Enemy) {
+
+            this.enemies = this.enemies.filter(enemy => enemy.id !== instance.id)
             this.explosion.push({ x: instance.x, y: instance.y })
+
             if (this.enemies.length === 0) {
                 if (this.enemyPerLevel > 0) {
                     this.createEnemies(this.enemyPerLevel)
-                }
-                else {
+                } else {
                     this.setNewLevel()
                 }
             }
@@ -155,19 +150,20 @@ class GameManager {
     }
 
     @action checkEnemies(instance) {
-        let spaceShipBorder = this.charBorders()
-
         this.enemies.forEach(e => {
-            if (e.x + instance.x + (spaceShipBorder.width + e.width) >= this.boardWidth && Math.abs(e.y - instance.y) <= spaceShipBorder.height) {
-                if (instance instanceof LaserShot) {
-                    this.enemyPerLevel--
-                    this.playerInfo.score += 10
+            if (Math.abs(e.y - instance.y) <= e.height || Math.abs(e.y - instance.y) <= e.height) {
+                if (e.x + instance.x + e.width >= this.boardWidth || e.x + instance.x + instance.width + e.width >= this.boardWidth) {
+                    if (instance instanceof LaserShot) {
+                        this.enemyPerLevel--
+                        this.playerInfo.score += 10
+                    }
+                    this.kill(instance)
+                    this.kill(e)
                 }
-                this.kill(instance)
-                this.kill(e)
             }
         })
     }
+
     sound = () => {
         Howler.volume(1);
         const sounds = [[Riggity], [Balls], [rickBlech], [rickportal], [ticky], [dubdub]]
@@ -178,11 +174,6 @@ class GameManager {
         // sound.play();
     }
 
-    @action charBorders = () => {
-        let spaceShip = new SpaceShip()
-        let border = spaceShip.charBorders()
-        return border
-    }
 }
 
 const game = new GameManager()

@@ -29,11 +29,11 @@ i {
     height: 100vh;
 }
 
+#space-ship > img {
+    height: 6vh;
+}
+
 #space-ship {
-    width: 93px;
-    height: 58px;
-    background-image: url("./images/rick-and-morty-szechuan-sauce-png.png");
-    background-size: cover;
     position: absolute;
 }
 
@@ -54,13 +54,14 @@ i {
     display: inline-block;
     position: absolute;
 }
-.explosion{
+
+.explosion {
     display: inline-block;
     position: absolute;
 }
-.explosion>img {
-    height: 50px;
 
+.explosion > img {
+    height: 50px;
 }
 
 .explosion>img {
@@ -102,9 +103,9 @@ i {
     width: 4vw;
 }
 
-#squirrel > img{
+#squirrel > img {
     height: 10vh;
-    width: 8vw;
+    width: 7vw;
 }
 
 .user-status {

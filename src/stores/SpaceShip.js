@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx'
-
+import { heightToPixels, widthToPixels } from '../consts/toPixels'
 
 class SpaceShip {
     @observable id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10)
@@ -10,8 +10,8 @@ class SpaceShip {
     constructor(x, y, height, width) {
         this.x = x
         this.y = y
-        this.height = height
-        this.width = width
+        this.height = heightToPixels(6)
+        this.width = widthToPixels(6.5)
     }
     @action move = (direction, width, height) => {
         if (direction === 40 && this.y - 35 > 0) {
@@ -36,15 +36,9 @@ class SpaceShip {
         }
     }
 
-    @action charBorders = () => {
-        this.width = document.getElementById('space-ship').clientWidth
-        this.height = document.getElementById('space-ship').clientHeight
-
-        let charBorders = { height: this.height, width: this.width }
-        return charBorders
-    }
 }
-
+let s = new SpaceShip()
+console.log(s)
 
 
 export default SpaceShip

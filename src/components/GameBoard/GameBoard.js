@@ -12,22 +12,23 @@ import explosion from '../../consts/explosion'
 // import ReactAudioPlayer from 'react-audio-player';
 // import ThemeSong from '../../sounds/Rick and Morty 8-Bit Intro Adult Swim.mp3'
 
-
 @inject('GameManager')
 @observer
 class GameBoard extends Component {
     componentDidMount() {
         this.props.GameManager.start()
     }
+
     finishExplosion() {
-        setTimeout(() => 
-        this.props.GameManager.finishExplosion()
-        ,500)
+        setTimeout(() =>
+            this.props.GameManager.finishExplosion()
+            , 500)
     }
+
     render() {
         if (this.props.GameManager.explosion.length > 0) {
             this.finishExplosion()
-        }   
+        }
 
         let gameBorders = document.getElementById('game-border')
         if (gameBorders) {
@@ -71,7 +72,7 @@ class GameBoard extends Component {
                     {enemies}
 
                     {this.props.GameManager.finishLevel ? <NextLevel level={playerInfo.level} /> : null}
-                    {this.props.GameManager.explosion.map((e,i) =>
+                    {this.props.GameManager.explosion.map((e, i) =>
                         <div key={i} className="explosion"
                             style={{
                                 right: `${e.x}px`,
@@ -79,7 +80,7 @@ class GameBoard extends Component {
                             }}>
                             <img alt="explosion" src={explosion} />
                         </div>
-                     )}
+                    )}
                 </div>
             </div>
         )
