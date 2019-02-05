@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
-import SpaceShipComponent from '../spaceShip/SpaceShipComponent';
-import Lasers from '../LaserShots/Lasers';
-import Enemy from '../Enemy/Enemy';
+import SpaceShipComponent from '../spaceShip/SpaceShipComponent'
+import Lasers from '../LaserShots/Lasers'
+import Enemy from '../Enemy/Enemy'
 import NextLevel from './NextLevel'
+import Losing from './Losing'
 
 import arrayImages from '../../consts/ArrayImages'
 import explosion from '../../consts/explosion'
@@ -15,6 +16,7 @@ import explosion from '../../consts/explosion'
 @inject('GameManager')
 @observer
 class GameBoard extends Component {
+
     componentDidMount() {
         this.props.GameManager.start()
     }
@@ -56,8 +58,9 @@ class GameBoard extends Component {
                     <div className="user-status">Life : {playerInfo.life}</div>
                     <div className="user-status">Level : {playerInfo.level}</div>
                     <div className="user-status">Enemies : {this.props.GameManager.enemyPerLevel}</div>
-                    <i className="fas fa-pause" onClick={this.props.GameManager.pauseGame}></i>
-                    <i className="fas fa-play" onClick={this.props.GameManager.continuePlaying}></i>
+                    {this.props.GameManager.isGameOnPause ?
+                        <i className="fas fa-play" onClick={this.props.GameManager.continuePlaying}></i>
+                        : <i className="fas fa-pause" onClick={this.props.GameManager.pauseGame}></i>}
                 </div>
                 {/* <ReactAudioPlayer
                     type="audio/mp3"
@@ -81,6 +84,8 @@ class GameBoard extends Component {
                             <img alt="explosion" src={explosion} />
                         </div>
                     )}
+
+                    {this.props.GameManager.gameOver && this.props.GameManager.losing ? <Losing /> : null}
                 </div>
             </div>
         )

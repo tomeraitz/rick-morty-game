@@ -43,7 +43,7 @@ body {
     border-radius: 25px;
     cursor: pointer;
     background: #00b0c8;
-    border: 2px solid #95978f;
+    border: none;
     box-shadow: 0 0 40px #5fa43d;
     cursor: pointer;
 }
@@ -59,12 +59,12 @@ body {
     border-radius: 25px;
     cursor: pointer;
     background: #a5d049;
-    border: 2px solid #00b0c8;
+    border: none;
     box-shadow: 0 0 40px #5fa43d;
     cursor: pointer;
 }
 
-/* Popup */
+/* Multiplayer-Popup */
 .popup {
     position: absolute;
     top: 18%;
@@ -91,10 +91,10 @@ body {
     background-color: #00b0c8;
     height: 5vh;
     width: 20vw;
+    font-weight: bold;
     justify-self: start;
     border-radius: 25px;
-    font-size: 18px;
-    border: 2px solid #95978f;
+    border: none;
     box-shadow: 0 0 40px #5fa43d;
     cursor: pointer;
 }
@@ -119,16 +119,16 @@ body {
 .join-game > input::placeholder {
     text-align: center;
     color: black;
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .join-game-button {
-    background-color: #00b0c8;
+    background-color: #a5d049;
     height: 5vh;
     width: 20vw;
+    font-weight: bold;
     border-radius: 25px;
-    font-size: 18px;
-    border: 2px solid #95978f;
+    border: none;
     box-shadow: 0 0 40px #5fa43d;
     align-self: end;
     cursor: pointer;

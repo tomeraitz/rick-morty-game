@@ -25,6 +25,7 @@ class GameManager {
     @observable enemyPerLevel = 4
     @observable boardHeight
 
+    @observable losing = false
     @observable finishLevel = false
     @observable isGameOver = false
     @observable isGameOnPause = false
@@ -42,6 +43,7 @@ class GameManager {
             console.log(this.enemies)
         }
     }
+
     @action start = () => {
         // this.sound()
         setTimeout(() => this.finishLevel = false, 2000);
@@ -69,16 +71,19 @@ class GameManager {
 
     gameOver = () => {
         clearInterval(this.interval);
+        this.losing = true;
+    }
 
+    @action startNewGame = () => {
+        window.location.reload()
         this.enemies = []
         this.spaceShips = []
         this.laserShots = []
         this.playerInfo = { life: 3, score: 0, level: 1 }
-
+        this.enemyPerLevel = 4;
         this.isGameOver = true
         this.finishLevel = false
-
-        alert("start new game loser!")
+        this.losing = false
         this.start()
     }
 
