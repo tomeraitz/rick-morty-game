@@ -14,13 +14,19 @@ class GameManager {
         this.enemies = []
         this.laserShots = []
         this.gameInterval
+        this.explosion = []
         // this.boardWidth = boardWidth
         // this.boardHeight = boardHeight
         this.enemyPerLevel = 4
         this.finishLevel = false
         this.isGameOver = false
         this.isGameOnPause = false
-        this.explosion = []
+    }
+
+    joinGame(playerID) {
+        const y = (this.players.length + 1) * 100
+        this.spaceShips.push(new spaceShip(playerID, y))
+        io.in(`${this.id}`).emit('playerJoined');
     }
 
     createEnemies = (num) => {
@@ -35,6 +41,7 @@ class GameManager {
             this.drawInstance(new Enemy(index, -x, y, width, height, src))
         }
     }
+
     start = () => {
         // this.sound()
         setTimeout(() => this.finishLevel = false, 2000);
@@ -101,7 +108,6 @@ class GameManager {
             this.checkEnemies(s)
         })
 
-
         const gameState = {
             spaceShips: this.spaceShips,
             enemies: this.enemies,
@@ -113,7 +119,7 @@ class GameManager {
             playerInfo: this.playerInfo
         }
 
-        io.in(`${this.id}`).emit('gameState', gameState);
+        io.in(`${this.id}`).emit('newState', gameState);
     }
 
     // setBorders = (height, width) => {
@@ -190,11 +196,40 @@ class GameManager {
 
     }
 
-    joinGame(playerID) {
-        const y = (this.players.length + 1) * 100
-        this.spaceShips.push(new spaceShip(playerID, y))
-        io.in(`${this.id}`).emit('playerJoined');
+    move(playerIndex, direction) {
+        if (direction === 40 && this.y - 4 > 0)
+        {
+            // down
+            this.spaceShips[playerIndex].y -= 4
+        }
+
+        if (direction === 38 && this.y + 6 < 100)
+        {
+            // up
+            this.spaceShips[playerIndex].y += 4
+        }
+
+        if (direction === 37 && this.x - 2 > 0)
+        {
+            // left
+            this.spaceShips[playerIndex].x -= 2
+        }
+
+        if (direction === 39 && this.x + 7 < 100)
+        {
+            //right
+            this.spaceShips[playerIndex].x += 2
+        }
+
     }
+
+    shoot(playerIndex) {
+        const { x, y } = this.spaceShips[playerIndex]
+        this.drawInstance(new LaserShot(x, y, playerIndex))
+    }
+
+
+
     // sound = () => {
     //     Howler.volume(1);
     //     const sounds = [

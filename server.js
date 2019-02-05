@@ -41,10 +41,38 @@ io.on('connection', (socket) => {
     Games[gameId] = newGame
     Games[gameId].joinGame(socket)
     socket.join(`${gameId}`)
-    socket.emit('gameCreated', gameId, newGame.players.length - 1)
-    console.log(Object.keys(Games))
+    socket.emit('joinedGame', { gameId, playerId: Games[id].players.length - 1 })
+    // socket.emit('gameCreated', gameId, newGame.players.length - 1)
+    // console.log(Object.keys(Games))
   })
 
+  socket.on('joinGame', (gameId) => {
+    console.log('Someone is trying to join a game')
+    Games[gameId].joinGame(socket)
+    socket.join(gameId)
+    socket.emit('joinedGame', { gameId, playerIndex: Games[id].players.length - 1 })
+  })
+
+  socket.on('startGame', (gameId) => {
+    console.log('Someone is trying to join a game')
+    Games[gameId].start()
+  })
+
+  socket.on('pauseGame', (gameId) => {
+    Games[gameId].pauseGame()
+  })
+
+  socket.on('continueGame', (gameId) => {
+    Games[gameId].continuePlaying()
+  })
+
+  socket.on('move', (gameId, playerIndex, direction) => {
+    Games[gameId].move(playerIndex, direction)
+  })
+
+  socket.on('shoot', (gameID, playerIndex) => {
+    Games[gameID].shoot(playerIndex)
+  })
 
 })
 
