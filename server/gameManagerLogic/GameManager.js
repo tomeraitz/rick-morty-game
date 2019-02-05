@@ -1,6 +1,6 @@
 import Enemy from './Enemy'
 import LaserShot from './LaserShot'
-import SpaceShip from './SpaceShip' 
+import SpaceShip from './SpaceShip'
 import arrayImages from '../../src/consts/ArrayImages'
 
 class GameManager {
@@ -13,9 +13,9 @@ class GameManager {
         }
         this.enemies = []
         this.laserShots = []
-        this.interval_id
-        this.boardWidth = boardWidth
-        this.boardHeight = boardHeight
+        this.gameInterval
+        // this.boardWidth = boardWidth
+        // this.boardHeight = boardHeight
         this.enemyPerLevel = 4
         this.finishLevel = false
         this.isGameOver = false
@@ -24,7 +24,8 @@ class GameManager {
     }
 
     createEnemies = (num) => {
-        for (let i = 1; i < (num + 1); i++) {
+        for (let i = 1; i < (num + 1); i++)
+        {
             let y = Math.floor(Math.random() * 400)
             let x = i * 50
             let index = Math.floor(Math.random() * arrayImages.length)
@@ -41,7 +42,7 @@ class GameManager {
         if (this.spaceShips.length === 0) this.drawInstance(new SpaceShip(0, 50, 3, 0, 1))
         this.createEnemies(this.enemyPerLevel)
 
-        this.interval = setInterval((this.game), 20)
+        this.gameInterval = setInterval((this.game), 20)
     }
 
     finishExplosion = () => {
@@ -52,13 +53,13 @@ class GameManager {
         this.finishLevel = true
         this.playerInfo.level++
         this.enemyPerLevel = this.playerInfo.level * 4
-        clearInterval(this.interval);
+        clearInterval(this.gameInterval);
         setTimeout(() => this.finishLevel = false, 2000);
         this.start()
     }
 
     gameOver = () => {
-        clearInterval(this.interval);
+        clearInterval(this.gameInterval);
 
         this.enemies = []
         this.spaceShips = []
@@ -75,12 +76,12 @@ class GameManager {
     }
 
     pauseGame = () => {
-        if (!this.isGameOnPause) clearInterval(this.interval);
+        if (!this.isGameOnPause) clearInterval(this.gameInterval);
         this.isGameOnPause = true
     }
 
     continuePlaying = () => {
-        if (this.isGameOnPause) this.interval = setInterval((this.game), 20)
+        if (this.isGameOnPause) this.gameInterval = setInterval((this.game), 20)
         this.isGameOnPause = false
     }
 
@@ -90,7 +91,8 @@ class GameManager {
             else this.kill(e)
         })
         this.laserShots.forEach(l => {
-            if (l.x + 50 <= this.boardWidth) {
+            if (l.x + 50 <= this.boardWidth)
+            {
                 l.x += 15
                 this.checkEnemies(l)
             } else this.kill(l)
@@ -98,45 +100,70 @@ class GameManager {
         this.spaceShips.forEach(s => {
             this.checkEnemies(s)
         })
+
+
+        const gameState = {
+            spaceShips: this.spaceShips,
+            enemies: this.enemies,
+            laserShots: this.laserShots,
+            finishLevel: this.finishLevel,
+            isGameOver: this.isGameOver,
+            isGameOnPause: this.isGameOnPause,
+            explosion: this.explosion,
+            playerInfo: this.playerInfo
+        }
+
+        io.in(`${this.id}`).emit('gameState', gameState);
     }
 
-    setBorders = (height, width) => {
-        this.boardWidth = width
-        this.boardHeight = height
-    }
+    // setBorders = (height, width) => {
+    //     this.boardWidth = width
+    //     this.boardHeight = height
+    // }
 
     drawInstance = (instance) => {
-        if (instance instanceof LaserShot) {
+        if (instance instanceof LaserShot)
+        {
             if (this.laserShots.length === 0) this.laserShots.push(instance)
-        } 
-        else if (instance instanceof Enemy) {
+        }
+        else if (instance instanceof Enemy)
+        {
             this.enemies.push(instance)
-        } 
-        else if (instance instanceof SpaceShip) {
+        }
+        else if (instance instanceof SpaceShip)
+        {
             this.spaceShips.push(instance)
         }
     }
 
     kill = (instance) => {
-        if (instance instanceof LaserShot) {
+        if (instance instanceof LaserShot)
+        {
             this.laserShots = this.laserShots.filter(laserShot => laserShot.id !== instance.id)
-        } else if (instance instanceof Enemy) {
+        } else if (instance instanceof Enemy)
+        {
             this.enemies = this.enemies.filter(enemy => enemy.id !== instance.id)
             this.explosion.push({
                 x: instance.x,
                 y: instance.y
             })
-            if (this.enemies.length === 0) {
-                if (this.enemyPerLevel > 0) {
+            if (this.enemies.length === 0)
+            {
+                if (this.enemyPerLevel > 0)
+                {
                     this.createEnemies(this.enemyPerLevel)
-                } else {
+                } else
+                {
                     this.setNewLevel()
                 }
             }
-        } else if (instance instanceof SpaceShip) {
-            if (this.playerInfo.life === 1) {
+        } else if (instance instanceof SpaceShip)
+        {
+            if (this.playerInfo.life === 1)
+            {
                 this.gameOver()
-            } else {
+            } else
+            {
                 this.playerInfo.life--
                 this.enemyPerLevel--
             }
@@ -146,9 +173,12 @@ class GameManager {
     checkEnemies = (instance) => {
         // let spaceShip = this.charBorders()
         this.enemies.forEach(e => {
-            if (Math.abs(e.y - instance.y) <= e.height) {
-                if (e.x + instance.x + (e.width) >= this.boardWidth || e.x + instance.x + (spaceShip.width) >= this.boardWidth) {
-                    if (instance instanceof LaserShot) {
+            if (Math.abs(e.y - instance.y) <= e.height)
+            {
+                if (e.x + instance.x + (e.width) >= this.boardWidth || e.x + instance.x + (spaceShip.width) >= this.boardWidth)
+                {
+                    if (instance instanceof LaserShot)
+                    {
                         this.enemyPerLevel--
                         this.playerInfo.score += 10
                     }
@@ -157,6 +187,13 @@ class GameManager {
                 }
             }
         })
+
+    }
+
+    joinGame(playerID) {
+        const y = (this.players.length + 1) * 100
+        this.spaceShips.push(new spaceShip(playerID, y))
+        io.in(`${this.id}`).emit('playerJoined');
     }
     // sound = () => {
     //     Howler.volume(1);
@@ -182,6 +219,9 @@ class GameManager {
     //     let border = spaceShip.charBorders()
     //     return border
     // }
+
+
+
 }
 
 // const game = new GameManager()
