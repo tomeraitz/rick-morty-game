@@ -19,7 +19,7 @@ i {
 
 .navbar-user {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 6fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     height: 4vh;
     align-items: center;
 }
@@ -52,12 +52,30 @@ i {
 .enemy {
     display: inline-block;
     position: absolute;
-    /* 
-    height: 50px;
-    width: 50px;
- background-image: var(--img);
-    background-size: cover; */
 }
+.explosion{
+    display: inline-block;
+    position: absolute;
+}
+.explosion>img {
+    height: 50px;
+}
+.explosion>img {
+    animation-duration: 1s;
+    /* animation-name: slidein; */
+  }
+  
+  /* @keyframes slidein {
+    from {
+      margin-left: 100%;
+      width: 300%; 
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
+  } */
 
 .enemy img {
     height: 50px;
@@ -68,10 +86,6 @@ i {
     margin-left: 1vw;
     text-transform: uppercase;
 }
-
-/* .life {
-    color: white;
-======= */
 
 #next-level {
     position: absolute;
