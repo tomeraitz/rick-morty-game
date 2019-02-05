@@ -5,27 +5,22 @@ import LaserShot from '../../stores/LaserShot';
 import '../../App.css'
 
 
-@inject("GameManager")
+@inject("ClientManager")
 
 @observer
 class SpaceShipComponent extends Component {
   hadelKeyPress = (e) => {
+    const game = this.props.ClientManager.gameData
     if (e.which === 32) {
-      this.props.GameManager.drawInstance(new LaserShot(this.props.x + 70, this.props.y, this.props.id))
-
-
+      game.shoot()
     }
-    else { this.props.move(e.which, this.props.GameManager.boardWidth, this.props.GameManager.boardHeight) }
-  }
-
-  testWidth = () => {
-
+    else if(game.checKeyPress.includes(e.which)) { 
+      game.move(e.which) 
+    }
   }
 
   componentDidMount() {
     document.addEventListener("keydown", this.hadelKeyPress);
-    this.props.GameManager.charBorders()
-
   }
 
   render() {

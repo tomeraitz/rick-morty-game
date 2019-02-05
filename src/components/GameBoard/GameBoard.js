@@ -13,50 +13,49 @@ import explosion from '../../consts/explosion'
 // import ThemeSong from '../../sounds/Rick and Morty 8-Bit Intro Adult Swim.mp3'
 
 
-@inject('GameManager')
+@inject('ClientManager')
 @observer
 class GameBoard extends Component {
-    componentDidMount() {
-        this.props.GameManager.start()
+    componentDidMount(){
+        this.props.ClientManager.gameData.startGame()
     }
-    finishExplosion() {
-        setTimeout(() => 
-        this.props.GameManager.finishExplosion()
-        ,500)
-    }
+
     render() {
-        if (this.props.GameManager.explosion.length > 0) {
-            this.finishExplosion()
-        }   
+        const game = this.props.ClientManager.gameData
+        const playerInfo = game.playerInfo
 
-        let gameBorders = document.getElementById('game-border')
-        if (gameBorders) {
-            const positionInfo = gameBorders.getBoundingClientRect();
-            const height = positionInfo.height;
-            const width = positionInfo.width;
-            this.props.GameManager.setBorders(height, width)
-        }
+        game.getgameData()
+        const enemies = game.enemies.map((e, i) => {
+            return <Enemy key={i} 
+                          id={arrayImages[e.index].name} 
+                          x={e.x} y={e.y} myImage={e.src} 
+                          arrayImages={arrayImages[e.index]} 
+                    />
+        });
+        const spaceShips = game.spaceShips.map((s, i) => {
+            return <SpaceShipComponent key={i} 
+                                       move={s.move} 
+                                       x={s.x} y={s.y} 
+                                       id={s.id} 
+                    />
+        });
+        const laserShot = game.laserShots.map((l, i) => {
+            return <Lasers key={i} 
+                           x={l.x} 
+                           y={l.y} 
+                    />
+        });
 
-        const enemies = this.props.GameManager.enemies.map((e, i) => {
-            return <Enemy key={i} id={arrayImages[e.index].name} x={e.x} y={e.y} myImage={e.src} arrayImages={arrayImages[e.index]} />
-        });
-        const spaceShips = this.props.GameManager.spaceShips.map((s, i) => {
-            return <SpaceShipComponent key={i} move={s.move} x={s.x} y={s.y} id={s.id} />
-        });
-        const laserShot = this.props.GameManager.laserShots.map((l, i) => {
-            return <Lasers key={i} x={l.x} y={l.y} />
-        });
-
-        const playerInfo = this.props.GameManager.playerInfo
+        
         return (
             <div id="game-border">
                 <div className="navbar-user">
                     <div className="user-status">Socre : {playerInfo.score}</div>
                     <div className="user-status">Life : {playerInfo.life}</div>
                     <div className="user-status">Level : {playerInfo.level}</div>
-                    <div className="user-status">Enemies : {this.props.GameManager.enemyPerLevel}</div>
-                    <i className="fas fa-pause" onClick={this.props.GameManager.pauseGame}></i>
-                    <i className="fas fa-play" onClick={this.props.GameManager.continuePlaying}></i>
+                    <div className="user-status">Enemies : {game.enemyPerLevel}</div>
+                    <i className="fas fa-pause" onClick={game.pauseGame}></i>
+                    <i className="fas fa-play" onClick={game.continueGame}></i>
                 </div>
                 {/* <ReactAudioPlayer
                     type="audio/mp3"
@@ -70,8 +69,8 @@ class GameBoard extends Component {
                     {laserShot}
                     {enemies}
 
-                    {this.props.GameManager.finishLevel ? <NextLevel level={playerInfo.level} /> : null}
-                    {this.props.GameManager.explosion.map((e,i) =>
+                    {game.finishLevel ? <NextLevel level={playerInfo.level} /> : null}
+                    {/* {this.props.ClientManager.gameData.explosion.map((e,i) =>
                         <div key={i} className="explosion"
                             style={{
                                 right: `${e.x}px`,
@@ -79,7 +78,7 @@ class GameBoard extends Component {
                             }}>
                             <img alt="explosion" src={explosion} />
                         </div>
-                     )}
+                     )} */}
                 </div>
             </div>
         )

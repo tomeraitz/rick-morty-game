@@ -3,6 +3,7 @@ import { BrowserRouter as Link } from 'react-router-dom' //Router, Route
 
 import '../../style/landing-page.css';
 
+
 class LandingPage extends Component {
     render() {
         let rickAndMortyLogo = "https://ya-webdesign.com/images/rick-and-morty-logo-png-1.png"

@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { observer, inject } from 'mobx-react';
 
-@inject("GameManager")
-
-@observer
 class Enemy extends Component {
 
     render() {
