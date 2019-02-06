@@ -2,6 +2,11 @@
 body {
     font-family: 'Patrick Hand', cursive;
 }
+#landing-page > i {
+    position: absolute;
+    top: 3vh;
+    right: 2vw;
+}
 
 #landing-page {
     height: 100vh;

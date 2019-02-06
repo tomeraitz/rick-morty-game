@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
+import ReactHowler from 'react-howler'
+
 import LaserShot from '../../stores/LaserShot';
 // import { heightToPixels, widthToPixels } from '../consts/toPixels'
 
@@ -15,6 +17,7 @@ class SpaceShipComponent extends Component {
 
     if (e.which === 32) {
       game.shoot()
+
     }
     else if (game.checKeyPress.includes(e.which)) {
       game.move(e.which)
