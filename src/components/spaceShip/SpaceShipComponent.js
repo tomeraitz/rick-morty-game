@@ -25,7 +25,7 @@ class SpaceShipComponent extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener("keydown", this.hadelKeyPress);
+    document.addEventListener("keyup", this.hadelKeyPress);
   }
 
   render() {

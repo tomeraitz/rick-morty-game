@@ -56,6 +56,7 @@ io.on('connection', (socket) => {
     Games[gameId].joinGame(socket)
     socket.join(gameId)
     socket.emit('joinedGame', { gameId, playerId: Games[gameId].spaceShips.length - 1 })
+    io.in(`${gameId}`).emit('getReady');
   })
 
   socket.on('startGame', (gameId) => {
@@ -70,6 +71,11 @@ io.on('connection', (socket) => {
   socket.on('continueGame', (gameId) => {
     Games[gameId].continuePlaying()
   })
+
+  // socket.on('twoPlayers', (gameId) => {
+  //   const result = Games[gameId].spaceShips.length === 2
+  //   socket.emit('twoPlayers', result)
+  // })
 
   socket.on('move', (gameId, playerIndex, direction) => {
     // console.log('TCL: playerIndex', playerIndex)

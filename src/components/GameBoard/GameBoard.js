@@ -19,16 +19,13 @@ class GameBoard extends Component {
 
     componentDidMount() {
 
-        socket.emit('newGame')
+        // socket.emit('newGame')
+        // socket.on('joinedGame', (gameIDAndPlayer) => {
+        //     this.props.ClientManager.getGameIdAndPlayerID(gameIDAndPlayer)
+        //     socket.emit('startGame', gameIDAndPlayer.gameId)
+        // })
 
-        socket.on('joinedGame', (gameIDAndPlayer) => {
-            this.props.ClientManager.getGameIdAndPlayerID(gameIDAndPlayer)
-            socket.emit('startGame', gameIDAndPlayer.gameId)
-        })
-
-        socket.on('newState', (gameData) => {
-            this.props.ClientManager.getgameData(gameData)
-        })
+        this.props.ClientManager.newState()
     }
     // finishExplosion() {
     //     setTimeout(() =>
@@ -41,14 +38,12 @@ class GameBoard extends Component {
         if (this.props.ClientManager.gameData) {
 
             const game = this.props.ClientManager.gameData
-            console.log(game.spaceShips)
             const playerInfo = game.playerInfo
             const enemies = game.enemies.map((e, i) => {
                 return <Enemy key={i} id={arrayImages[e.index].name} x={widthToPixels(e.x)} y={heightToPixels(e.y)} myImage={e.src} arrayImages={arrayImages[e.index]} />
             });
 
             const spaceShips = game.spaceShips.map((s, i) => {
-                console.log()
                 return <SpaceShipComponent key={i} move={s.move} x={widthToPixels(s.x)} y={heightToPixels(s.y)} id={s.id} height={heightToPixels(s.height)} width={widthToPixels(s.width)} />
             });
 

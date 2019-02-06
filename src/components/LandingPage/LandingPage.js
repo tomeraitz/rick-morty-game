@@ -23,8 +23,9 @@ class LandingPage extends Component {
     }
 
     startSingleGame = () => {
-        this.props.ClientManager.newGame()
-        this.props.ClientManager.multiPlayer = false
+        // this.props.ClientManager.newGame()
+        this.props.ClientManager.startSinglePlay()
+        this.props.ClientManager.singlePlayer = true
     }
 
     searchingForPlayerToggle = () => {
@@ -44,7 +45,6 @@ class LandingPage extends Component {
                 {this.props.soundOn ? <i className="fas fa-volume-up" onClick={this.toggleSound}></i> : <i className="fas fa-volume-off" onClick={this.toggleSound}></i>}
                 <img id="logo" alt="" src={rickAndMortyLogo} />
                 <div className="games-buttons">
-
 
                     <Link to="/game" ><div className="start-game" onClick={this.startSingleGame}>SINGLE PLAYER</div></Link>
 

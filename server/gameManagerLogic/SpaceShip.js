@@ -4,7 +4,7 @@ class SpaceShip {
         this.x = x
         this.y = y
         this.height = 6
-        this.width = 6.5
+        this.width = 5.5
     }
 }
 

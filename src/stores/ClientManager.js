@@ -7,17 +7,26 @@ class ClientManager {
     @observable playerID
     @observable gameData
     @observable checKeyPress = [40, 38, 37, 39]
-    @observable multiPlayer = false
+    @observable singlePlayer = false
     @observable gameOver = false
-
+    @observable isGameMultiplayerOn = false
+    @observable ready = false
     @action getGameIdAndPlayerID(gameIDAndPlayer) {
         this.gameID = gameIDAndPlayer.gameId
         this.playerID = gameIDAndPlayer.playerId
     }
 
-    @action startGame = () => {
-        socket.emit('startGame', this.gameID)
-    }
+    // @action startGame = () => {
+    //     socket.emit('startGame', this.gameID)
+    // }
+
+    // @action isTwoPlayers = () => {
+    //     socket.emit('twoPlayers', this.gameID)
+    //     socket.on('twoPlayers', (isGameOn) => {
+    //         this.isGameMultiplayerOn = isGameOn
+    //     })
+
+    // }
 
 
     @action newState = () => {
@@ -26,7 +35,8 @@ class ClientManager {
         })
     }
 
-    @action startsingleGame = () => {
+    @action startSinglePlay = () => {
+        socket.emit('newGame')
         socket.on('joinedGame', (gameIDAndPlayer) => {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
             socket.emit('startGame', gameIDAndPlayer.gameId)
@@ -34,19 +44,26 @@ class ClientManager {
 
     }
 
-    @action gameCreated = () => {
+    @action startMultiPlay = () => {
         socket.on('joinedGame', (gameIDAndPlayer) => {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
-            console.log(gameIDAndPlayer.gameId)
+            socket.emit('startGame', gameIDAndPlayer.gameId)
         })
     }
+
+
+    // @action gameCreated = () => {
+    //     socket.on('joinedGame', (gameIDAndPlayer) => {
+    //         this.getGameIdAndPlayerID(gameIDAndPlayer)
+    //         console.log(this.gameID)
+    //     })
+    // }
 
     @action newGame = () => {
         this.gameOver = false
         socket.emit('newGame')
         socket.on('joinedGame', gameIDAndPlayer => {
-            this.gameID = gameIDAndPlayer.gameId
-            // this.gameID = gameIDAndPlayer.gameId
+            this.getGameIdAndPlayerID(gameIDAndPlayer)
         })
     }
 
@@ -55,7 +72,6 @@ class ClientManager {
         socket.emit('joinGame', gameJoinID)
         socket.on('joinedGame', (gameIDAndPlayer) => {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
-
         })
     }
 
@@ -81,7 +97,13 @@ class ClientManager {
     @action setGameOver = () => {
         this.gameOver = true
     }
+    @action waitForPlayers = () => {
+        socket.on("getReady", () => {
+            this.ready = true
 
+        })
+
+    }
 }
 
 const clientManager = new ClientManager()

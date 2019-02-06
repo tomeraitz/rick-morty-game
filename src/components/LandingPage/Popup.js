@@ -13,7 +13,7 @@ class Popup extends Component {
     closePopup = () => this.props.closePopup()
 
     inputHandle = (e) => {
-        this.setState({ codeText: e.target.value })
+        this.setState({ codeText: e.target.value.toLowerCase() })
     }
 
     joinGame = () => {
@@ -21,16 +21,19 @@ class Popup extends Component {
             this.setState({ codeError: true })
         } else {
             this.props.ClientManager.joinGame(this.state.codeText)
+            // this.props.ClientManager.newGame()
+            // console.log(this.props.ClientManager.gameID)
+            // this.props.ClientManager.startsingleGame()
+            this.props.ClientManager.startMultiPlay()
+
         }
     }
 
     searchingForPlayer = () => {
         this.props.searchingForPlayer()
-        // this.props.ClientManager.gameCreated()
         this.props.ClientManager.newGame()
-
-
-
+        // this.props.ClientManager.newGame()
+        // this.props.ClientManager.startGame()
     }
 
 
@@ -53,6 +56,7 @@ class Popup extends Component {
             </div>
         );
     }
+
 }
 
 export default Popup;
