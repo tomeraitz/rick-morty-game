@@ -15,6 +15,7 @@ import Losing from './Losing'
 import { heightToPixels, widthToPixels } from '../../consts/toPixels'
 import arrayImages from '../../consts/ArrayImages'
 import explosion from '../../consts/explosion'
+import { Socket } from 'net';
 
 // import io from 'socket.io-client';
 // const socket = io.connect('http://localhost:3004/')
@@ -26,21 +27,22 @@ import explosion from '../../consts/explosion'
 class GameBoard extends Component {
 
     componentDidMount() {
-   
-        if(!this.props.ClientManager.multiPlayer){
+
+        if (!this.props.ClientManager.multiPlayer) {
             this.props.ClientManager.startsingleGame()
         }
+        this.props.ClientManager.newState()
+
 
     }
     // finishExplosion() {
-        //     setTimeout(() =>
-        //         game.finishExplosion()
-        //         , 500)
-        // }
-        
-        render() {
-            this.props.ClientManager.newState()
-            
+    //     setTimeout(() =>
+    //         game.finishExplosion()
+    //         , 500)
+    // }
+
+    render() {
+
         if (this.props.ClientManager.gameData) {
 
             const game = this.props.ClientManager.gameData

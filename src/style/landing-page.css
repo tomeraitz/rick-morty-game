@@ -97,6 +97,7 @@ body {
     border: none;
     box-shadow: 0 0 40px #5fa43d;
     cursor: pointer;
+    outline: none;
 }
 
 .join-game {
@@ -107,13 +108,14 @@ body {
     grid-gap: 5vh;
 }
 
-.join-game > input {
+.code-input > input {
     border: none;
     border-radius: 25px;
     width: 17vw;
     height: 5vh;
     text-align: center;
-    background-color: white
+    background-color: white;
+    outline: none;
 }
 
 .join-game > input::placeholder {
@@ -132,6 +134,7 @@ body {
     box-shadow: 0 0 40px #5fa43d;
     align-self: end;
     cursor: pointer;
+    outline: none;
 }
 
 .close-popup {
@@ -140,4 +143,15 @@ body {
     right: 4%;
     color: #a5d049;
     cursor: pointer;
+}
+
+.code-error {
+    box-sizing: border-box;
+    border: 2px solid #FF0022 !important
+}
+
+.code-input > p {
+    color: #5fa43d;
+    margin: 0;
+    margin-left: 1vw;
 }

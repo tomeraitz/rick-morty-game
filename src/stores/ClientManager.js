@@ -8,6 +8,7 @@ class ClientManager {
     @observable gameData
     @observable checKeyPress = [40, 38, 37, 39]
     @observable multiPlayer = false
+    @observable gameOver=false
 
     @action getGameIdAndPlayerID(gameIDAndPlayer) {
         this.gameID = gameIDAndPlayer.gameId
@@ -18,20 +19,22 @@ class ClientManager {
         socket.emit('startGame', this.gameID)
     }
 
-    @action newState = () =>{
+    @action newState = () => {
         socket.on('newState', (gameData) => {
             this.getgameData(gameData)
         })
+        socket.on('gameOver', function () {
+            this.gameOver=true
+        })
+
     }
 
-    @action startsingleGame = () =>{
+    @action startsingleGame = () => {
         socket.on('joinedGame', (gameIDAndPlayer) => {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
             socket.emit('startGame', gameIDAndPlayer.gameId)
         })
     }
-
- 
 
     @action newGame = () => {
         socket.emit('newGame')
@@ -42,7 +45,6 @@ class ClientManager {
     }
 
     @action getgameData = (gameData) => {
-
         this.gameData = { ...gameData }
     }
 
@@ -62,6 +64,7 @@ class ClientManager {
         socket.emit('continueGame', this.gameID)
     }
 }
+
 
 const clientManager = new ClientManager()
 

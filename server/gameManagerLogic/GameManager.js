@@ -35,7 +35,7 @@ class GameManager {
 
     createEnemies(num) {
         for (let i = 1; i < (num + 1); i++) {
-            let y = Math.floor(Math.random() * 400)
+            let y = Math.floor(Math.random() * 100)
             let x = i * 2
             let index = Math.floor(Math.random() * arrayImages.length)
             let width = arrayImages[index].width
@@ -48,8 +48,6 @@ class GameManager {
     start() {
         // this.sound()
         setTimeout(() => this.finishLevel = false, 2000);
-
-        if (this.spaceShips.length === 0) this.drawInstance(new SpaceShip(0, 50, 3, 0, 1))
         this.createEnemies(this.enemyPerLevel)
 
         this.gameInterval = setInterval((this.game), 20)
@@ -59,12 +57,11 @@ class GameManager {
         this.explosion.shift()
     }
 
-    setNewLeve() {
+    setNewLevel() {
         this.finishLevel = true
         this.playerInfo.level++
         this.enemyPerLevel = this.playerInfo.level * 4
         clearInterval(this.gameInterval);
-        setTimeout(() => this.finishLevel = false, 20);
         this.start()
     }
 
@@ -81,8 +78,11 @@ class GameManager {
         }
         this.isGameOver = true
         this.finishLevel = false
-        alert("start new game loser!")
-        this.start()
+        // this.start()
+
+        io.in(`${this.id}`).emit('gameOver');
+
+
     }
 
     pauseGame() {
@@ -99,7 +99,9 @@ class GameManager {
     game() {
 
         this.enemies.forEach(e => {
-            if (e.x + 5 <= 100) e.x += this.playerInfo.level
+            if (e.x + 5 <= 100) {
+                e.x += 1// this.playerInfo.level
+            }
             else this.kill(e)
         })
         this.laserShots.forEach(l => {
@@ -174,10 +176,13 @@ class GameManager {
     checkEnemies(instance) {
         this.enemies.forEach(e => {
             if (Math.abs(e.y - instance.y) <= e.height) {
-                if (e.x + instance.x + (e.width) >= this.boardWidth || e.x + instance.x + (instance.width) >= this.boardWidth) {
+                if (e.x + instance.x + (e.width) >= 100 || e.x + instance.x + (instance.width) >= 100) {
                     if (instance instanceof LaserShot) {
                         this.enemyPerLevel--
                         this.playerInfo.score += 10
+                        // if (this.enemyPerLevel === 0) {
+                        //     this.setNewLeve()
+                        // }
                     }
                     this.kill(instance)
                     this.kill(e)
