@@ -11,7 +11,7 @@ class Losing extends Component {
             <div className="losing-popup">
                 <h1>YOU SUCK!</h1>
                 <div className="player-choose-next">
-                    <button className="start-new-game" onClick={this.props.GameManager.startNewGame}>START A NEW GAME!</button>
+                    {/* <button className="start-new-game" onClick={this.props.ClientManager.startNewGame}>START A NEW GAME!</button> */}
                     <Link to='/'><button className="exit-button">Exit</button></Link>
                 </div>
             </div >

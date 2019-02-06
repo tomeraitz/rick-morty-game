@@ -220,6 +220,7 @@ class GameManager {
     }
 
     shoot(playerIndex) {
+		console.log('TCL: GameManager -> shoot -> playerIndex', playerIndex)
         const { x, y } = this.spaceShips[playerIndex]
         this.drawInstance(new LaserShot(x, y, playerIndex))
     }

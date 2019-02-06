@@ -42,6 +42,7 @@ class ClientManager {
     }
 
     @action newGame = () => {
+        this.gameOver=false
         socket.emit('newGame')
     }
 
@@ -73,13 +74,19 @@ class ClientManager {
     @action continueGame = () => {
         socket.emit('continueGame', this.gameID)
     }
+    @action setGameOver = ()=>{
+        this.gameOver=true
+    }
 
 }
-
 
 const clientManager = new ClientManager()
 if(clientManager.gameData){
     clientManager.newState()
 }
 
+
+socket.on('gameOver',()=>{
+    clientManager.setGameOver()
+})
 export default clientManager
