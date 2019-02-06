@@ -13,6 +13,9 @@ import Losing from './Losing'
 
 import arrayImages from '../../consts/ArrayImages'
 import explosion from '../../consts/explosion'
+import { Socket } from 'net';
+
+// import io from 'socket.io-client';
 
 
 
@@ -31,6 +34,7 @@ class GameBoard extends Component {
     pauseGame =() =>{
         this.props.ClientManager.pauseGame()
 
+
     }
     // finishExplosion() {
     //     setTimeout(() =>
@@ -45,7 +49,6 @@ class GameBoard extends Component {
             const playerInfo = game.playerInfo
             const gameFunctions = this.props.ClientManager
             const enemies = game.enemies.map((e, i) => {
-                console.log(e.src)
                 return <Enemy key={i} id={arrayImages[e.index].name} x={widthToPixels(e.x)} y={heightToPixels(e.y)} myImage={e.src} arrayImages={arrayImages[e.index]} />
             });
 
@@ -57,6 +60,7 @@ class GameBoard extends Component {
             const laserShots = game.laserShots.map((l, i) => {
                 return <Lasers key={i} x={widthToPixels(l.x)} y={heightToPixels(l.y)} />
             });
+
 
             console.log(game.isGameOnPause)
             return (

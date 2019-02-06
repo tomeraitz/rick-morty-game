@@ -23,6 +23,7 @@ class LandingPage extends Component {
     }
 
 
+
     startSingleGame = () =>{
         this.props.ClientManager.newGame()
         this.props.ClientManager.multiPlayer = false
@@ -41,6 +42,7 @@ class LandingPage extends Component {
             <div id="landing-page" onClick={this.showPopup ? this.closePopup() : null}>
                 <img id="logo" alt="" src={rickAndMortyLogo} />
                 <div className="games-buttons">
+
 
                     <Link to="/game" ><div className="start-game" onClick={this.startSingleGame}>SINGLE PLAYER</div></Link>
 
