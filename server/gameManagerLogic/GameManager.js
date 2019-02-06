@@ -86,9 +86,10 @@ class GameManager {
     }
 
     pauseGame() {
-        console.log(this.isGameOnPause)
+
         if (!this.isGameOnPause) clearInterval(this.gameInterval);
         this.isGameOnPause = true
+        
     }
 
     continuePlaying() {
@@ -124,6 +125,7 @@ class GameManager {
             explosion: this.explosion,
             playerInfo: this.playerInfo
         }
+
 
         io.in(`${this.id}`).emit('newState', gameState);
     }
@@ -194,6 +196,7 @@ class GameManager {
 
     move(playerIndex, direction) {
         let spaceShip = this.spaceShips[playerIndex]
+        console.log(playerIndex)
         if (direction === 40 && spaceShip.y - 4 > 0) {
             // down
             spaceShip.y -= 4

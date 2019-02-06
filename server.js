@@ -55,6 +55,7 @@ io.on('connection', (socket) => {
     Games[gameId] = newGame
     Games[gameId].joinGame(socket.id)
     socket.join(`${gameId}`)
+		console.log('TCL: gameId', gameId)
     const info={ gameId, playerId: Games[gameId].spaceShips.length - 1 }
     socket.emit('joinedGame',info )
     // socket.emit('gameCreated', gameId, newGame.players.length - 1)
@@ -65,7 +66,7 @@ io.on('connection', (socket) => {
     console.log('Someone is trying to join a game')
     Games[gameId].joinGame(socket)
     socket.join(gameId)
-    socket.emit('joinedGame', { gameId, playerIndex: Games[id].players.length - 1 })
+    socket.emit('joinedGame', { gameId, playerId: Games[gameId].spaceShips.length - 1 })
   })
 
   socket.on('startGame', (gameId) => {
@@ -82,6 +83,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('move', (gameId, playerIndex, direction) => {
+		console.log('TCL: playerIndex', playerIndex)
     Games[gameId].move(playerIndex, direction)
   })
 

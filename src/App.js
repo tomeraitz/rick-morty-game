@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import ReactHowler from 'react-howler'
+// import ReactHowler from 'react-howler'
 import { observer } from 'mobx-react'
 
 import './App.css';
@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <ReactHowler src={themeSong} playing={true} />
+          {/* <ReactHowler src={themeSong} playing={true} /> */}
 
           <Stars />
           <Route path="/" exact render={() => <LandingPage />} />

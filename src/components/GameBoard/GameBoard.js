@@ -17,18 +17,22 @@ import { Socket } from 'net';
 
 // import io from 'socket.io-client';
 
-const socket = io.connect('http://localhost:3004/')
+
 
 @inject('ClientManager')
 @observer
 class GameBoard extends Component {
 
     componentDidMount() {
-
-        if (!this.props.ClientManager.multiPlayer) {
+        if(!this.props.ClientManager.multiPlayer){
             this.props.ClientManager.startsingleGame()
         }
+
         this.props.ClientManager.newState()
+    }
+
+    pauseGame =() =>{
+        this.props.ClientManager.pauseGame()
 
 
     }
@@ -41,9 +45,9 @@ class GameBoard extends Component {
     render() {
 
         if (this.props.ClientManager.gameData) {
-
             const game = this.props.ClientManager.gameData
             const playerInfo = game.playerInfo
+            const gameFunctions = this.props.ClientManager
             const enemies = game.enemies.map((e, i) => {
                 return <Enemy key={i} id={arrayImages[e.index].name} x={widthToPixels(e.x)} y={heightToPixels(e.y)} myImage={e.src} arrayImages={arrayImages[e.index]} />
             });
@@ -56,6 +60,9 @@ class GameBoard extends Component {
             const laserShots = game.laserShots.map((l, i) => {
                 return <Lasers key={i} x={widthToPixels(l.x)} y={heightToPixels(l.y)} />
             });
+
+
+            console.log(game.isGameOnPause)
             return (
                 <div id="game-border">
                     <div className="navbar-user">
@@ -64,8 +71,8 @@ class GameBoard extends Component {
                         <div className="user-status">Level : {playerInfo.level}</div>
                         <div className="user-status">Enemies : {game.enemyPerLevel}</div>
                         {game.isGameOnPause ?
-                            <i className="fas fa-play" onClick={game.continuePlaying}></i>
-                            : <i className="fas fa-pause" onClick={game.pauseGame}></i>}
+                            <i className="fas fa-play" onClick={gameFunctions.continuePlaying}></i>
+                            : <i className="fas fa-pause" onClick={this.pauseGame}></i>}
                     </div>
                     {/* <ReactAudioPlayer type="audio/mp3" src={ThemeSong} autoPlay loop /> */}
 

@@ -19,20 +19,25 @@ class ClientManager {
         socket.emit('startGame', this.gameID)
     }
 
-    @action newState = () => {
+
+    @action newState = () =>{
         socket.on('newState', (gameData) => {
             this.getgameData(gameData)
         })
-        socket.on('gameOver', function () {
-            this.gameOver=true
-        })
-
     }
 
-    @action startsingleGame = () => {
+    @action startsingleGame = () =>{
         socket.on('joinedGame', (gameIDAndPlayer) => {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
             socket.emit('startGame', gameIDAndPlayer.gameId)
+        })
+
+    } 
+
+    @action gameCreated = () =>{
+        socket.on('joinedGame', (gameIDAndPlayer) => {
+            this.getGameIdAndPlayerID(gameIDAndPlayer)
+
         })
     }
 
@@ -40,8 +45,13 @@ class ClientManager {
         socket.emit('newGame')
     }
 
-    @action joinGame = () => {
-        socket.emit('joinGame')
+
+    @action joinGame = (gameJoinID) => {
+        socket.emit('joinGame',gameJoinID)
+        socket.on('joinedGame', (gameIDAndPlayer) => {
+            this.getGameIdAndPlayerID(gameIDAndPlayer)
+
+        })
     }
 
     @action getgameData = (gameData) => {
@@ -63,9 +73,13 @@ class ClientManager {
     @action continueGame = () => {
         socket.emit('continueGame', this.gameID)
     }
+
 }
 
 
 const clientManager = new ClientManager()
+if(clientManager.gameData){
+    clientManager.newState()
+}
 
 export default clientManager
