@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, remove } from 'mobx'
 import io from 'socket.io-client';
 const socket = io.connect('http://localhost:3004/')
 
@@ -36,6 +36,7 @@ class ClientManager {
 
     @action gameCreated = () =>{
         socket.on('joinedGame', (gameIDAndPlayer) => {
+            console.log(gameIDAndPlayer.gameId)
             this.getGameIdAndPlayerID(gameIDAndPlayer)
 
         })
@@ -44,6 +45,10 @@ class ClientManager {
     @action newGame = () => {
         this.gameOver=false
         socket.emit('newGame')
+        socket.on('joinedGame', (gameIDAndPlayer) => {
+            console.log(gameIDAndPlayer.gameId)
+
+        })
     }
 
 
@@ -75,7 +80,14 @@ class ClientManager {
         socket.emit('continueGame', this.gameID)
     }
     @action setGameOver = ()=>{
+        // this.gameID=""
+        // this.playerID=""
+        // this.gameData=""
+        // this.checKeyPress = [40, 38, 37, 39]
+        // this.multiPlayer = false
         this.gameOver=true
+        // socket //disconnect
+        // socket.emit('removeGame',this.gameID)
     }
 
 }

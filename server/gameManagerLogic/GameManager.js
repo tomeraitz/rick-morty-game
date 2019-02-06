@@ -137,10 +137,7 @@ class GameManager {
 
     drawInstance(instance) {
         if (instance instanceof LaserShot) {
-            if (this.laserShots.length === 0) {
                 this.laserShots.push(instance)
-                console.log(this.laserShots)
-            }
 
         } else if (instance instanceof Enemy) {
             this.enemies.push(instance)
@@ -196,7 +193,7 @@ class GameManager {
 
     move(playerIndex, direction) {
         let spaceShip = this.spaceShips[playerIndex]
-        console.log(playerIndex)
+        console.log(spaceShip)
         if (direction === 40 && spaceShip.y - 4 > 0) {
             // down
             spaceShip.y -= 4

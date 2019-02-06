@@ -48,6 +48,7 @@ const Games={}
 io.on('connection', (socket) => {
 
   console.log('connection')
+
   socket.on('newGame', () => {
     console.log('Someone created a new game')
     const gameId = `${randomWords()}-${randomWords()}-${randomWords()}`
@@ -91,6 +92,10 @@ io.on('connection', (socket) => {
     Games[gameID].shoot(playerIndex)
   })
 
+  socket.on('removeGame',(gameId)=>{
+    console.log(`removeGame ${gameId}`)
+    delete Games[gameId]
+  })
 })
 
 
