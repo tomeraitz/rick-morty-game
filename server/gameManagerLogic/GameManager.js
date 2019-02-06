@@ -86,9 +86,10 @@ class GameManager {
     }
 
     pauseGame() {
-        console.log(this.isGameOnPause)
+        
         if (!this.isGameOnPause) clearInterval(this.gameInterval);
         this.isGameOnPause = true
+        
     }
 
     continuePlaying() {
@@ -122,6 +123,7 @@ class GameManager {
             explosion: this.explosion,
             playerInfo: this.playerInfo
         }
+        console.log(this.isGameOnPause)
 
         io.in(`${this.id}`).emit('newState', gameState);
     }

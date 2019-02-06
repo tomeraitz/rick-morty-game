@@ -29,9 +29,14 @@ class ClientManager {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
             socket.emit('startGame', gameIDAndPlayer.gameId)
         })
-    }
+    } 
 
- 
+    @action gameCreated = () =>{
+        socket.on('joinedGame', (gameIDAndPlayer) => {
+            this.getGameIdAndPlayerID(gameIDAndPlayer)
+
+        })
+    }
 
     @action newGame = () => {
         socket.emit('newGame')
@@ -61,6 +66,7 @@ class ClientManager {
     @action continueGame = () => {
         socket.emit('continueGame', this.gameID)
     }
+
 }
 
 const clientManager = new ClientManager()
