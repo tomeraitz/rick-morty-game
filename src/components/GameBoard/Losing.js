@@ -3,7 +3,7 @@ import { inject } from 'mobx-react';
 
 import { Link } from 'react-router-dom'
 
-@inject('GameManager')
+@inject('ClientManager')
 
 class Losing extends Component {
     render() {

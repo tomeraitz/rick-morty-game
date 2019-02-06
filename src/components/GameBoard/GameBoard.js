@@ -1,10 +1,9 @@
-import React, {
-    Component
-} from 'react';
-import {
-    observer,
-    inject
-} from 'mobx-react';
+import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react';
+import { Howl, Howler } from 'howler';
+import io from 'socket.io-client';
+import ReactHowler from 'react-howler'
+import { heightToPixels, widthToPixels } from '../../consts/toPixels'
 
 import SpaceShipComponent from '../spaceShip/SpaceShipComponent'
 import Lasers from '../LaserShots/Lasers'
@@ -12,15 +11,13 @@ import Enemy from '../Enemy/Enemy'
 import NextLevel from './NextLevel'
 import Losing from './Losing'
 
-import { heightToPixels, widthToPixels } from '../../consts/toPixels'
 import arrayImages from '../../consts/ArrayImages'
 import explosion from '../../consts/explosion'
 import { Socket } from 'net';
 
 // import io from 'socket.io-client';
-// const socket = io.connect('http://localhost:3004/')
 
-
+const socket = io.connect('http://localhost:3004/')
 
 @inject('ClientManager')
 @observer
@@ -70,14 +67,9 @@ class GameBoard extends Component {
                             <i className="fas fa-play" onClick={game.continuePlaying}></i>
                             : <i className="fas fa-pause" onClick={game.pauseGame}></i>}
                     </div>
-                    {/* <ReactAudioPlayer
-                    type="audio/mp3"
-                    src={ThemeSong}
-                    autoPlay
-                    loop
-                /> */}
-                    <div id="space-background" >
+                    {/* <ReactAudioPlayer type="audio/mp3" src={ThemeSong} autoPlay loop /> */}
 
+                    <div id="space-background" >
                         {spaceShips}
                         {laserShots}
                         {enemies}
