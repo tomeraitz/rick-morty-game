@@ -70,5 +70,8 @@ class ClientManager {
 }
 
 const clientManager = new ClientManager()
+if(clientManager.gameData){
+    clientManager.newState()
+}
 
 export default clientManager

@@ -35,7 +35,6 @@ class GameBoard extends Component {
 
     pauseGame =() =>{
         this.props.ClientManager.pauseGame()
-        this.props.ClientManager.newState()
 
     }
     // finishExplosion() {
