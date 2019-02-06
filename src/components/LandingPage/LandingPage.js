@@ -1,19 +1,32 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
-import Popup from './Popup'
 import { inject } from 'mobx-react';
+import { Link } from 'react-router-dom'
+
+import Popup from './Popup'
+import JoinedPopup from './JoinedPopup'
 
 import '../../style/landing-page.css';
+import SearchingForPlayer from './SearchingForPlayer';
 
 @inject('ClientManager')
 
 class LandingPage extends Component {
     state = {
-        showPopup: false
+        showPopup: false,
+        searchingForPlayer: false,
+        gameFound: false
     }
 
     togglePopup = () => {
         this.setState({ showPopup: !this.state.showPopup })
+    }
+
+    searchingForPlayerToggle = () => {
+        this.setState({ searchingForPlayer: !this.state.searchingForPlayer, showPopup: false })
+    }
+
+    foundGameToggle = () => {
+        this.setState({ gameFound: !this.state.gameFound, showPopup: false })
     }
 
     render() {
@@ -22,10 +35,13 @@ class LandingPage extends Component {
             <div id="landing-page" onClick={this.showPopup ? this.closePopup() : null}>
                 <img id="logo" alt="" src={rickAndMortyLogo} />
                 <div className="games-buttons">
-                    <Link to="/game" ><div className="start-game" onClick={this.props.GameManager.startNewGame}>SINGLE PLAYER</div></Link>
+                    <Link to="/game" ><div className="start-game">SINGLE PLAYER</div></Link>
                     <div className="start-multiplayer-game" onClick={this.togglePopup}>MULTIPLAYER</div>
 
-                    {this.state.showPopup ? <Popup closePopup={this.togglePopup} /> : null}
+                    {this.state.showPopup ? <Popup closePopup={this.togglePopup} searchingForPlayer={this.searchingForPlayerToggle} foundGameToggle={this.foundGameToggle} /> : null}
+
+                    {this.state.searchingForPlayer ? <SearchingForPlayer cancelSearch={this.searchingForPlayerToggle} /> : null}
+                    {this.state.gameFound ? <JoinedPopup /> : null}
                 </div>
             </div>
         );
