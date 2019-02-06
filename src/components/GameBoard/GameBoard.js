@@ -16,8 +16,8 @@ import { heightToPixels, widthToPixels } from '../../consts/toPixels'
 import arrayImages from '../../consts/ArrayImages'
 import explosion from '../../consts/explosion'
 
-import io from 'socket.io-client';
-const socket = io.connect('http://localhost:3004/')
+// import io from 'socket.io-client';
+// const socket = io.connect('http://localhost:3004/')
 
 
 
@@ -26,17 +26,11 @@ const socket = io.connect('http://localhost:3004/')
 class GameBoard extends Component {
 
     componentDidMount() {
+        if(!this.props.ClientManager.multiPlayer){
+            this.props.ClientManager.startsingleGame()
+        }
 
-        socket.emit('newGame')
-
-        socket.on('joinedGame', (gameIDAndPlayer) => {
-            this.props.ClientManager.getGameIdAndPlayerID(gameIDAndPlayer)
-            socket.emit('startGame', gameIDAndPlayer.gameId)
-        })
-
-        socket.on('newState', (gameData) => {
-            this.props.ClientManager.getgameData(gameData)
-        })
+        this.props.ClientManager.newState()
     }
     // finishExplosion() {
     //     setTimeout(() =>
@@ -62,8 +56,6 @@ class GameBoard extends Component {
             const laserShots = game.laserShots.map((l, i) => {
                 return <Lasers key={i} x={widthToPixels(l.x)} y={heightToPixels(l.y)} />
             });
-
-
             return (
                 <div id="game-border">
                     <div className="navbar-user">

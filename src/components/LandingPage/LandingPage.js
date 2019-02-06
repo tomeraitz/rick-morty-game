@@ -5,6 +5,7 @@ import { inject } from 'mobx-react';
 
 import '../../style/landing-page.css';
 
+
 @inject('ClientManager')
 
 class LandingPage extends Component {
@@ -16,13 +17,18 @@ class LandingPage extends Component {
         this.setState({ showPopup: !this.state.showPopup })
     }
 
+    startSingleGame = () =>{
+        this.props.ClientManager.newGame()
+        this.props.ClientManager.multiPlayer = false
+    }
+
     render() {
         let rickAndMortyLogo = "https://ya-webdesign.com/images/rick-and-morty-logo-png-1.png"
         return (
             <div id="landing-page" onClick={this.showPopup ? this.closePopup() : null}>
                 <img id="logo" alt="" src={rickAndMortyLogo} />
                 <div className="games-buttons">
-                    <Link to="/game" ><div className="start-game" onClick={this.props.GameManager.startNewGame}>SINGLE PLAYER</div></Link>
+                    <Link to="/game" ><div className="start-game" onClick={this.startSingleGame}>SINGLE PLAYER</div></Link>
                     <div className="start-multiplayer-game" onClick={this.togglePopup}>MULTIPLAYER</div>
 
                     {this.state.showPopup ? <Popup closePopup={this.togglePopup} /> : null}

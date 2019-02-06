@@ -7,6 +7,7 @@ class ClientManager {
     @observable playerID
     @observable gameData
     @observable checKeyPress = [40, 38, 37, 39]
+    @observable multiPlayer = false
 
     @action getGameIdAndPlayerID(gameIDAndPlayer) {
         this.gameID = gameIDAndPlayer.gameId
@@ -17,14 +18,27 @@ class ClientManager {
         socket.emit('startGame', this.gameID)
     }
 
+    @action newState = () =>{
+        socket.on('newState', (gameData) => {
+            this.getgameData(gameData)
+        })
+    }
+
+    @action startsingleGame = () =>{
+        socket.on('joinedGame', (gameIDAndPlayer) => {
+            this.getGameIdAndPlayerID(gameIDAndPlayer)
+            socket.emit('startGame', gameIDAndPlayer.gameId)
+        })
+    }
+
+ 
+
     @action newGame = () => {
         socket.emit('newGame')
-        this.getGameIdAndPlayerID()
     }
 
     @action joinGame = () => {
         socket.emit('joinGame')
-        this.getGameIdAndPlayerID()
     }
 
     @action getgameData = (gameData) => {
