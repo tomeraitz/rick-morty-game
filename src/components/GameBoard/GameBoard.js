@@ -26,20 +26,21 @@ import explosion from '../../consts/explosion'
 class GameBoard extends Component {
 
     componentDidMount() {
+   
         if(!this.props.ClientManager.multiPlayer){
             this.props.ClientManager.startsingleGame()
         }
 
-        this.props.ClientManager.newState()
     }
     // finishExplosion() {
-    //     setTimeout(() =>
-    //         game.finishExplosion()
-    //         , 500)
-    // }
-
-    render() {
-
+        //     setTimeout(() =>
+        //         game.finishExplosion()
+        //         , 500)
+        // }
+        
+        render() {
+            this.props.ClientManager.newState()
+            
         if (this.props.ClientManager.gameData) {
 
             const game = this.props.ClientManager.gameData
