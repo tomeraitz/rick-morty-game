@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
-import ReactHowler from 'react-howler'
+// import ReactHowler from 'react-howler'
 
-import LaserShot from '../../stores/LaserShot';
+// import LaserShot from '../../stores/LaserShot';
 // import { heightToPixels, widthToPixels } from '../consts/toPixels'
 
 
@@ -31,12 +31,12 @@ class SpaceShipComponent extends Component {
   render() {
     let x = this.props.x
     let y = this.props.y
-    // let height = heightToPixels(6)
-    // let width = widthToPixels(6.5)
+    let shipHeight = this.props.height
+    let shipWidth = this.props.width
 
     return (
       <div id="space-ship" style={{ bottom: `${y}px`, left: `${x}px` }} >
-        <img src={spaceShipImage} alt="space-ship" />
+        <img src={spaceShipImage} alt="space-ship" style={{ height: `${shipHeight}px`, width: `${shipWidth}px` }} />
       </div>
     );
   }

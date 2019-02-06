@@ -26,6 +26,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+
           {this.state.soundOn ? <ReactHowler src={themeSong} playing={true} loop={true} /> : <ReactHowler src={themeSong} playing={false} />}
 
           <Stars />

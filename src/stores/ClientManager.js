@@ -7,6 +7,8 @@ class ClientManager {
     @observable playerID
     @observable gameData
     @observable checKeyPress = [40, 38, 37, 39]
+    @observable multiPlayer = false
+    @observable gameOver = false
 
     @action getGameIdAndPlayerID(gameIDAndPlayer) {
         this.gameID = gameIDAndPlayer.gameId
@@ -17,14 +19,44 @@ class ClientManager {
         socket.emit('startGame', this.gameID)
     }
 
-    @action newGame = () => {
-        socket.emit('newGame')
-        this.getGameIdAndPlayerID()
+
+    @action newState = () => {
+        socket.on('newState', (gameData) => {
+            this.getgameData(gameData)
+        })
     }
 
-    @action joinGame = () => {
-        socket.emit('joinGame')
-        this.getGameIdAndPlayerID()
+    @action startsingleGame = () => {
+        socket.on('joinedGame', (gameIDAndPlayer) => {
+            this.getGameIdAndPlayerID(gameIDAndPlayer)
+            socket.emit('startGame', gameIDAndPlayer.gameId)
+        })
+
+    }
+
+    @action gameCreated = () => {
+        socket.on('joinedGame', (gameIDAndPlayer) => {
+            this.getGameIdAndPlayerID(gameIDAndPlayer)
+            console.log(gameIDAndPlayer.gameId)
+        })
+    }
+
+    @action newGame = () => {
+        this.gameOver = false
+        socket.emit('newGame')
+        socket.on('joinedGame', gameIDAndPlayer => {
+            this.gameID = gameIDAndPlayer.gameId
+            // this.gameID = gameIDAndPlayer.gameId
+        })
+    }
+
+
+    @action joinGame = (gameJoinID) => {
+        socket.emit('joinGame', gameJoinID)
+        socket.on('joinedGame', (gameIDAndPlayer) => {
+            this.getGameIdAndPlayerID(gameIDAndPlayer)
+
+        })
     }
 
     @action getgameData = (gameData) => {
@@ -46,8 +78,19 @@ class ClientManager {
     @action continueGame = () => {
         socket.emit('continueGame', this.gameID)
     }
+    @action setGameOver = () => {
+        this.gameOver = true
+    }
+
 }
 
 const clientManager = new ClientManager()
+if (clientManager.gameData) {
+    clientManager.newState()
+}
 
+
+socket.on('gameOver', () => {
+    clientManager.setGameOver()
+})
 export default clientManager

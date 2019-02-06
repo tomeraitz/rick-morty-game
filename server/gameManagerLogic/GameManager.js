@@ -35,8 +35,8 @@ class GameManager {
 
     createEnemies(num) {
         for (let i = 1; i < (num + 1); i++) {
-            let y = Math.floor(Math.random() * 400)
-            let x = i * 2
+            let y = Math.floor(Math.random() * 80)
+            let x = i * 5
             let index = Math.floor(Math.random() * arrayImages.length)
             let width = arrayImages[index].width
             let height = arrayImages[index].height
@@ -46,10 +46,7 @@ class GameManager {
     }
 
     start() {
-        // this.sound()
         setTimeout(() => this.finishLevel = false, 2000);
-
-        if (this.spaceShips.length === 0) this.drawInstance(new SpaceShip(0, 50, 3, 0, 1))
         this.createEnemies(this.enemyPerLevel)
 
         this.gameInterval = setInterval((this.game), 20)
@@ -59,12 +56,11 @@ class GameManager {
         this.explosion.shift()
     }
 
-    setNewLeve() {
+    setNewLevel() {
         this.finishLevel = true
         this.playerInfo.level++
         this.enemyPerLevel = this.playerInfo.level * 4
         clearInterval(this.gameInterval);
-        setTimeout(() => this.finishLevel = false, 20);
         this.start()
     }
 
@@ -81,13 +77,14 @@ class GameManager {
         }
         this.isGameOver = true
         this.finishLevel = false
-        alert("start new game loser!")
-        this.start()
+
+        io.in(`${this.id}`).emit('gameOver');
     }
 
     pauseGame() {
         if (!this.isGameOnPause) clearInterval(this.gameInterval);
         this.isGameOnPause = true
+
     }
 
     continuePlaying() {
@@ -96,13 +93,14 @@ class GameManager {
     }
 
     game() {
-
         this.enemies.forEach(e => {
-            if (e.x + 5 <= 100) e.x += this.playerInfo.level
+            if (e.x + 2 <= 100) {
+                e.x += 0.5
+            }
             else this.kill(e)
         })
         this.laserShots.forEach(l => {
-            if (l.x + 5 <= 100) {
+            if (l.x + 4 <= 100) {
                 l.x += 5
                 this.checkEnemies(l)
             } else this.kill(l)
@@ -125,18 +123,9 @@ class GameManager {
         io.in(`${this.id}`).emit('newState', gameState);
     }
 
-    // setBorders = (height, width) => {
-    //     this.boardWidth = width
-    //     this.boardHeight = height
-    // }
-
     drawInstance(instance) {
         if (instance instanceof LaserShot) {
-            if (this.laserShots.length === 0) {
-                this.laserShots.push(instance)
-                console.log(this.laserShots)
-            }
-
+            this.laserShots.push(instance)
         } else if (instance instanceof Enemy) {
             this.enemies.push(instance)
         } else if (instance instanceof SpaceShip) {
@@ -173,10 +162,13 @@ class GameManager {
     checkEnemies(instance) {
         this.enemies.forEach(e => {
             if (Math.abs(e.y - instance.y) <= e.height) {
-                if (e.x + instance.x + (e.width) >= this.boardWidth || e.x + instance.x + (instance.width) >= this.boardWidth) {
+                if (e.x + instance.x + (e.width) >= 100 || e.x + instance.x + (instance.width) >= 100) {
                     if (instance instanceof LaserShot) {
                         this.enemyPerLevel--
                         this.playerInfo.score += 10
+                        // if (this.enemyPerLevel === 0) {
+                        //     this.setNewLeve()
+                        // }
                     }
                     this.kill(instance)
                     this.kill(e)
@@ -214,34 +206,6 @@ class GameManager {
         const { x, y } = this.spaceShips[playerIndex]
         this.drawInstance(new LaserShot(x, y, playerIndex))
     }
-
-    // sound = () => {
-    //     Howler.volume(1);
-    //     const sounds = [
-    //             [Riggity],
-    //             [Balls],
-    //             [rickBlech],
-    //             [rickportal],
-    //             [ticky],
-    //             [dubdub]
-    //         ]
-    //         .map(s => new Howl({
-    //             src: [s]
-    //         }));
-    //     const soundIndex = Math.floor(Math.random() * sounds.length)
-    //     // const sound = new Howl({ src: sounds[soundIndex] });
-    //     sounds[soundIndex].play();
-    //     // sound.play();
-    // }
-
-    // charBorders = () => {
-    //     let spaceShip = new SpaceShip()
-    //     let border = spaceShip.charBorders()
-    //     return border
-    // }
-
-
-
 }
 
 module.exports = GameManager

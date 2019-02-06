@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import '../../style/searching-for-player.css'
+import { inject, observer } from 'mobx-react';
 
+@inject("ClientManager")
+
+@observer
 class SearchingForPlayer extends Component {
     cancelSearch = () => this.props.cancelSearch()
 
     render() {
         return (
             <div className="searching-for-player">
+                <h1>Code: {this.props.ClientManager.gameID}</h1>
                 <div className="cancel-search" onClick={this.cancelSearch}>X</div>
-                <div class="lds-roller">
+                <div className="lds-roller">
                     <div></div>
                     <div></div>
                     <div></div>
@@ -18,7 +23,7 @@ class SearchingForPlayer extends Component {
                     <div></div>
                     <div></div>
                 </div>
-                <h1 className="looking-for-player">Waiting for a player...</h1>
+                <h3 className="looking-for-player">Waiting for a player...</h3>
             </div>
         );
     }

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { Howl, Howler } from 'howler';
 import io from 'socket.io-client';
-import ReactHowler from 'react-howler'
 import { heightToPixels, widthToPixels } from '../../consts/toPixels'
 
 import SpaceShipComponent from '../spaceShip/SpaceShipComponent'
@@ -15,7 +13,6 @@ import arrayImages from '../../consts/ArrayImages'
 import explosion from '../../consts/explosion'
 
 const socket = io.connect('http://localhost:3004/')
-
 @inject('ClientManager')
 @observer
 class GameBoard extends Component {
@@ -44,15 +41,15 @@ class GameBoard extends Component {
         if (this.props.ClientManager.gameData) {
 
             const game = this.props.ClientManager.gameData
+            console.log(game.spaceShips)
             const playerInfo = game.playerInfo
             const enemies = game.enemies.map((e, i) => {
-                console.log(e.src)
                 return <Enemy key={i} id={arrayImages[e.index].name} x={widthToPixels(e.x)} y={heightToPixels(e.y)} myImage={e.src} arrayImages={arrayImages[e.index]} />
             });
 
             const spaceShips = game.spaceShips.map((s, i) => {
                 console.log()
-                return <SpaceShipComponent key={i} move={s.move} x={widthToPixels(s.x)} y={heightToPixels(s.y)} id={s.id} />
+                return <SpaceShipComponent key={i} move={s.move} x={widthToPixels(s.x)} y={heightToPixels(s.y)} id={s.id} height={heightToPixels(s.height)} width={widthToPixels(s.width)} />
             });
 
             const laserShots = game.laserShots.map((l, i) => {
@@ -71,7 +68,6 @@ class GameBoard extends Component {
                             <i className="fas fa-play" onClick={game.continuePlaying}></i>
                             : <i className="fas fa-pause" onClick={game.pauseGame}></i>}
                     </div>
-                    {/* <ReactAudioPlayer type="audio/mp3" src={ThemeSong} autoPlay loop /> */}
 
                     <div id="space-background" >
                         {spaceShips}

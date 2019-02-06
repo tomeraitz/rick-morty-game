@@ -8,6 +8,7 @@ import JoinedPopup from './JoinedPopup'
 import '../../style/landing-page.css';
 import SearchingForPlayer from './SearchingForPlayer';
 
+
 @inject('ClientManager')
 
 class LandingPage extends Component {
@@ -19,6 +20,11 @@ class LandingPage extends Component {
 
     togglePopup = () => {
         this.setState({ showPopup: !this.state.showPopup })
+    }
+
+    startSingleGame = () => {
+        this.props.ClientManager.newGame()
+        this.props.ClientManager.multiPlayer = false
     }
 
     searchingForPlayerToggle = () => {
@@ -35,10 +41,13 @@ class LandingPage extends Component {
         let rickAndMortyLogo = "https://ya-webdesign.com/images/rick-and-morty-logo-png-1.png"
         return (
             <div id="landing-page" onClick={this.showPopup ? this.closePopup() : null}>
-                {this.props.soundOn ? <i class="fas fa-volume-up" onClick={this.toggleSound}></i> : <i class="fas fa-volume-off" onClick={this.toggleSound}></i>}
+                {this.props.soundOn ? <i className="fas fa-volume-up" onClick={this.toggleSound}></i> : <i className="fas fa-volume-off" onClick={this.toggleSound}></i>}
                 <img id="logo" alt="" src={rickAndMortyLogo} />
                 <div className="games-buttons">
-                    <Link to="/game" ><div className="start-game">SINGLE PLAYER</div></Link>
+
+
+                    <Link to="/game" ><div className="start-game" onClick={this.startSingleGame}>SINGLE PLAYER</div></Link>
+
                     <div className="start-multiplayer-game" onClick={this.togglePopup}>MULTIPLAYER</div>
 
                     {this.state.showPopup ? <Popup closePopup={this.togglePopup} searchingForPlayer={this.searchingForPlayerToggle} foundGameToggle={this.foundGameToggle} /> : null}

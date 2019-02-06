@@ -21,7 +21,6 @@ body {
 #landing-page a {
     text-decoration: none;
     display: grid;
-    justify-content: center;
 }
 
 #landing-page > img {
