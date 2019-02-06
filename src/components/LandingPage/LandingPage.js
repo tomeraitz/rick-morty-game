@@ -23,7 +23,6 @@ class LandingPage extends Component {
     }
 
     startSingleGame = () => {
-        // this.props.ClientManager.newGame()
         this.props.ClientManager.startSinglePlay()
         this.props.ClientManager.singlePlayer = true
     }
@@ -39,6 +38,7 @@ class LandingPage extends Component {
     toggleSound = () => this.props.toggleSound()
 
     render() {
+
         let rickAndMortyLogo = "https://ya-webdesign.com/images/rick-and-morty-logo-png-1.png"
         return (
             <div id="landing-page" onClick={this.showPopup ? this.closePopup() : null}>

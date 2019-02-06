@@ -153,12 +153,12 @@ i {
     text-transform: uppercase
 }
 
-.player-choose-next {
+/* .player-choose-next {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 2vw;
     align-items: center;
-}
+} */
 
 .start-new-game {
     border: none;

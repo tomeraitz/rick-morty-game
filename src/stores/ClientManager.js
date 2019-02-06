@@ -11,23 +11,11 @@ class ClientManager {
     @observable gameOver = false
     @observable isGameMultiplayerOn = false
     @observable ready = false
+
     @action getGameIdAndPlayerID(gameIDAndPlayer) {
         this.gameID = gameIDAndPlayer.gameId
         this.playerID = gameIDAndPlayer.playerId
     }
-
-    // @action startGame = () => {
-    //     socket.emit('startGame', this.gameID)
-    // }
-
-    // @action isTwoPlayers = () => {
-    //     socket.emit('twoPlayers', this.gameID)
-    //     socket.on('twoPlayers', (isGameOn) => {
-    //         this.isGameMultiplayerOn = isGameOn
-    //     })
-
-    // }
-
 
     @action newState = () => {
         socket.on('newState', (gameData) => {
@@ -41,7 +29,6 @@ class ClientManager {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
             socket.emit('startGame', gameIDAndPlayer.gameId)
         })
-
     }
 
     @action startMultiPlay = () => {
@@ -50,14 +37,6 @@ class ClientManager {
             socket.emit('startGame', gameIDAndPlayer.gameId)
         })
     }
-
-
-    // @action gameCreated = () => {
-    //     socket.on('joinedGame', (gameIDAndPlayer) => {
-    //         this.getGameIdAndPlayerID(gameIDAndPlayer)
-    //         console.log(this.gameID)
-    //     })
-    // }
 
     @action newGame = () => {
         this.gameOver = false
@@ -94,16 +73,22 @@ class ClientManager {
     @action continueGame = () => {
         socket.emit('continueGame', this.gameID)
     }
+
     @action setGameOver = () => {
         this.gameOver = true
     }
+
     @action waitForPlayers = () => {
         socket.on("getReady", () => {
             this.ready = true
-
         })
-
     }
+
+    @action deleteGame = () => {
+        socket.emit('deleteGame', this.gameID)
+        window.location.reload()
+    }
+
 }
 
 const clientManager = new ClientManager()
@@ -115,4 +100,5 @@ if (clientManager.gameData) {
 socket.on('gameOver', () => {
     clientManager.setGameOver()
 })
+
 export default clientManager

@@ -43,6 +43,7 @@ io.on('connection', (socket) => {
     console.log('Someone created a new game')
     const gameId = `${randomWords()}-${randomWords()}-${randomWords()}`
     const newGame = new Game(gameId)
+    console.log(newGame)
     Games[gameId] = newGame
     Games[gameId].joinGame(socket.id)
     socket.join(`${gameId}`)
@@ -72,18 +73,17 @@ io.on('connection', (socket) => {
     Games[gameId].continuePlaying()
   })
 
-  // socket.on('twoPlayers', (gameId) => {
-  //   const result = Games[gameId].spaceShips.length === 2
-  //   socket.emit('twoPlayers', result)
-  // })
-
   socket.on('move', (gameId, playerIndex, direction) => {
-    // console.log('TCL: playerIndex', playerIndex)
-    Games[gameId].move(playerIndex, direction)
+    Games[gameId] ? Games[gameId].move(playerIndex, direction) : null
   })
 
   socket.on('shoot', (gameID, playerIndex) => {
     Games[gameID].shoot(playerIndex)
+  })
+
+  socket.on('deleteGame', (gameID) => {
+    delete Games[gameID]
+    socket.emit('deleteThisGame', null)
   })
 
 })

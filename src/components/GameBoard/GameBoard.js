@@ -34,9 +34,10 @@ class GameBoard extends Component {
     // }
 
     render() {
+        console.log(this.props.ClientManager.gameData)
 
-        if (this.props.ClientManager.gameData) {
 
+        if (this.props.ClientManager.gameData && this.props.ClientManager.gameData.spaceShips.length > 0) {
             const game = this.props.ClientManager.gameData
             const playerInfo = game.playerInfo
             const enemies = game.enemies.map((e, i) => {
@@ -80,7 +81,7 @@ class GameBoard extends Component {
                         </div>
                     )} */}
 
-                        {game.gameOver && game.losing ? <Losing /> : null}
+                        {game.isGameOver ? <Losing /> : null}
                     </div>
                 </div>
             )

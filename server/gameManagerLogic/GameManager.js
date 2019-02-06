@@ -26,7 +26,6 @@ class GameManager {
     }
 
     joinGame(playerID) {
-        console.log('TCL: GameManager -> joinGame -> playerID', playerID)
         const y = (this.spaceShips.length + 1) * 10
         const x = 10
         this.spaceShips.push(new SpaceShip(playerID, x, y))
@@ -49,7 +48,7 @@ class GameManager {
         setTimeout(() => this.finishLevel = false, 2000);
         this.createEnemies(this.enemyPerLevel)
 
-        this.gameInterval = setInterval((this.game), 20)
+        this.gameInterval = setInterval((this.game), 30)
     }
 
     finishExplosion() {
@@ -67,19 +66,21 @@ class GameManager {
     gameOver() {
         clearInterval(this.gameInterval);
 
-        this.enemies = []
-        this.spaceShips = []
-        this.laserShots = []
         this.playerInfo = {
             life: 3,
             score: 0,
             level: 1
         }
-        this.isGameOver = true
-        this.finishLevel = false
+        this.enemies = []
+        this.laserShots = []
+        this.gameInterval = 0
+        this.explosion = []
+        this.enemyPerLevel = 4
 
+        this.isGameOver = true
         io.in(`${this.id}`).emit('gameOver');
     }
+
 
     pauseGame() {
         if (!this.isGameOnPause) clearInterval(this.gameInterval);
@@ -88,7 +89,7 @@ class GameManager {
     }
 
     continuePlaying() {
-        if (this.isGameOnPause) this.gameInterval = setInterval(this.game, 20)
+        if (this.isGameOnPause) this.gameInterval = setInterval(this.game, 30)
         this.isGameOnPause = false
     }
 

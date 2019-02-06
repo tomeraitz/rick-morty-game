@@ -21,9 +21,6 @@ class Popup extends Component {
             this.setState({ codeError: true })
         } else {
             this.props.ClientManager.joinGame(this.state.codeText)
-            // this.props.ClientManager.newGame()
-            // console.log(this.props.ClientManager.gameID)
-            // this.props.ClientManager.startsingleGame()
             this.props.ClientManager.startMultiPlay()
 
         }
@@ -32,8 +29,6 @@ class Popup extends Component {
     searchingForPlayer = () => {
         this.props.searchingForPlayer()
         this.props.ClientManager.newGame()
-        // this.props.ClientManager.newGame()
-        // this.props.ClientManager.startGame()
     }
 
 
