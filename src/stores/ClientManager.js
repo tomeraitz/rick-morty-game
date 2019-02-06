@@ -42,12 +42,15 @@ class ClientManager {
         socket.emit('newGame')
     }
 
-    @action joinGame = () => {
-        socket.emit('joinGame')
+    @action joinGame = (gameJoinID) => {
+        socket.emit('joinGame',gameJoinID)
+        socket.on('joinedGame', (gameIDAndPlayer) => {
+            this.getGameIdAndPlayerID(gameIDAndPlayer)
+
+        })
     }
 
     @action getgameData = (gameData) => {
-
         this.gameData = { ...gameData }
     }
 

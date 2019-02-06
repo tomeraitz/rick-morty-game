@@ -1,10 +1,9 @@
-import React, {
-    Component
-} from 'react';
-import {
-    observer,
-    inject
-} from 'mobx-react';
+import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react';
+import { Howl, Howler } from 'howler';
+import io from 'socket.io-client';
+import ReactHowler from 'react-howler'
+import { heightToPixels, widthToPixels } from '../../consts/toPixels'
 
 import SpaceShipComponent from '../spaceShip/SpaceShipComponent'
 import Lasers from '../LaserShots/Lasers'
@@ -12,12 +11,8 @@ import Enemy from '../Enemy/Enemy'
 import NextLevel from './NextLevel'
 import Losing from './Losing'
 
-import { heightToPixels, widthToPixels } from '../../consts/toPixels'
 import arrayImages from '../../consts/ArrayImages'
 import explosion from '../../consts/explosion'
-
-// import io from 'socket.io-client';
-// const socket = io.connect('http://localhost:3004/')
 
 
 
@@ -50,6 +45,7 @@ class GameBoard extends Component {
             const playerInfo = game.playerInfo
             const gameFunctions = this.props.ClientManager
             const enemies = game.enemies.map((e, i) => {
+                console.log(e.src)
                 return <Enemy key={i} id={arrayImages[e.index].name} x={widthToPixels(e.x)} y={heightToPixels(e.y)} myImage={e.src} arrayImages={arrayImages[e.index]} />
             });
 
@@ -74,14 +70,9 @@ class GameBoard extends Component {
                             <i className="fas fa-play" onClick={gameFunctions.continuePlaying}></i>
                             : <i className="fas fa-pause" onClick={this.pauseGame}></i>}
                     </div>
-                    {/* <ReactAudioPlayer
-                    type="audio/mp3"
-                    src={ThemeSong}
-                    autoPlay
-                    loop
-                /> */}
-                    <div id="space-background" >
+                    {/* <ReactAudioPlayer type="audio/mp3" src={ThemeSong} autoPlay loop /> */}
 
+                    <div id="space-background" >
                         {spaceShips}
                         {laserShots}
                         {enemies}
