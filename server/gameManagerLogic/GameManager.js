@@ -96,7 +96,7 @@ class GameManager {
     game() {
         this.enemies.forEach(e => {
             if (e.x + 2 <= 100) {
-                e.x += 0.5
+                e.x += this.playerInfo.level / 2
             }
             else this.kill(e)
         })
@@ -167,9 +167,6 @@ class GameManager {
                     if (instance instanceof LaserShot) {
                         this.enemyPerLevel--
                         this.playerInfo.score += 10
-                        // if (this.enemyPerLevel === 0) {
-                        //     this.setNewLeve()
-                        // }
                     }
                     this.kill(instance)
                     this.kill(e)

@@ -74,6 +74,10 @@ class ClientManager {
         socket.emit('continueGame', this.gameID)
     }
 
+    @action finishExplosion = () => {
+        socket.emit('finishExplosion', this.gameID)
+    }
+
     @action setGameOver = () => {
         this.gameOver = true
     }
@@ -88,7 +92,6 @@ class ClientManager {
         socket.emit('deleteGame', this.gameID)
         window.location.reload()
     }
-
 }
 
 const clientManager = new ClientManager()

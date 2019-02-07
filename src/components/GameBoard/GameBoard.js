@@ -19,26 +19,18 @@ class GameBoard extends Component {
 
     componentDidMount() {
 
-        // socket.emit('newGame')
-        // socket.on('joinedGame', (gameIDAndPlayer) => {
-        //     this.props.ClientManager.getGameIdAndPlayerID(gameIDAndPlayer)
-        //     socket.emit('startGame', gameIDAndPlayer.gameId)
-        // })
-
         this.props.ClientManager.newState()
     }
-    // finishExplosion() {
-    //     setTimeout(() =>
-    //         game.finishExplosion()
-    //         , 500)
-    // }
+
+    finishExplosion() {
+        this.props.ClientManager.finishExplosion()
+    }
 
     render() {
-        console.log(this.props.ClientManager.gameData)
-
 
         if (this.props.ClientManager.gameData && this.props.ClientManager.gameData.spaceShips.length > 0) {
             const game = this.props.ClientManager.gameData
+            this.finishExplosion()
             const playerInfo = game.playerInfo
             const enemies = game.enemies.map((e, i) => {
                 return <Enemy key={i} id={arrayImages[e.index].name} x={widthToPixels(e.x)} y={heightToPixels(e.y)} myImage={e.src} arrayImages={arrayImages[e.index]} />
@@ -50,6 +42,10 @@ class GameBoard extends Component {
 
             const laserShots = game.laserShots.map((l, i) => {
                 return <Lasers key={i} x={widthToPixels(l.x)} y={heightToPixels(l.y)} />
+            });
+
+            const explosionGif = game.explosion.map((e, i) => {
+                return <div key={i} className="explosion" style={{ right: `${widthToPixels(e.x)}px`, bottom: `${heightToPixels(e.y)}px` }}> <img alt="explosion" src={explosion} /> </div>
             });
 
 
@@ -69,17 +65,9 @@ class GameBoard extends Component {
                         {spaceShips}
                         {laserShots}
                         {enemies}
+                        {explosionGif}
 
                         {game.finishLevel ? <NextLevel level={playerInfo.level} /> : null}
-                        {/* {game.explosion.map((e, i) =>
-                        <div key={i} className="explosion"
-                            style={{
-                                right: `${e.x}px`,
-                                bottom: `${e.y}px`
-                            }}>
-                            <img alt="explosion" src={explosion} />
-                        </div>
-                    )} */}
 
                         {game.isGameOver ? <Losing /> : null}
                     </div>
