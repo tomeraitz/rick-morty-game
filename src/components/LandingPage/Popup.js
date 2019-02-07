@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {observer,inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { Link } from 'react-router-dom'
 
 @inject('ClientManager')
@@ -13,24 +13,22 @@ class Popup extends Component {
     closePopup = () => this.props.closePopup()
 
     inputHandle = (e) => {
-        this.setState({ codeText: e.target.value })
+        this.setState({ codeText: e.target.value.toLowerCase() })
     }
 
     joinGame = () => {
         if (this.state.codeText === "") {
             this.setState({ codeError: true })
-        } 
-        else {
-            // return this.props.searchingForPlayer()
+        } else {
             this.props.ClientManager.joinGame(this.state.codeText)
-            
-            
+            this.props.ClientManager.startMultiPlay()
+
         }
     }
 
     searchingForPlayer = () => {
-        this.props.ClientManager.newGame()
         this.props.searchingForPlayer()
+        this.props.ClientManager.newGame()
     }
 
 
@@ -41,18 +39,19 @@ class Popup extends Component {
                 <div></div>
                 <div className="side-bar">
 
-                <Link to="/game" ><button className="create-game" onClick={this.searchingForPlayer}>CREATE GAME</button></Link>
+                    <button className="create-game" onClick={this.searchingForPlayer}>CREATE GAME</button>
                     <div className="join-game">
                         <div className="code-input">
                             <input name="codeText" className={this.state.codeError ? "code-error" : ""} value={this.state.codeText} onChange={this.inputHandle} placeholder="Enter passcode to join..." />
                             {this.state.codeError ? <p>Please enter valid code...</p> : null}
                         </div>
-                        <Link to="/game" ><button className="join-game-button" onClick={this.joinGame}>JOIN</button></Link>
+                        <Link to={this.state.codeText === "" ? "/" : "/game"} ><button className="join-game-button" onClick={this.joinGame}>JOIN</button></Link>
                     </div>
                 </div>
             </div>
         );
     }
+
 }
 
 export default Popup;

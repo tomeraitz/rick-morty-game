@@ -22,12 +22,11 @@ class LandingPage extends Component {
         this.setState({ showPopup: !this.state.showPopup })
     }
 
-
-
-    startSingleGame = () =>{
-        this.props.ClientManager.newGame()
-        this.props.ClientManager.multiPlayer = false
+    startSingleGame = () => {
+        this.props.ClientManager.startSinglePlay()
+        this.props.ClientManager.singlePlayer = true
     }
+
     searchingForPlayerToggle = () => {
         this.setState({ searchingForPlayer: !this.state.searchingForPlayer, showPopup: false })
     }
@@ -36,13 +35,16 @@ class LandingPage extends Component {
         this.setState({ gameFound: !this.state.gameFound, showPopup: false })
     }
 
+    toggleSound = () => this.props.toggleSound()
+
     render() {
+
         let rickAndMortyLogo = "https://ya-webdesign.com/images/rick-and-morty-logo-png-1.png"
         return (
             <div id="landing-page" onClick={this.showPopup ? this.closePopup() : null}>
+                {this.props.soundOn ? <i className="fas fa-volume-up" onClick={this.toggleSound}></i> : <i className="fas fa-volume-off" onClick={this.toggleSound}></i>}
                 <img id="logo" alt="" src={rickAndMortyLogo} />
                 <div className="games-buttons">
-
 
                     <Link to="/game" ><div className="start-game" onClick={this.startSingleGame}>SINGLE PLAYER</div></Link>
 

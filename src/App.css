@@ -15,9 +15,9 @@
     height: 100vh;
 }
 
-#space-ship > img {
+/* #space-ship > img {
     height: 6vh;
-}
+} */
 
 #space-ship {
     position: absolute;
@@ -56,42 +56,42 @@
   
 #reaper > img {
     height: 9vh;
-    width: 4vw;
+    /* width: 4vw; */
 }
 
 #poopy > img {
     height: 10vh;
-    width: 2vw;
+    /* width: 2vw; */
 }
 
 #martin > img {
     height: 10vh;
-    width: 5vw;
+    /* width: 5vw; */
 }
 
 #rick-and-morty > img {
     height: 10vh;
-    width: 3vw;
+    /* width: 3vw; */
 }
 
 #ass-morty > img {
     height: 10vh;
-    width: 2vw;
+    /* width: 2vw; */
 }
 
 #pickle > img {
     height: 10vh;
-    width: 2vw;
+    /* width: 2vw; */
 }
 
 #robot > img {
     height: 10vh;
-    width: 4vw;
+    /* width: 4vw; */
 }
 
 #squirrel > img {
     height: 10vh;
-    width: 7vw;
+    /* width: 7vw; */
 }
 
 /* user-navbar */
@@ -153,12 +153,12 @@ i {
     text-transform: uppercase
 }
 
-.player-choose-next {
+/* .player-choose-next {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 2vw;
     align-items: center;
-}
+} */
 
 .start-new-game {
     border: none;

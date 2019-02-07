@@ -6,6 +6,7 @@ class JoinedPopup extends Component {
     closePopup = () => {
         return this.props.closePopup()
     }
+
     render() {
         return (
             <div className="joined-popup">

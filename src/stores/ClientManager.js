@@ -1,62 +1,58 @@
 import { observable, action, remove } from 'mobx'
 import io from 'socket.io-client';
-const socket = io.connect('http://localhost:3004/')
+const socket = io.connect('https://mihi.serveo.net/')
 
 class ClientManager {
     @observable gameID
     @observable playerID
     @observable gameData
     @observable checKeyPress = [40, 38, 37, 39]
-    @observable multiPlayer = false
-    @observable gameOver=false
+    @observable singlePlayer = false
+    @observable gameOver = false
+    @observable isGameMultiplayerOn = false
+    @observable ready = false
 
     @action getGameIdAndPlayerID(gameIDAndPlayer) {
         this.gameID = gameIDAndPlayer.gameId
         this.playerID = gameIDAndPlayer.playerId
     }
 
-    @action startGame = () => {
-        socket.emit('startGame', this.gameID)
-    }
-
-
-    @action newState = () =>{
+    @action newState = () => {
         socket.on('newState', (gameData) => {
             this.getgameData(gameData)
         })
     }
 
-    @action startsingleGame = () =>{
+    @action startSinglePlay = () => {
+        socket.emit('newGame')
         socket.on('joinedGame', (gameIDAndPlayer) => {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
             socket.emit('startGame', gameIDAndPlayer.gameId)
         })
+    }
 
-    } 
-
-    @action gameCreated = () =>{
+    @action startMultiPlay = () => {
         socket.on('joinedGame', (gameIDAndPlayer) => {
             console.log(gameIDAndPlayer.gameId)
             this.getGameIdAndPlayerID(gameIDAndPlayer)
-
+            socket.emit('startGame', gameIDAndPlayer.gameId)
         })
     }
 
     @action newGame = () => {
-        this.gameOver=false
+        this.gameOver = false
         socket.emit('newGame')
-        socket.on('joinedGame', (gameIDAndPlayer) => {
-            console.log(gameIDAndPlayer.gameId)
+        socket.on('joinedGame', gameIDAndPlayer => {
+            this.getGameIdAndPlayerID(gameIDAndPlayer)
 
         })
     }
 
 
     @action joinGame = (gameJoinID) => {
-        socket.emit('joinGame',gameJoinID)
+        socket.emit('joinGame', gameJoinID)
         socket.on('joinedGame', (gameIDAndPlayer) => {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
-
         })
     }
 
@@ -79,26 +75,34 @@ class ClientManager {
     @action continueGame = () => {
         socket.emit('continueGame', this.gameID)
     }
-    @action setGameOver = ()=>{
-        // this.gameID=""
-        // this.playerID=""
-        // this.gameData=""
-        // this.checKeyPress = [40, 38, 37, 39]
-        // this.multiPlayer = false
-        this.gameOver=true
-        // socket //disconnect
-        // socket.emit('removeGame',this.gameID)
+
+
+    @action setGameOver = () => {
+        this.gameOver = true
+    }
+
+    @action waitForPlayers = () => {
+        socket.on("getReady", () => {
+            this.ready = true
+        })
+    }
+
+    @action deleteGame = () => {
+        socket.emit('deleteGame', this.gameID)
+        window.location.reload()
+
     }
 
 }
 
 const clientManager = new ClientManager()
-if(clientManager.gameData){
+if (clientManager.gameData) {
     clientManager.newState()
 }
 
 
-socket.on('gameOver',()=>{
+socket.on('gameOver', () => {
     clientManager.setGameOver()
 })
+
 export default clientManager

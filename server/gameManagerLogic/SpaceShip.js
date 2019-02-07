@@ -3,12 +3,9 @@ class SpaceShip {
         this.id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10)
         this.x = x
         this.y = y
-        // this.height = height
-        // this.width = width
+        this.height = 6
+        this.width = 5.5
     }
-
 }
-
-
 
 module.exports = SpaceShip
