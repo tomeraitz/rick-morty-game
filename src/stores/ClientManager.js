@@ -1,6 +1,6 @@
-import { observable, action, remove } from 'mobx'
+import { observable, action } from 'mobx'
 import io from 'socket.io-client';
-const socket = io.connect('http://localhost:3004')
+const socket = io.connect()//('http://localhost:3004')
 
 class ClientManager {
     @observable gameID
@@ -100,7 +100,8 @@ class ClientManager {
 }
 
 const clientManager = new ClientManager()
-if (clientManager.gameData) {
+if (clientManager.gameData)
+{
     clientManager.newState()
 }
 
