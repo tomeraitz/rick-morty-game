@@ -12,7 +12,7 @@ import Losing from './Losing'
 import arrayImages from '../../consts/ArrayImages'
 import explosion from '../../consts/explosion'
 
-const socket = io.connect('http://localhost:3004/')
+// const socket = io.connect('http://localhost:3004/')
 @inject('ClientManager')
 @observer
 class GameBoard extends Component {
