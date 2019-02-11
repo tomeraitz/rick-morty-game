@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
-const api = require('./server/routes/api')
+// const api = require('./server/routes/api')
 const port = process.env.PORT || 3004
 const server = app.listen(port)//http.createServer(app);
 const randomWords = require('random-words')
@@ -39,10 +39,18 @@ app.get('*', function (req, res) {
 // app.use('/', api)
 
 
-const Game = require('./server/gameManagerLogic/GameManager')
 
+
+io.configure(function () {
+  io.set("transports", ["xhr-polling"]);
+  io.set("polling duration", 10);
+});
+
+
+const Game = require('./server/gameManagerLogic/GameManager')
 const Games = {}
 // socket.io
+
 io.on('connection', (socket) => {
 
   console.log('connection')
