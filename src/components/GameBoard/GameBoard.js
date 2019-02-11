@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import io from 'socket.io-client';
+
 import { heightToPixels, widthToPixels } from '../../consts/toPixels'
 
 import SpaceShipComponent from '../spaceShip/SpaceShipComponent'
@@ -13,10 +14,10 @@ import arrayImages from '../../consts/ArrayImages'
 import explosion from '../../consts/explosion'
 
 const socket = io.connect('http://localhost:3004/')
+
 @inject('ClientManager')
 @observer
 class GameBoard extends Component {
-
     componentDidMount() {
 
         this.props.ClientManager.newState()
@@ -26,8 +27,8 @@ class GameBoard extends Component {
         this.props.ClientManager.finishExplosion()
     }
 
-    render() {
 
+    render() {
         if (this.props.ClientManager.gameData && this.props.ClientManager.gameData.spaceShips.length > 0) {
             const game = this.props.ClientManager.gameData
             this.finishExplosion()
@@ -71,11 +72,12 @@ class GameBoard extends Component {
 
                         {game.isGameOver ? <Losing /> : null}
                     </div>
+                    {this.props.ClientManager.singlePlayer ? this.dubdubOnce() : null}
                 </div>
             )
-        } else { return <h1>ERROR</h1> }
+        } else { return <h1>Loading....</h1> }
     }
-
 }
+
 
 export default GameBoard

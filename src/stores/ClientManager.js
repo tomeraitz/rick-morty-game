@@ -1,5 +1,9 @@
 import { observable, action } from 'mobx'
 import io from 'socket.io-client';
+import { Howl, Howler } from 'howler';
+
+
+
 const socket = io.connect('http://localhost:3004/')
 
 class ClientManager {
@@ -92,13 +96,22 @@ class ClientManager {
         socket.emit('deleteGame', this.gameID)
         window.location.reload()
     }
+
+    @action dubdubOnce = () => {
+        let sounds = require('../sounds/woo_vu_luvub_dub_dub.wav')
+        var sound = new Howl({
+            src: sounds
+        });
+
+        sound.play();
+    }
+
 }
 
 const clientManager = new ClientManager()
 if (clientManager.gameData) {
     clientManager.newState()
 }
-
 
 socket.on('gameOver', () => {
     clientManager.setGameOver()

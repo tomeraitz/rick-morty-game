@@ -96,7 +96,7 @@ class GameManager {
     game() {
         this.enemies.forEach(e => {
             if (e.x + 2 <= 100) {
-                e.x += this.playerInfo.level / 2
+                e.x += 0.5
             }
             else this.kill(e)
         })
@@ -118,7 +118,8 @@ class GameManager {
             isGameOver: this.isGameOver,
             isGameOnPause: this.isGameOnPause,
             explosion: this.explosion,
-            playerInfo: this.playerInfo
+            playerInfo: this.playerInfo,
+            enemyPerLevel: this.enemyPerLevel
         }
 
         io.in(`${this.id}`).emit('newState', gameState);
