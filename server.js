@@ -3,11 +3,12 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
-const api = require('./server/routes/api')
-const port =   3004
-const server = app.listen(process.env.PORT || port)//http.createServer(app);
 const randomWords = require('random-words')
-const io = require('socket.io').listen(server);
+// const api = require('./server/routes/api')
+const server = require('http').server(app)
+// const server = app.listen(port)//http.createServer(app);
+const io = require('socket.io')(server);
+const port =   process.env.PORT || 3004
 
 module.exports = io
 
@@ -88,3 +89,6 @@ io.on('connection', (socket) => {
 })
 
 
+server.listen(port,()=>{
+  console.log(`server is running on: ${port}`)
+})
