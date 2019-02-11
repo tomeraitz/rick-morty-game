@@ -4,8 +4,8 @@ const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
 const api = require('./server/routes/api')
-const port =  process.env.PORT || 3004
-const server = app.listen(port)//http.createServer(app);
+const port =   3004
+const server = app.listen(process.env.PORT || port)//http.createServer(app);
 const randomWords = require('random-words')
 const io = require('socket.io').listen(server);
 
