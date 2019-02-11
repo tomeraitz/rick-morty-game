@@ -13,21 +13,16 @@ module.exports = io
 
 
 // Mongoose setup
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/Rick&MortyDB', { useNewUrlParser: true })
+// const mongoose = require('mongoose')
+// mongoose.connect('mongodb://localhost/Rick&MortyDB', { useNewUrlParser: true })
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static(path.join(__dirname, 'build')));
 
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
-  res.header('Access-Control-Allow-Credentials', true);
-
-  next()
-})
-
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 // app.use('/', api)
 
