@@ -1,6 +1,7 @@
 import { observable, action, remove } from 'mobx'
 import io from 'socket.io-client';
 const socket = io.connect('https://rick-and-morty-space-game.herokuapp.com:'+ process.env.PORT  + '/')//('http://localhost:3004/')
+console.log('https://rick-and-morty-space-game.herokuapp.com:'+ process.env.PORT  + '/')
 
 class ClientManager {
     @observable gameID
