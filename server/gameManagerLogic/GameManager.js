@@ -118,7 +118,8 @@ class GameManager {
             isGameOver: this.isGameOver,
             isGameOnPause: this.isGameOnPause,
             explosion: this.explosion,
-            playerInfo: this.playerInfo
+            playerInfo: this.playerInfo,
+            enemyPerLevel : this.enemyPerLevel
         }
 
         io.in(`${this.id}`).emit('newState', gameState);
@@ -167,9 +168,6 @@ class GameManager {
                     if (instance instanceof LaserShot) {
                         this.enemyPerLevel--
                         this.playerInfo.score += 10
-                        // if (this.enemyPerLevel === 0) {
-                        //     this.setNewLeve()
-                        // }
                     }
                     this.kill(instance)
                     this.kill(e)

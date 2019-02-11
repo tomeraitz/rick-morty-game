@@ -1,6 +1,6 @@
 import { observable, action, remove } from 'mobx'
 import io from 'socket.io-client';
-const socket = io.connect('https://mihi.serveo.net/')
+const socket = io.connect('http://localhost:3004')
 
 class ClientManager {
     @observable gameID
@@ -77,6 +77,11 @@ class ClientManager {
     }
 
 
+    @action finishExplosion = () => {
+        socket.emit('finishExplosion', this.gameID)
+    }
+
+
     @action setGameOver = () => {
         this.gameOver = true
     }
@@ -92,7 +97,6 @@ class ClientManager {
         window.location.reload()
 
     }
-
 }
 
 const clientManager = new ClientManager()
