@@ -1,6 +1,6 @@
 import { observable, action, remove } from 'mobx'
 import io from 'socket.io-client';
-const socket = io.connect('http://localhost:3004')
+const socket = io.connect()
 
 class ClientManager {
     @observable gameID
