@@ -9,6 +9,7 @@ const randomWords = require('random-words')
 const port =   process.env.PORT || 3004
 const server = app.listen(port)//http.createServer(app);
 const io = require('socket.io')(server);
+console.log('porti!!!!!!' + port)
 
 module.exports = io
 
