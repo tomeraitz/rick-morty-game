@@ -13,6 +13,7 @@ const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.use(express.static(path.resolve(__dirname, 'buildgit')));
 
