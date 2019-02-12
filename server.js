@@ -4,7 +4,7 @@ const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
 const randomWords = require('random-words')
-// const api = require('./server/routes/api')
+const api = require('./server/routes/api')
 // const server = require('http').server(app)
 const port =   process.env.PORT || 3004
 const server = app.listen(port)//http.createServer(app);
@@ -26,7 +26,7 @@ app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-// app.use('/', api)
+app.use('/', api)
 
 
 const Game = require('./server/gameManagerLogic/GameManager')
@@ -87,5 +87,9 @@ io.on('connection', (socket) => {
   })
 
 
+})
+
+app.get('portName', function(req, res){
+  res.send(port)
 })
 
