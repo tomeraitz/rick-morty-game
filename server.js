@@ -65,7 +65,7 @@ io.on('connection', (socket) => {
     if (multy.length===0){
       console.log('Someone created a new game')
       const gameId = `${randomWords()}-${randomWords()}-${randomWords()}`
-      multy[0] = gameId
+      multy.push(gameId)
       const newGame = new Game(gameId)
       Games[gameId] = newGame
       Games[gameId].joinGame(socket.id)
