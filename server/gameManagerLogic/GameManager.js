@@ -119,7 +119,11 @@ class GameManager {
             isGameOnPause: this.isGameOnPause,
             explosion: this.explosion,
             playerInfo: this.playerInfo,
+<<<<<<< HEAD
             enemyPerLevel: this.enemyPerLevel
+=======
+            enemyPerLevel : this.enemyPerLevel
+>>>>>>> f5563a929a7995d15729ed32afd3a5bfde90b6a4
         }
 
         io.in(`${this.id}`).emit('newState', gameState);

@@ -76,7 +76,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "heroku-postbuild": "npm install --only=dev && npm install && npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -98,7 +99,7 @@
   "bugs": {
     "url": "https://github.com/tomeraitz/rick-morty-game/issues"
   },
-  "homepage": "https://github.com/tomeraitz/rick-morty-game#readme",
+  "homepage": "./",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",

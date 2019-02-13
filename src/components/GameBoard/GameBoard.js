@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import io from 'socket.io-client';
-
 import { heightToPixels, widthToPixels } from '../../consts/toPixels'
 
 import SpaceShipComponent from '../spaceShip/SpaceShipComponent'

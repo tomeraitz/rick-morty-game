@@ -2,8 +2,6 @@ import { observable, action } from 'mobx'
 import io from 'socket.io-client';
 import { Howl, Howler } from 'howler';
 
-
-
 const socket = io.connect('http://localhost:3004/')
 
 class ClientManager {
@@ -37,6 +35,7 @@ class ClientManager {
 
     @action startMultiPlay = () => {
         socket.on('joinedGame', (gameIDAndPlayer) => {
+            console.log(gameIDAndPlayer.gameId)
             this.getGameIdAndPlayerID(gameIDAndPlayer)
             socket.emit('startGame', gameIDAndPlayer.gameId)
         })
@@ -47,6 +46,7 @@ class ClientManager {
         socket.emit('newGame')
         socket.on('joinedGame', gameIDAndPlayer => {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
+
         })
     }
 
@@ -78,9 +78,11 @@ class ClientManager {
         socket.emit('continueGame', this.gameID)
     }
 
+
     @action finishExplosion = () => {
         socket.emit('finishExplosion', this.gameID)
     }
+
 
     @action setGameOver = () => {
         this.gameOver = true
@@ -95,6 +97,7 @@ class ClientManager {
     @action deleteGame = () => {
         socket.emit('deleteGame', this.gameID)
         window.location.reload()
+
     }
 
     @action dubdubOnce = () => {
