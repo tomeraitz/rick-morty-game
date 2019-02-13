@@ -1,41 +1,39 @@
-// Server Setup
 const express = require('express')
 const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
 const randomWords = require('random-words')
-// const api = require('./server/routes/api')
-const port =  3004
-const server = app.listen(port, function(){
-  console.log(`running on ${port}`)
-})//http.createServer(app);
-const io = require('socket.io')(server);
-
-
-module.exports = io
-// const server = require('http').server(app)
-
-
+const port = 3004//process.env.PORT || 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // Mongoose setup
 // const mongoose = require('mongoose')
 // mongoose.connect('mongodb://localhost/Rick&MortyDB', { useNewUrlParser: true })
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.static(path.join(__dirname, 'build')));
-
-app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
+// const api = require('./server/routes/api')
 // app.use('/', api)
 
 
 
-const Game = require('./server/gameManagerLogic/GameManager')
+  app.use(express.static(path.join(__dirname, 'build')));
 
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  })
+
+
+
+
+const server = app.listen(port, () => {
+  console.log(`server running on ${port}`)
+});//http.createServer(app);
+const io = require('socket.io').listen(server)
+module.exports = io
+
+const Game = require('./server/gameManagerLogic/GameManager')
 const Games = {}
+
 // socket.io
 io.on('connection', (socket) => {
 
