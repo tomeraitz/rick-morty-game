@@ -3,6 +3,10 @@
     font-family: 'Patrick Hand', cursive;
 }
 
+#mobile-message {
+    margin-top: 30vh;
+}
+
 #game-border {
     width: 100vw;
     height: 100vh;
@@ -36,6 +40,7 @@
 }
 
 /* Enemies */
+
 .enemy {
     display: inline-block;
     position: absolute;
@@ -46,55 +51,56 @@
     position: absolute;
 }
 
-.explosion > img {
+.explosion>img {
     height: 50px;
 }
 
 .explosion>img {
     animation-duration: 1s;
 }
-  
-#reaper > img {
+
+#reaper>img {
     height: 9vh;
     /* width: 4vw; */
 }
 
-#poopy > img {
+#poopy>img {
     height: 10vh;
     /* width: 2vw; */
 }
 
-#martin > img {
+#martin>img {
     height: 10vh;
     /* width: 5vw; */
 }
 
-#rick-and-morty > img {
+#rick-and-morty>img {
     height: 10vh;
     /* width: 3vw; */
 }
 
-#ass-morty > img {
+#ass-morty>img {
     height: 10vh;
     /* width: 2vw; */
 }
 
-#pickle > img {
+#pickle>img {
     height: 10vh;
     /* width: 2vw; */
 }
 
-#robot > img {
+#robot>img {
     height: 10vh;
     /* width: 4vw; */
 }
 
-#squirrel > img {
+#squirrel>img {
     height: 10vh;
     /* width: 7vw; */
 }
 
 /* user-navbar */
+
 .navbar-user {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
@@ -116,6 +122,7 @@ i {
 }
 
 /* next-level-popup */
+
 #next-level {
     position: absolute;
     text-align: center;
@@ -131,13 +138,14 @@ i {
     text-transform: uppercase
 }
 
-#next-level > h3 {
+#next-level>h3 {
     color: #e2e25a;
     cursor: pointer;
     font-size: 30px;
 }
 
 /* losing-popup */
+
 .losing-popup {
     position: absolute;
     text-align: center;
@@ -147,7 +155,7 @@ i {
     width: 50vw;
 }
 
-.losing-popup > h1 {
+.losing-popup>h1 {
     color: #FF0022;
     font-size: 50px;
     text-transform: uppercase
@@ -169,7 +177,7 @@ i {
     background-color: #00b0c8;
 }
 
-.player-choose-next > a {
+.player-choose-next>a {
     justify-self: start;
 }
 

@@ -34,7 +34,7 @@ else// for dev enviroment
     next()
   })
 }
-
+f
 
 
 
@@ -50,9 +50,7 @@ const Games = {}
 
 // socket.io
 io.on('connection', (socket) => {
-
   console.log('connection')
-
   socket.on('newGame', () => {
     console.log('Someone created a new game')
     const gameId = `${randomWords()}-${randomWords()}-${randomWords()}`
