@@ -55,7 +55,11 @@ class LandingPage extends Component {
                     </div>
                 </MediaQuery>
                 <MediaQuery maxDeviceWidth={1024}>
-                    <h1 id="mobile-message">mobile version is coming soon...</h1>
+                    <div id="mobile-message">
+                        <h1 >mobile version</h1>
+                        <h2 >is coming soon...</h2>
+                    </div>
+
                 </MediaQuery>
             </div>
         );
