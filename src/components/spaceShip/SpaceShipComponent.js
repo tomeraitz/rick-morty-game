@@ -41,6 +41,7 @@ class SpaceShipComponent extends Component {
 
     const { index, x, y, height, width } = this.props
     const imageSRC = index === null ? spaceShipImage : index === 0 ? redSpaceShipImage : blueSpaceShipImage
+
     return (
       <div id="space-ship" style={{ bottom: `${y}px`, left: `${x}px` }} >
         <img src={imageSRC} alt="space-ship" style={{ height: `${height}px`, width: `${width}px` }} />
