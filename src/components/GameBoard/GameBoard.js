@@ -72,7 +72,7 @@ class GameBoard extends Component {
 
                         {game.isGameOver ? <Losing /> : null}
                     </div>
-                    {this.props.ClientManager.singlePlayer ? this.dubdubOnce() : null}
+                    {/* {this.props.ClientManager.singlePlayer ? this.dubdubOnce() : null} */}
                 </div>
             )
         } else { return <h1>Loading....</h1> }
