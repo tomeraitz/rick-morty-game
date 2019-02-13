@@ -14,7 +14,7 @@ const port = process.env.PORT || 3004
 
 
 
-if (process.env.PORT || true)//for production enviroment
+if (process.env.PORT)//for production enviroment
 {
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: false }))
