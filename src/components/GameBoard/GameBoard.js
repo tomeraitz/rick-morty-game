@@ -35,9 +35,11 @@ class GameBoard extends Component {
                 return <Enemy key={i} id={arrayImages[e.index].name} x={widthToPixels(e.x)} y={heightToPixels(e.y)} myImage={e.src} arrayImages={arrayImages[e.index]} />
             });
 
-            const spaceShips = game.spaceShips.map((s, i) => {
-                return <SpaceShipComponent key={i} move={s.move} x={widthToPixels(s.x)} y={heightToPixels(s.y)} id={s.id} height={heightToPixels(s.height)} width={widthToPixels(s.width)} />
-            });
+            const spaceShips = game.spaceShips.length > 1 ? game.spaceShips.map((s, i) => {
+                return <SpaceShipComponent key={i} index={i} move={s.move} x={widthToPixels(s.x)} y={heightToPixels(s.y)} id={s.id} height={heightToPixels(s.height)} width={widthToPixels(s.width)} />
+            }) : game.spaceShips.map((s, i) => {
+                return <SpaceShipComponent key={i} index={null} move={s.move} x={widthToPixels(s.x)} y={heightToPixels(s.y)} id={s.id} height={heightToPixels(s.height)} width={widthToPixels(s.width)} />
+            })
 
             const laserShots = game.laserShots.map((l, i) => {
                 return <Lasers key={i} x={widthToPixels(l.x)} y={heightToPixels(l.y)} />

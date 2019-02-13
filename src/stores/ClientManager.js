@@ -19,6 +19,7 @@ class ClientManager {
 
     @action newState = () => {
         socket.on('newState', (gameData) => {
+            console.log('TCL: ClientManager -> @actionnewState -> gameData', gameData)
             this.getgameData(gameData)
         })
     }
