@@ -3,7 +3,7 @@ const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
 const randomWords = require('random-words')
-const port = 3004//process.env.PORT || 
+const port = process.env.PORT || 3004
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -16,12 +16,26 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 
 
+if (process.env.PORT)//for production enviroment
+{
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: false }))
   app.use(express.static(path.join(__dirname, 'build')));
 
   app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   })
-
+}
+else// for dev enviroment
+{
+  app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
+    res.header('Access-Control-Allow-Credentials', true);
+    next()
+  })
+}
 
 
 
@@ -43,7 +57,6 @@ io.on('connection', (socket) => {
     console.log('Someone created a new game')
     const gameId = `${randomWords()}-${randomWords()}-${randomWords()}`
     const newGame = new Game(gameId)
-    console.log(newGame)
     Games[gameId] = newGame
     Games[gameId].joinGame(socket.id)
     socket.join(`${gameId}`)

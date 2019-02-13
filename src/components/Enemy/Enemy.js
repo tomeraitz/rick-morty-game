@@ -28,7 +28,7 @@ class Enemy extends Component {
         return (
             <div className="enemy" id={this.props.id}
                 style={{
-                    right: `${x}px`, bottom: `${y}px`
+                    left: `${x}px`, bottom: `${y}px`
                 }}
             >
                 <img alt="enemy" src={[corrntImg.src]} />

@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 import io from 'socket.io-client';
-const socket = io.connect('http://localhost:3004/')
+const socket = io.connect('http://localhost:3004')
 
 
 class ClientManager {
@@ -12,6 +12,7 @@ class ClientManager {
     @observable gameOver = false
     @observable isGameMultiplayerOn = false
     @observable ready = false
+    @observable isGameOnPause = false
 
     @action getGameIdAndPlayerID(gameIDAndPlayer) {
         this.gameID = gameIDAndPlayer.gameId
@@ -71,10 +72,12 @@ class ClientManager {
 
     @action pauseGame = () => {
         socket.emit('pauseGame', this.gameID)
+        this.isGameOnPause = true
     }
 
     @action continueGame = () => {
         socket.emit('continueGame', this.gameID)
+        this.isGameOnPause = false
     }
 
 
