@@ -27,7 +27,7 @@ class App extends Component {
       <Router>
         <div className="App">
 
-          {/* {this.state.soundOn ? <ReactHowler src={themeSong} playing={true} loop={true} /> : <ReactHowler src={themeSong} playing={false} />} */}
+          {this.state.soundOn ? <ReactHowler src={themeSong} playing={true} loop={true} /> : <ReactHowler src={themeSong} playing={false} />}
 
           <Stars />
           <Route path="/" exact render={() => <LandingPage toggleSound={this.toggleSound} soundOn={this.state.soundOn} />} />
