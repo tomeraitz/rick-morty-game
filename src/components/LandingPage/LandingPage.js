@@ -20,6 +20,7 @@ class LandingPage extends Component {
 
     togglePopup = () => {
         this.setState({ showPopup: !this.state.showPopup })
+        this.props.ClientManager.startMultiPlay()
     }
 
     startSingleGame = () => {
@@ -50,10 +51,10 @@ class LandingPage extends Component {
 
                     <div className="start-multiplayer-game" onClick={this.togglePopup}>MULTIPLAYER</div>
 
-                    {this.state.showPopup ? <Popup closePopup={this.togglePopup} searchingForPlayer={this.searchingForPlayerToggle} foundGameToggle={this.foundGameToggle} /> : null}
+                    {/* {this.state.showPopup ? <Popup closePopup={this.togglePopup} searchingForPlayer={this.searchingForPlayerToggle} foundGameToggle={this.foundGameToggle} /> : null} */}
 
-                    {this.state.searchingForPlayer ? <SearchingForPlayer cancelSearch={this.searchingForPlayerToggle} /> : null}
-                    {this.state.gameFound ? <JoinedPopup /> : null}
+                    {this.state.showPopup ? <SearchingForPlayer cancelSearch={this.searchingForPlayerToggle} /> : null}
+                    {/* {this.state.gameFound ? <JoinedPopup /> : null} */}
                 </div>
             </div>
         );

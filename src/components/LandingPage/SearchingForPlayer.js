@@ -18,7 +18,7 @@ class SearchingForPlayer extends Component {
         } else {
             return (
                 <div className="searching-for-player">
-                    <h1>Code: {this.props.ClientManager.gameID}</h1>
+                    {/* <h1>Code: {this.props.ClientManager.gameID}</h1> */}
                     <div className="cancel-search" onClick={this.cancelSearch}>X</div>
                     <div className="lds-roller">
                         <div></div>

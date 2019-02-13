@@ -26,7 +26,7 @@ class ClientManager {
     }
 
     @action startSinglePlay = () => {
-        socket.emit('newGame')
+        socket.emit('singleGame')
         socket.on('joinedGame', (gameIDAndPlayer) => {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
             socket.emit('startGame', gameIDAndPlayer.gameId)
@@ -34,10 +34,13 @@ class ClientManager {
     }
 
     @action startMultiPlay = () => {
+        socket.emit('multyGame')
         socket.on('joinedGame', (gameIDAndPlayer) => {
             console.log(gameIDAndPlayer.gameId)
             this.getGameIdAndPlayerID(gameIDAndPlayer)
-            socket.emit('startGame', gameIDAndPlayer.gameId)
+            if(this.playerID == 1){
+                socket.emit('startGame', gameIDAndPlayer.gameId)
+            }
         })
     }
 
