@@ -10,7 +10,7 @@ import '../../style/landing-page.css';
 import SearchingForPlayer from './SearchingForPlayer';
 
 
-
+@inject('ClientManager')
 class LandingPage extends Component {
     state = {
         showPopup: false,
