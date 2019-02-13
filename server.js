@@ -35,16 +35,14 @@ else// for dev enviroment
   })
 }
 
-
-
-
-
 const server = app.listen(port, () => {
   console.log(`server running on ${port}`)
 });//http.createServer(app);
+
 const io = require('socket.io').listen(server)
 
 module.exports = io
+
 const Game = require('./server/gameManagerLogic/GameManager')
 const Games = {}
 
@@ -96,13 +94,10 @@ io.on('connection', (socket) => {
     Games[gameID].shoot(playerIndex)
   })
 
-
   socket.on('deleteGame', (gameID) => {
     delete Games[gameID]
     socket.emit('deleteThisGame', null)
   })
-
-
 })
 
 
