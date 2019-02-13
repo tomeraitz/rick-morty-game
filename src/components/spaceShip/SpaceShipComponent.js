@@ -6,7 +6,10 @@ import { observer, inject } from 'mobx-react'
 // import { heightToPixels, widthToPixels } from '../consts/toPixels'
 
 
-let spaceShipImage = require('../../images/spaceShip.png')
+const spaceShipImage = require('../../images/spaceShip.png')
+const redSpaceShipImage = require('../../images/redSpaceShip.png')
+const blueSpaceShipImage = require('../../images/blueSpaceShip.png')
+
 
 @inject("ClientManager")
 
@@ -15,11 +18,13 @@ class SpaceShipComponent extends Component {
   hadelKeyPress = (e) => {
     const game = this.props.ClientManager
 
-    if (e.which === 32) {
+    if (e.which === 32)
+    {
       game.shoot()
 
     }
-    else if (game.checKeyPress.includes(e.which)) {
+    else if (game.checKeyPress.includes(e.which))
+    {
       game.move(e.which)
     }
   }
@@ -29,14 +34,16 @@ class SpaceShipComponent extends Component {
   }
 
   render() {
-    let x = this.props.x
-    let y = this.props.y
-    let shipHeight = this.props.height
-    let shipWidth = this.props.width
+    // let x = this.props.x
+    // let y = this.props.y
+    // let shipHeight = this.props.height
+    // let shipWidth = this.props.width
 
+    const { index, x, y, height, width } = this.props
+    const imageSRC = index === null ? spaceShipImage : index === 0 ? redSpaceShipImage : blueSpaceShipImage
     return (
       <div id="space-ship" style={{ bottom: `${y}px`, left: `${x}px` }} >
-        <img src={spaceShipImage} alt="space-ship" style={{ height: `${shipHeight}px`, width: `${shipWidth}px` }} />
+        <img src={imageSRC} alt="space-ship" style={{ height: `${height}px`, width: `${width}px` }} />
       </div>
     );
   }

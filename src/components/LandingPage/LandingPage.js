@@ -10,7 +10,7 @@ import '../../style/landing-page.css';
 import SearchingForPlayer from './SearchingForPlayer';
 
 
-
+@inject('ClientManager')
 class LandingPage extends Component {
     state = {
         showPopup: false,
@@ -57,7 +57,6 @@ class LandingPage extends Component {
                 <MediaQuery maxDeviceWidth={1024}>
                     <h1 id="mobile-message">mobile version is coming soon...</h1>
                 </MediaQuery>
-
             </div>
         );
     }
