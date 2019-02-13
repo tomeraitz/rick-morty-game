@@ -1,58 +1,54 @@
-// Server Setup
 const express = require('express')
 const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
-// const api = require('./server/routes/api')
-
-
+const randomWords = require('random-words')
+const port = process.env.PORT || 3004
 
 // Mongoose setup
 // const mongoose = require('mongoose')
 // mongoose.connect('mongodb://localhost/Rick&MortyDB', { useNewUrlParser: true })
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.static(path.join(__dirname, 'build')));
-
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
-
-// app.use(function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', '*')
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
-//   res.header('Access-Control-Allow-Credentials', true);
-
-//   next()
-// })
-
-
+// const api = require('./server/routes/api')
 // app.use('/', api)
 
 
 
-// maybe thats good =>
-// io.configure(function () {
-//   io.set("transports", ["xhr-polling"]);
-//   io.set("polling duration", 10);
-// });
-const port = process.env.PORT || 3004
+if (process.env.PORT)//for production enviroment
+{
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(express.static(path.join(__dirname, 'build')));
+
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  })
+}
+else// for dev enviroment
+{
+  app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
+    res.header('Access-Control-Allow-Credentials', true);
+    next()
+  })
+}
+
+
+
+
+
 const server = app.listen(port, () => {
   console.log(`server running on ${port}`)
 });//http.createServer(app);
-
-const randomWords = require('random-words')
 const io = require('socket.io').listen(server)
 
 module.exports = io
-
 const Game = require('./server/gameManagerLogic/GameManager')
 const Games = {}
-// socket.io
 
+// socket.io
 io.on('connection', (socket) => {
 
   console.log('connection')
