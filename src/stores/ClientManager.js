@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 import io from 'socket.io-client';
-const socket = io.connect()
+const socket = io.connect('http://localhost:3004/')
 
 class ClientManager {
     @observable gameID
@@ -19,6 +19,7 @@ class ClientManager {
 
     @action newState = () => {
         socket.on('newState', (gameData) => {
+            console.log('TCL: ClientManager -> @actionnewState -> gameData', gameData)
             this.getgameData(gameData)
         })
     }

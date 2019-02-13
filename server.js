@@ -55,7 +55,6 @@ io.on('connection', (socket) => {
     console.log('Someone created a new game')
     const gameId = `${randomWords()}-${randomWords()}-${randomWords()}`
     const newGame = new Game(gameId)
-    console.log(newGame)
     Games[gameId] = newGame
     Games[gameId].joinGame(socket.id)
     socket.join(`${gameId}`)
