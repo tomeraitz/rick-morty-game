@@ -4,14 +4,17 @@ const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
 const randomWords = require('random-words')
-const api = require('./server/routes/api')
-// const server = require('http').server(app)
-const port =   process.env.PORT || 3004
-const server = app.listen(port)//http.createServer(app);
+// const api = require('./server/routes/api')
+const port =  3004
+const server = app.listen(port, function(){
+  console.log(`running on ${port}`)
+})//http.createServer(app);
 const io = require('socket.io')(server);
 
 
 module.exports = io
+// const server = require('http').server(app)
+
 
 
 // Mongoose setup
@@ -27,6 +30,7 @@ app.get('*', function (req, res) {
 });
 
 // app.use('/', api)
+
 
 
 const Game = require('./server/gameManagerLogic/GameManager')
@@ -89,7 +93,4 @@ io.on('connection', (socket) => {
 
 })
 
-// app.get('portName', function(req, res){
-//   res.send(port)
-// })
 
