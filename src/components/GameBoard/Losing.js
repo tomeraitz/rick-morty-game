@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { inject } from 'mobx-react';
-
 import { Redirect, Link } from 'react-router-dom'
 
 @inject('ClientManager')
-
 class Losing extends Component {
     startNewGame = () => this.props.ClientManager.startSinglePlay()
 

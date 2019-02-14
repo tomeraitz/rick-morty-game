@@ -4,6 +4,8 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const randomWords = require('random-words')
 const port = process.env.PORT || 3004
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // Mongoose setup
 // const mongoose = require('mongoose')
@@ -11,8 +13,6 @@ const port = process.env.PORT || 3004
 
 // const api = require('./server/routes/api')
 // app.use('/', api)
-
-
 
 if (process.env.PORT)//for production enviroment
 {
@@ -35,24 +35,26 @@ else// for dev enviroment
   })
 }
 
-
-
-
-
 const server = app.listen(port, () => {
   console.log(`server running on ${port}`)
 });//http.createServer(app);
-const io = require('socket.io').listen(server)
 
+const io = require('socket.io').listen(server)
 module.exports = io
+
 const Game = require('./server/gameManagerLogic/GameManager')
 const Games = {}
+let multy = []
 
 // socket.io
 io.on('connection', (socket) => {
+
   console.log('connection')
-  socket.on('newGame', () => {
-    console.log('Someone created a new game')
+
+
+  socket.on('singleGame', () => {
+    console.log('Someone created a new single game')
+
     const gameId = `${randomWords()}-${randomWords()}-${randomWords()}`
     const newGame = new Game(gameId)
     Games[gameId] = newGame
@@ -62,12 +64,27 @@ io.on('connection', (socket) => {
     socket.emit('joinedGame', info)
   })
 
-  socket.on('joinGame', (gameId) => {
-    Games[gameId].joinGame(socket)
-    socket.join(gameId)
-    socket.emit('joinedGame', { gameId, playerId: Games[gameId].spaceShips.length - 1 })
-    io.in(`${gameId}`).emit('getReady');
+  socket.on('multyGame', () => {
+    if (multy.length===0){
+      console.log('Someone created a new game')
+      const gameId = `${randomWords()}-${randomWords()}-${randomWords()}`
+      multy.push(gameId)
+      const newGame = new Game(gameId)
+      Games[gameId] = newGame
+      Games[gameId].joinGame(socket.id)
+      socket.join(`${gameId}`)
+      const info = { gameId, playerId: Games[gameId].spaceShips.length - 1 }
+      socket.emit('joinedGame', info)
+    }
+    else{
+        Games[multy[0]].joinGame(socket)
+        socket.join(multy[0])
+        socket.emit('joinedGame', { gameId :multy[0], playerId: Games[multy[0]].spaceShips.length - 1 })
+        io.in(`${multy[0]}`).emit('getReady');
+        multy = []
+    }
   })
+
 
   socket.on('startGame', (gameId) => {
     Games[gameId].start()
@@ -93,13 +110,10 @@ io.on('connection', (socket) => {
     Games[gameID].shoot(playerIndex)
   })
 
-
   socket.on('deleteGame', (gameID) => {
     delete Games[gameID]
     socket.emit('deleteThisGame', null)
   })
-
-
 })
 
 

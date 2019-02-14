@@ -35,12 +35,12 @@ class GameManager {
     createEnemies(num) {
         for (let i = 1; i < (num + 1); i++) {
             let y = Math.floor(Math.random() * 80)
-            let x = i * 5
+            let x = 100 + i * 5
             let index = Math.floor(Math.random() * arrayImages.length)
             let width = arrayImages[index].width
             let height = arrayImages[index].height
             let src = arrayImages[index].src
-            this.drawInstance(new Enemy(index, -x, y, width, height, src))
+            this.drawInstance(new Enemy(index, x, y, width, height, src))
         }
     }
 
@@ -76,7 +76,7 @@ class GameManager {
         this.gameInterval = 0
         this.explosion = []
         this.enemyPerLevel = 4
-
+        this.finishLevel = false
         this.isGameOver = true
         io.in(`${this.id}`).emit('gameOver');
     }
@@ -85,7 +85,7 @@ class GameManager {
     pauseGame() {
         if (!this.isGameOnPause) clearInterval(this.gameInterval);
         this.isGameOnPause = true
-
+        console.log(this.isGameOnPause)
     }
 
     continuePlaying() {
@@ -95,8 +95,8 @@ class GameManager {
 
     game() {
         this.enemies.forEach(e => {
-            if (e.x + 2 <= 100) {
-                e.x += 0.5
+            if (e.x + 2 >= 0) {
+                e.x -= this.playerInfo.level /4
             }
             else this.kill(e)
         })
@@ -119,7 +119,8 @@ class GameManager {
             isGameOnPause: this.isGameOnPause,
             explosion: this.explosion,
             playerInfo: this.playerInfo,
-            enemyPerLevel : this.enemyPerLevel
+            enemyPerLevel: this.enemyPerLevel
+
         }
 
         io.in(`${this.id}`).emit('newState', gameState);
@@ -164,7 +165,7 @@ class GameManager {
     checkEnemies(instance) {
         this.enemies.forEach(e => {
             if (Math.abs(e.y - instance.y) <= e.height) {
-                if (e.x + instance.x + (e.width) >= 100 || e.x + instance.x + (instance.width) >= 100) {
+                if (Math.abs(e.x - instance.x) <= e.width) {
                     if (instance instanceof LaserShot) {
                         this.enemyPerLevel--
                         this.playerInfo.score += 10
@@ -179,24 +180,24 @@ class GameManager {
 
     move(playerIndex, direction) {
         let spaceShip = this.spaceShips[playerIndex]
-        if (direction === 40 && spaceShip.y - 4 > 0) {
+        if (direction === 40 && spaceShip.y - 5 >= 0) {
             // down
-            spaceShip.y -= 4
+            spaceShip.y -= 5
         }
 
-        if (direction === 38 && spaceShip.y + 6 < 100) {
+        if (direction === 38 && spaceShip.y + 5 <= 90) {
             // up
-            spaceShip.y += 4
+            spaceShip.y += 5
         }
 
-        if (direction === 37 && spaceShip.x - 2 > 0) {
+        if (direction === 37 && spaceShip.x - 5 >= 0) {
             // left
-            spaceShip.x -= 2
+            spaceShip.x -= 5
         }
 
-        if (direction === 39 && spaceShip.x + 7 < 100) {
+        if (direction === 39 && spaceShip.x + 5 < 100) {
             //right
-            spaceShip.x += 2
+            spaceShip.x += 5
         }
 
     }

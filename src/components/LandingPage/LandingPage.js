@@ -20,6 +20,7 @@ class LandingPage extends Component {
 
     togglePopup = () => {
         this.setState({ showPopup: !this.state.showPopup })
+        this.props.ClientManager.startMultiPlay()
     }
 
     startSingleGame = () => {
@@ -44,15 +45,19 @@ class LandingPage extends Component {
             <div id="landing-page" onClick={this.showPopup ? this.closePopup() : null}>
                 {this.props.soundOn ? <i className="fas fa-volume-up" onClick={this.toggleSound}></i> : <i className="fas fa-volume-off" onClick={this.toggleSound}></i>}
                 <MediaQuery minDeviceWidth={1025}>
+                <img id="logo" alt="" src={rickAndMortyLogo} />
+                <div className="games-buttons">
 
-                    <img id="logo" alt="" src={rickAndMortyLogo} />
-                    <div className="games-buttons">
-                        <Link to="/game" ><div className="start-game" onClick={this.startSingleGame}>SINGLE PLAYER</div></Link>
-                        <div className="start-multiplayer-game" onClick={this.togglePopup}>MULTIPLAYER</div>
-                        {this.state.showPopup ? <Popup closePopup={this.togglePopup} searchingForPlayer={this.searchingForPlayerToggle} foundGameToggle={this.foundGameToggle} /> : null}
-                        {this.state.searchingForPlayer ? <SearchingForPlayer cancelSearch={this.searchingForPlayerToggle} /> : null}
-                        {this.state.gameFound ? <JoinedPopup /> : null}
-                    </div>
+                    <Link to="/game" ><div className="start-game" onClick={this.startSingleGame}>SINGLE PLAYER</div></Link>
+
+                    <div className="start-multiplayer-game" onClick={this.togglePopup}>MULTIPLAYER</div>
+
+                    {/* {this.state.showPopup ? <Popup closePopup={this.togglePopup} searchingForPlayer={this.searchingForPlayerToggle} foundGameToggle={this.foundGameToggle} /> : null} */}
+
+                    {this.state.showPopup ? <SearchingForPlayer cancelSearch={this.searchingForPlayerToggle} /> : null}
+                    {/* {this.state.gameFound ? <JoinedPopup /> : null} */}
+                </div>
+
                 </MediaQuery>
                 <MediaQuery maxDeviceWidth={1024}>
                     <div id="mobile-message">

@@ -11,6 +11,8 @@ const Score = require('../model/Score')
 const Users = require('../model/Users')
 
 
+
+
 //get best scores
 router.get('/bestScores', async function (req, res) {
     const user = await Users.find({}).populate('scores')
