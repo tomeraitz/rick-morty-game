@@ -2,7 +2,7 @@ import { observable, action } from 'mobx'
 import io from 'socket.io-client';
 import Features from './Features'
 
-const socket = io.connect('http://localhost:3004/')//()
+const socket = io.connect()//('http://localhost:3004/')
 
 
 class ClientManager {
