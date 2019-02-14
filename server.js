@@ -12,13 +12,28 @@ const port = process.env.PORT || 3004
 // const api = require('./server/routes/api')
 // app.use('/', api)
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-})
+
+if (process.env.PORT)//for production enviroment
+{
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(express.static(path.join(__dirname, 'build')));
+
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  })
+}
+else// for dev enviroment
+{
+  app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
+    res.header('Access-Control-Allow-Credentials', true);
+    next()
+  })
+}
 
 const server = app.listen(port, () => {
   console.log(`server running on ${port}`)
@@ -34,7 +49,6 @@ const Games = {}
 // socket.io
 io.on('connection', (socket) => {
 
-  console.log('connection')
 
   socket.on('newGame', () => {
     console.log('Someone created a new game')

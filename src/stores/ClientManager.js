@@ -1,8 +1,8 @@
 import { observable, action } from 'mobx'
 import io from 'socket.io-client';
-import { Howl, Howler } from 'howler';
+import Features from './Features'
 
-const socket = io.connect()
+const socket = io.connect('http://localhost:3004/')
 
 class ClientManager {
     @observable gameID
@@ -13,6 +13,7 @@ class ClientManager {
     @observable gameOver = false
     @observable isGameMultiplayerOn = false
     @observable ready = false
+    @observable soundOn = true
 
     @action getGameIdAndPlayerID(gameIDAndPlayer) {
         this.gameID = gameIDAndPlayer.gameId
@@ -31,6 +32,8 @@ class ClientManager {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
             socket.emit('startGame', gameIDAndPlayer.gameId)
         })
+        Features.playDubdub()
+        Features.playThemeSong()
     }
 
     @action startMultiPlay = () => {
@@ -68,6 +71,7 @@ class ClientManager {
 
     @action shoot = () => {
         socket.emit('shoot', this.gameID, this.playerID)
+        Features.shootSound()
     }
 
     @action pauseGame = () => {
@@ -83,7 +87,6 @@ class ClientManager {
         socket.emit('finishExplosion', this.gameID)
     }
 
-
     @action setGameOver = () => {
         this.gameOver = true
     }
@@ -98,15 +101,6 @@ class ClientManager {
         socket.emit('deleteGame', this.gameID)
         window.location.reload()
 
-    }
-
-    @action dubdubOnce = () => {
-        let sounds = require('../sounds/woo_vu_luvub_dub_dub.wav')
-        var sound = new Howl({
-            src: sounds
-        });
-
-        sound.play();
     }
 
 }

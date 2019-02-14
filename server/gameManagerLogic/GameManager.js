@@ -165,7 +165,7 @@ class GameManager {
     checkEnemies(instance) {
         this.enemies.forEach(e => {
             if (Math.abs(e.y - instance.y) <= e.height) {
-                if (e.x + instance.x + (e.width) >= 100 || e.x + instance.x + (instance.width) >= 100) {
+                if (e.x + instance.x + (instance.width) == 100 || e.x + instance.x + (e.width) == 100) {
                     if (instance instanceof LaserShot) {
                         this.enemyPerLevel--
                         this.playerInfo.score += 10
