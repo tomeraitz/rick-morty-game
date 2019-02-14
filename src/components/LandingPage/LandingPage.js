@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { inject } from 'mobx-react';
 import { Link } from 'react-router-dom'
+import MediaQuery from 'react-responsive';
 
 import Popup from './Popup'
 import JoinedPopup from './JoinedPopup'
@@ -10,7 +11,6 @@ import SearchingForPlayer from './SearchingForPlayer';
 
 
 @inject('ClientManager')
-
 class LandingPage extends Component {
     state = {
         showPopup: false,
@@ -44,6 +44,7 @@ class LandingPage extends Component {
         return (
             <div id="landing-page" onClick={this.showPopup ? this.closePopup() : null}>
                 {this.props.soundOn ? <i className="fas fa-volume-up" onClick={this.toggleSound}></i> : <i className="fas fa-volume-off" onClick={this.toggleSound}></i>}
+                <MediaQuery minDeviceWidth={1025}>
                 <img id="logo" alt="" src={rickAndMortyLogo} />
                 <div className="games-buttons">
 
@@ -56,6 +57,15 @@ class LandingPage extends Component {
                     {this.state.showPopup ? <SearchingForPlayer cancelSearch={this.searchingForPlayerToggle} /> : null}
                     {/* {this.state.gameFound ? <JoinedPopup /> : null} */}
                 </div>
+
+                </MediaQuery>
+                <MediaQuery maxDeviceWidth={1024}>
+                    <div id="mobile-message">
+                        <h1 >mobile version</h1>
+                        <h2 >is coming soon...</h2>
+                    </div>
+
+                </MediaQuery>
             </div>
         );
     }

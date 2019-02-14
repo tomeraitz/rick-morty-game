@@ -47,11 +47,11 @@ let multy = []
 
 // socket.io
 io.on('connection', (socket) => {
-
   console.log('connection')
 
   socket.on('singleGame', () => {
     console.log('Someone created a new single game')
+
     const gameId = `${randomWords()}-${randomWords()}-${randomWords()}`
     const newGame = new Game(gameId)
     Games[gameId] = newGame

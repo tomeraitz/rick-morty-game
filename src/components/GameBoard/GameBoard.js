@@ -38,7 +38,7 @@ class GameBoard extends Component {
     }
     renderSpaceShips= () =>{
         return this.props.ClientManager.gameData.spaceShips.map((s, i) => {
-            return <SpaceShipComponent key={i} move={s.move} x={widthToPixels(s.x)} y={heightToPixels(s.y)} id={s.id} height={heightToPixels(s.height)} width={widthToPixels(s.width)} />
+            return <SpaceShipComponent key={i} index={i} move={s.move} x={widthToPixels(s.x)} y={heightToPixels(s.y)} id={s.id} height={heightToPixels(s.height)} width={widthToPixels(s.width)} />
         });
      }
      renderLaserShots= () =>{
@@ -58,6 +58,7 @@ class GameBoard extends Component {
             const game = {...this.props.ClientManager.gameData}
             this.finishExplosion()
             const playerInfo = game.playerInfo
+
 
             return (
                 <div id="game-border">
