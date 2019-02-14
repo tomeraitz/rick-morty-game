@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx'
 import io from 'socket.io-client';
+import Features from './Features'
 
 const socket = io.connect('http://localhost:3004/')//()
 
@@ -14,6 +15,8 @@ class ClientManager {
     @observable isGameMultiplayerOn = false
     @observable ready = false
     @observable isGameOnPause = false
+    @observable soundOn = true
+
 
     @action getGameIdAndPlayerID(gameIDAndPlayer) {
         this.gameID = gameIDAndPlayer.gameId
@@ -32,6 +35,8 @@ class ClientManager {
             this.getGameIdAndPlayerID(gameIDAndPlayer)
             socket.emit('startGame', gameIDAndPlayer.gameId)
         })
+        Features.playDubdub()
+        Features.playThemeSong()
     }
 
     @action startMultiPlay = () => {
@@ -72,6 +77,7 @@ class ClientManager {
 
     @action shoot = () => {
         socket.emit('shoot', this.gameID, this.playerID)
+        Features.shootSound()
     }
 
     @action pauseGame = () => {
@@ -89,7 +95,6 @@ class ClientManager {
         socket.emit('finishExplosion', this.gameID)
     }
 
-
     @action setGameOver = () => {
         this.gameOver = true
     }
@@ -105,14 +110,13 @@ class ClientManager {
         window.location.reload()
 
     }
+
 }
 
 const clientManager = new ClientManager()
-if (clientManager.gameData)
-{
+if (clientManager.gameData) {
     clientManager.newState()
 }
-
 
 socket.on('gameOver', () => {
     clientManager.setGameOver()

@@ -38,6 +38,7 @@ else// for dev enviroment
 const server = app.listen(port, () => {
   console.log(`server running on ${port}`)
 });//http.createServer(app);
+
 const io = require('socket.io').listen(server)
 module.exports = io
 
@@ -47,7 +48,9 @@ let multy = []
 
 // socket.io
 io.on('connection', (socket) => {
+
   console.log('connection')
+
 
   socket.on('singleGame', () => {
     console.log('Someone created a new single game')
@@ -107,13 +110,10 @@ io.on('connection', (socket) => {
     Games[gameID].shoot(playerIndex)
   })
 
-
   socket.on('deleteGame', (gameID) => {
     delete Games[gameID]
     socket.emit('deleteThisGame', null)
   })
-
-
 })
 
 

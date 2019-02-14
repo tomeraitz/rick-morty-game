@@ -56,6 +56,7 @@ class GameBoard extends Component {
         if (this.props.ClientManager.gameData && this.props.ClientManager.gameData.spaceShips.length > 0)
         {
             const game = {...this.props.ClientManager.gameData}
+
             this.finishExplosion()
             const playerInfo = game.playerInfo
 
@@ -82,9 +83,9 @@ class GameBoard extends Component {
                     </div>
                 </div>
             )
-        } else { return <h1>ERROR</h1> }
+        } else { return <h1>Loading....</h1> }
     }
-
 }
+
 
 export default GameBoard
